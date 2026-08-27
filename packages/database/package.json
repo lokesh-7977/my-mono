@@ -1,9 +1,12 @@
 {
-  "name": "database",
+  "name": "@mono/database",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "check-types": "tsc --noEmit"
   },
