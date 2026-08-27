@@ -19,6 +19,10 @@ const envSchema = z.object({
     GOOGLE_CLIENT_ID: z
         .string()
         .min(1, "GOOGLE_CLIENT_ID is required"),
+
+    NODE_ENV: z
+        .enum(["development", "production"])
+        .default("development"),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
