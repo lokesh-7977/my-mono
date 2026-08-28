@@ -19,4 +19,56 @@ export const createSession = async (data: CreateSessionData) => {
 
 export const findByEmail = async (email: string) => {
     return prisma.user.findUnique({ where: { email } });
-};  
+};
+
+export const revokeSession = async (
+    sessionId: string,
+    userId: string,
+) => {
+    const session = await prisma.session.findFirst({
+        where: {
+            id: sessionId,
+            userId,
+        },
+    });
+
+    if (!session) {
+        return null;
+    }
+
+    return prisma.session.update({
+        where: {
+            id: sessionId,
+        },
+        data: {
+            isRevoked: true,
+        },
+    });
+};
+
+
+export const findSessionById = async (
+    sessionId: string,
+) => {
+    return prisma.session.findUnique({
+        where: {
+            id: sessionId,
+        },
+    });
+};
+
+export const updateSession = async (
+    sessionId: string,
+    refreshTokenHash: string,
+    expiresAt: Date,
+) => {
+    return prisma.session.update({
+        where: {
+            id: sessionId,
+        },
+        data: {
+            refreshTokenHash,
+            expiresAt,
+        },
+    });
+};

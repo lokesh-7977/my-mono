@@ -3,7 +3,9 @@ import {
     GoogleLoginSchema
 } from "../validators/auth.validators.js"
 
-import { googleLogin } from "../controllers/auth.controllers.js"
+import { googleLogin, logout } from "../controllers/auth.controllers.js"
+
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 export const authRoutes = new OpenAPIHono();
 
@@ -74,4 +76,48 @@ authRoutes.openapi(
     }),
 
     googleLogin as any,
+);
+
+
+
+authRoutes.openapi(
+    createRoute({
+        method: "post",
+        path: "/logout",
+        tags: ["Auth"],
+        summary: "Logout current session",
+        security: [
+            {
+                bearerAuth: [],
+            },
+        ],
+        responses: {
+            200: {
+                content: {
+                    "application/json": {
+                        schema: SuccessSchema,
+                    },
+                },
+                description: "Logged out successfully",
+            },
+            401: {
+                content: {
+                    "application/json": {
+                        schema: ErrorSchema,
+                    },
+                },
+                description: "Unauthorized",
+            },
+            404: {
+                content: {
+                    "application/json": {
+                        schema: ErrorSchema,
+                    },
+                },
+                description: "Session not found",
+            },
+        },
+        middleware: [authMiddleware],
+    }),
+    logout as any,
 );

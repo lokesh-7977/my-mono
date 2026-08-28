@@ -57,3 +57,60 @@ export const googleLogin = async (c: Context): Promise<Response> => {
         ).send(c);
     }
 };
+
+
+export const logout = async (
+    c: Context,
+): Promise<Response> => {
+    try {
+        const userId = c.get("userId") as string | undefined;
+        const sessionId = c.get("sessionId") as string | undefined;
+
+        if (!userId || !sessionId) {
+            logger.warn(
+                "Logout attempt without authenticated session",
+            );
+
+            return ApiResponse.error(
+                "Unauthorized",
+                401,
+            ).send(c);
+        }
+
+        const result = await AuthService.logout({
+            userId,
+            sessionId,
+        });
+
+        setRefresh.clearRefreshTokenCookie(c);
+
+        logger.info(
+            { userId, sessionId },
+            "Logout successful",
+        );
+
+        return ApiResponse.success(
+            result.message,
+        ).send(c);
+    } catch (error) {
+        logger.error(
+            { error },
+            "Logout failed",
+        );
+
+        if (error instanceof CustomError) {
+            return ApiResponse.error(
+                error.message,
+                error.statusCode,
+            ).send(c);
+        }
+
+        return ApiResponse.error(
+            "An error occurred during logout",
+            500,
+        ).send(c);
+    }
+};
+
+
+
