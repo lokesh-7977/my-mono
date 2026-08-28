@@ -9,6 +9,7 @@ import * as setRefresh from "../helper/jwt.helper.js"
 import ApiResponse from "../utils/api-response.js";
 import { CustomError } from "../utils/custom-error.js";
 import { logger } from "../utils/logger.js";
+import { getCookie } from "hono/cookie";
 
 
 const getClientInfo = (c: Context): ClientInfo => ({
@@ -112,5 +113,64 @@ export const logout = async (
     }
 };
 
+
+export const refresh = async (
+    c: Context,
+): Promise<Response> => {
+    try {
+        const refreshToken = getCookie(
+            c,
+            "refreshToken",
+        );
+
+        if (!refreshToken) {
+            logger.warn(
+                "Token refresh attempted without refresh token",
+            );
+
+            return ApiResponse.error(
+                "Refresh token missing",
+                401,
+            ).send(c);
+        }
+
+        const result = await AuthService.refresh(
+            refreshToken,
+        );
+
+        setRefresh.setRefreshTokenCookie(
+            c,
+            result.refreshToken,
+        );
+
+        logger.info(
+            "Token refreshed successfully",
+        );
+
+        return ApiResponse.success(
+            "Token refreshed successfully",
+            {
+                accessToken: result.accessToken,
+            },
+        ).send(c);
+    } catch (error) {
+        logger.error(
+            { error },
+            "Token refresh failed",
+        );
+
+        if (error instanceof CustomError) {
+            return ApiResponse.error(
+                error.message,
+                error.statusCode,
+            ).send(c);
+        }
+
+        return ApiResponse.error(
+            "An error occurred while refreshing token",
+            500,
+        ).send(c);
+    }
+};
 
 

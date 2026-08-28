@@ -3,7 +3,7 @@ import {
     GoogleLoginSchema
 } from "../validators/auth.validators.js"
 
-import { googleLogin, logout } from "../controllers/auth.controllers.js"
+import { googleLogin, logout, refresh } from "../controllers/auth.controllers.js"
 
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -121,3 +121,36 @@ authRoutes.openapi(
     }),
     logout as any,
 );
+
+
+authRoutes.openapi(
+    createRoute({
+        method: "post",
+        path: "/refresh",
+        tags: ["Auth"],
+        summary: "Refresh access token",
+
+        responses: {
+            200: {
+                content: {
+                    "application/json": {
+                        schema: SuccessSchema,
+                    },
+                },
+                description: "Token refreshed successfully",
+            },
+
+            401: {
+                content: {
+                    "application/json": {
+                        schema: ErrorSchema,
+                    },
+                },
+                description: "Invalid or expired refresh token",
+            },
+        },
+    }),
+
+    refresh as any,
+);
+
