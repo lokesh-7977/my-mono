@@ -12,17 +12,18 @@ const Refreshsecret = new TextEncoder().encode(
 
 export interface TokenPayload extends JWTPayload {
     id: string;
-    sessionId: string,
+    sessionId: string;
+    role: string;
 }
 
 export const signAccessToken = async (
     payload: {
-        id: string,
-        sessionId: string
-
+        id: string;
+        sessionId: string;
+        role: string;
     }
 ) => {
-    const jwt = await new SignJWT({ id: payload.id, sessionId: payload.sessionId })
+    const jwt = await new SignJWT({ id: payload.id, sessionId: payload.sessionId, role: payload.role })
         .setProtectedHeader({ alg: config.ALG })
         .setIssuedAt()
         .setExpirationTime(config.ACCESS_TOKEN_EXPIRY!)
@@ -34,11 +35,12 @@ export const signAccessToken = async (
 
 export const signRefreshToken = async (
     payload: {
-        id: string,
-        sessionId: string
+        id: string;
+        sessionId: string;
+        role: string;
     }
 ) => {
-    const jwt = await new SignJWT({ id: payload.id, sessionId: payload.sessionId })
+    const jwt = await new SignJWT({ id: payload.id, sessionId: payload.sessionId, role: payload.role })
         .setProtectedHeader({ alg: config.ALG })
         .setIssuedAt()
         .setExpirationTime(config.REFRESH_TOKEN_EXPIRY!)
