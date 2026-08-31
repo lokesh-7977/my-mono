@@ -1,5 +1,5 @@
 import { prisma } from "../utils/prisma.js";
-import type { CreateUserData, CreateSessionData } from "../types/auth.types.js";
+import type { CreateUserData, CreateSessionData } from "../types/index.js";
 
 export const create = async (data: CreateUserData) => {
     return prisma.user.create({
