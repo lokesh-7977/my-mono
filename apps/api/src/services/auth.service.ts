@@ -6,9 +6,9 @@ import type {
     LogoutData,
     MessageResponse,
     RefreshResponse,
-} from "../types/auth.types.ts";
+} from "../types/index.js";
 import { verifyGoogleToken } from "../lib/google.service.js";
-import * as AuthRepository from "../Repositories/auth.repository.js";
+import * as AuthRepository from "../repositories/auth.repository.js";
 import { uuidv7 } from "uuidv7";
 import * as JwtService from "../lib/jwt.service.js";
 import argon2 from "argon2";
