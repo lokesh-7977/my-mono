@@ -2,7 +2,7 @@ import { type Context } from "hono";
 import type {
     GoogleLoginRequest,
     ClientInfo
-} from "../types/auth.types.ts";
+} from "../types/index.js";
 
 import * as AuthService from "../services/auth.service.js"
 import * as setRefresh from "../helper/jwt.helper.js"
