@@ -1,9 +1,9 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import {
     GoogleLoginSchema
-} from "../validators/auth.validators.js"
+} from "../validators/auth.validator.js"
 
-import { googleLogin, logout, refresh } from "../controllers/auth.controllers.js"
+import { googleLogin, logout, refresh } from "../controllers/auth.controller.js"
 
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
