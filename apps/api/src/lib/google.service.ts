@@ -1,6 +1,6 @@
 import { OAuth2Client } from "google-auth-library";
 
-import type { GoogleUserPayload } from "../types/auth.types.js";
+import type { GoogleUserPayload } from "../types/index.js";
 import config from "../config/index.js"
 
 const client = new OAuth2Client(config.GOOGLE_CLIENT_ID);
