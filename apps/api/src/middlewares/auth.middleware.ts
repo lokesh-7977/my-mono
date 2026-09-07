@@ -1,6 +1,7 @@
 import type { Context, Next } from "hono";
 import ApiResponse from "../utils/api-response.js";
 import * as JwtService from "../lib/jwt.service.js";
+import { UserRole } from "@mono/database";
 
 export const authMiddleware = async (
   c: Context,
@@ -31,3 +32,18 @@ export const authMiddleware = async (
     ).send(c);
   }
 };
+
+export const requireRole =
+  (...allowedRoles: UserRole[]) =>
+    async (c: Context, next: Next): Promise<Response | void> => {
+      const role = c.get("role");
+
+      if (!role || !allowedRoles.includes(role)) {
+        return ApiResponse.error(
+          "Forbidden - Insufficient permissions",
+          403,
+        ).send(c);
+      }
+
+      await next();
+    };
