@@ -5,12 +5,12 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-   url      = env("DATABASE_URL")
- 
+  url      = env("DATABASE_URL")
 }
 
 enum UserRole {
   USER
+  VENDOR
   ADMIN
 }
 
@@ -75,9 +75,9 @@ enum PaymentStatus {
 }
 
 model User {
-  id        String @id @map("_id")
-  googleId  String @unique
-  email     String @unique
+  id        String  @id @map("_id")
+  googleId  String  @unique
+  email     String  @unique
   name      String?
   avatarUrl String?
 
@@ -103,15 +103,15 @@ model User {
 }
 
 model Session {
-  id               String @id @map("_id")
+  id               String   @id @map("_id")
   userId           String
   refreshTokenHash String
   expiresAt        DateTime
   ipAddress        String?
   userAgent        String?
-  isRevoked        Boolean @default(false)
+  isRevoked        Boolean  @default(false)
 
-  user User @relation(fields: [userId],references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UserExperience {
@@ -130,7 +130,7 @@ model UserExperience {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UserCertification {
@@ -149,12 +149,12 @@ model UserCertification {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Badge {
-  id          String @id @map("_id")
-  name        String @unique
+  id          String  @id @map("_id")
+  name        String  @unique
   description String
   iconUrl     String?
   criteria    String?
@@ -177,8 +177,6 @@ model UserBadge {
   @@unique([userId, badgeId])
 }
 
-
-
 model MasterTrek {
   id String @id @map("_id")
 
@@ -192,7 +190,7 @@ model MasterTrek {
   durationDays   Int
   maxAltitude    Float?
   distanceKm     Float?
-  distinctRoutes Int @default(1)
+  distinctRoutes Int        @default(1)
 
   baseLocation String
   state        String
@@ -228,8 +226,8 @@ model MasterTrek {
 
   activityIds String[]
   activities  Activity[] @relation(fields: [activityIds], references: [id])
-  
-  packages    Package[]
+
+  packages Package[]
 }
 
 model TrekRoute {
@@ -284,8 +282,8 @@ model TrekItineraryDay {
 }
 
 model Activity {
-  id          String @id @map("_id")
-  name        String @unique
+  id          String  @id @map("_id")
+  name        String  @unique
   description String?
   iconUrl     String?
 
@@ -295,10 +293,10 @@ model Activity {
   itineraryDayIds String[]
   itineraryDays   TrekItineraryDay[] @relation(fields: [itineraryDayIds], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
   packageItineraryDayIds String[]
-  packageItineraryDays PackageItineraryDay[] @relation(fields: [packageItineraryDayIds], references: [id])
+  packageItineraryDays   PackageItineraryDay[] @relation(fields: [packageItineraryDayIds], references: [id])
 }
 
 model NearbyPlace {
@@ -374,7 +372,7 @@ model PackageItineraryDay {
   duration      String?
   altitude      Float?
 
-  activityIds String[]  
+  activityIds String[]
   activities  Activity[] @relation(fields: [activityIds], references: [id])
 
   createdAt DateTime @default(now())
