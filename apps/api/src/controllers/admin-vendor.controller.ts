@@ -37,3 +37,42 @@ export const getPendingVendorApplications = async (
     ).send(c);
   }
 };
+
+export const getVendorApplicationByUserId = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const userId = c.req.param("userId") as string;
+
+    const result =
+      await AdminVendorService.getVendorApplicationByUserIdService(userId);
+
+    logger.info(
+      { userId },
+      "Vendor application fetched successfully",
+    );
+
+    return ApiResponse.success(
+      "Vendor application fetched successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to fetch vendor application",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to fetch vendor application",
+      500,
+    ).send(c);
+  }
+};

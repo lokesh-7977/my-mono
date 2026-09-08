@@ -1,5 +1,8 @@
 import { prisma } from "../utils/prisma.js";
-import type { PendingVendorApplicationResponse } from "../types/index.js";
+import type {
+  PendingVendorApplicationResponse,
+  VendorApplicationDetailsResponse,
+} from "../types/index.js";
 
 export const getPendingVendorApplications = async (): Promise<
   PendingVendorApplicationResponse[]
@@ -26,6 +29,66 @@ export const getPendingVendorApplications = async (): Promise<
     },
     orderBy: {
       submittedAt: "asc",
+    },
+  });
+};
+
+export const getVendorApplicationByUserId = async (
+  userId: string,
+): Promise<VendorApplicationDetailsResponse | null> => {
+  return prisma.vendorProfile.findUnique({
+    where: {
+      userId,
+    },
+    select: {
+      id: true,
+      userId: true,
+      vendorType: true,
+      experienceYears: true,
+      treksLed: true,
+      regionsWorkedIn: true,
+      isAgeEligible: true,
+      hasRequiredExperience: true,
+      hasFirstAidCertification: true,
+      hasSmartphoneAndWhatsApp: true,
+      agreesToInsuranceTerms: true,
+      agreesToSafetyStandards: true,
+      verificationStatus: true,
+      submittedAt: true,
+      user: {
+        select: {
+          name: true,
+          email: true,
+          phone: true,
+          avatarUrl: true,
+          address: true,
+          city: true,
+          state: true,
+          country: true,
+          pinCode: true,
+          languages: true,
+          userExperiences: {
+            select: {
+              id: true,
+              description: true,
+              imageUrls: true,
+              verificationStatus: true,
+            },
+          },
+          userCertifications: {
+            select: {
+              id: true,
+              title: true,
+              issuingOrganization: true,
+              certificateNumber: true,
+              certificateUrl: true,
+              issuedAt: true,
+              expiresAt: true,
+              verificationStatus: true,
+            },
+          },
+        },
+      },
     },
   });
 };
