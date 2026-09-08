@@ -2,6 +2,7 @@ import type { z } from "@hono/zod-openapi";
 import type {
   UpdateOnboardingProfileSchema,
   CreateVendorProfileSchema,
+  UpdateVendorEligibilitySchema,
 } from "../validators/onboarding.validator.js";
 
 export type UpdateOnboardingProfileInput =
@@ -52,4 +53,19 @@ export type VendorProfileResponse = {
     | "APPROVED"
     | "REJECTED";
 };
+
+export type UpdateVendorEligibilityInput =
+  z.infer<typeof UpdateVendorEligibilitySchema>;
+
+export type VendorEligibilityResponse = {
+  id: string;
+  userId: string;
+  isAgeEligible: boolean;
+  hasRequiredExperience: boolean;
+  hasFirstAidCertification: boolean;
+  hasSmartphoneAndWhatsApp: boolean;
+  agreesToInsuranceTerms: boolean;
+  agreesToSafetyStandards: boolean;
+};
+
 

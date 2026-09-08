@@ -57,3 +57,25 @@ export const CreateVendorProfileSchema = z.object({
     }),
 });
 
+export const UpdateVendorEligibilitySchema = z.object({
+  isAgeEligible: z.boolean().openapi({
+    example: true,
+  }),
+  hasRequiredExperience: z.boolean().openapi({
+    example: true,
+  }),
+  hasFirstAidCertification: z.boolean().openapi({
+    example: true,
+  }),
+  hasSmartphoneAndWhatsApp: z.boolean().openapi({
+    example: true,
+  }),
+  agreesToInsuranceTerms: z.boolean().openapi({
+    example: true,
+  }),
+  agreesToSafetyStandards: z.boolean().openapi({
+    example: true,
+  }),
+});
+
+

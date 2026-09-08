@@ -2,10 +2,12 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import {
   UpdateOnboardingProfileSchema,
   CreateVendorProfileSchema,
+  UpdateVendorEligibilitySchema,
 } from "../validators/onboarding.validator.js";
 import {
   updateOnboardingProfile,
   createVendorProfile,
+  updateVendorEligibility,
 } from "../controllers/onboarding.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -159,4 +161,72 @@ onboardingRoutes.openapi(
   }),
   createVendorProfile as any,
 );
+
+onboardingRoutes.openapi(
+  createRoute({
+    method: "patch",
+    path: "/vendor-profile/eligibility",
+    tags: ["Onboarding"],
+    summary: "Update vendor eligibility",
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: UpdateVendorEligibilitySchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description: "Vendor eligibility updated successfully",
+      },
+      400: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Invalid request body",
+      },
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Vendor profile not found",
+      },
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Failed to update vendor eligibility",
+      },
+    },
+    middleware: [authMiddleware],
+  }),
+  updateVendorEligibility as any,
+);
+
 

@@ -2,6 +2,7 @@ import type { Context } from "hono";
 import type {
   UpdateOnboardingProfileInput,
   CreateVendorProfileInput,
+  UpdateVendorEligibilityInput,
 } from "../types/index.js";
 import * as OnboardingService from "../services/onboarding.service.js";
 import ApiResponse from "../utils/api-response.js";
@@ -87,5 +88,46 @@ export const createVendorProfile = async (
     ).send(c);
   }
 };
+
+export const updateVendorEligibility = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const userId = c.get("userId") as string;
+
+    const body = await c.req.json<UpdateVendorEligibilityInput>();
+
+    const result = await OnboardingService.updateVendorEligibilityService(
+      userId,
+      body,
+    );
+
+    logger.info(
+      { userId },
+      "Vendor eligibility updated successfully",
+    );
+
+    return ApiResponse.success(
+      "Vendor eligibility updated successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error({ error }, "Failed to update vendor eligibility");
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to update vendor eligibility",
+      500,
+    ).send(c);
+  }
+};
+
 
 
