@@ -1,3 +1,9 @@
+import type { z } from "@hono/zod-openapi";
+import type { RejectVendorApplicationSchema } from "../validators/admin-vendor.validator.js";
+
+export type RejectVendorApplicationInput =
+  z.infer<typeof RejectVendorApplicationSchema>;
+
 export type PendingVendorApplicationResponse = {
   id: string;
   userId: string;
@@ -97,3 +103,4 @@ export type VendorReviewResponse = {
   verifiedAt: Date | null;
   rejectionReason: string | null;
 };
+

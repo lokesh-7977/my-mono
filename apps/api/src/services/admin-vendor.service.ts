@@ -2,6 +2,7 @@ import { logger } from "../utils/logger.js";
 import * as AdminVendorRepository from "../repositories/admin-vendor.repository.js";
 import type {
   PendingVendorApplicationResponse,
+  RejectVendorApplicationInput,
   VendorApplicationDetailsResponse,
   VendorReviewResponse,
 } from "../types/index.js";
@@ -90,3 +91,55 @@ export const approveVendorApplicationService = async (
 
   return result;
 };
+
+export const rejectVendorApplicationService = async (
+  userId: string,
+  data: RejectVendorApplicationInput,
+): Promise<VendorReviewResponse> => {
+  const application =
+    await AdminVendorRepository.getVendorApplicationByUserId(userId);
+
+  if (!application) {
+    logger.warn(
+      { userId },
+      "Vendor application rejection failed: vendor application not found",
+    );
+
+    throw new CustomError(
+      "Vendor application not found",
+      404,
+    );
+  }
+
+  if (application.verificationStatus !== "PENDING") {
+    logger.warn(
+      {
+        userId,
+        verificationStatus: application.verificationStatus,
+      },
+      "Vendor application rejection failed: application is not pending",
+    );
+
+    throw new CustomError(
+      "Only pending vendor applications can be rejected",
+      400,
+    );
+  }
+
+  const result =
+    await AdminVendorRepository.rejectVendorApplication(
+      userId,
+      data,
+    );
+
+  logger.info(
+    {
+      userId,
+      vendorProfileId: result.id,
+    },
+    "Vendor application rejected successfully",
+  );
+
+  return result;
+};
+

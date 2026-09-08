@@ -1,6 +1,7 @@
 import { prisma } from "../utils/prisma.js";
 import type {
   PendingVendorApplicationResponse,
+  RejectVendorApplicationInput,
   VendorApplicationDetailsResponse,
   VendorReviewResponse,
 } from "../types/index.js";
@@ -128,3 +129,27 @@ export const approveVendorApplication = async (
     return vendorProfile;
   });
 };
+
+export const rejectVendorApplication = async (
+  userId: string,
+  data: RejectVendorApplicationInput,
+): Promise<VendorReviewResponse> => {
+  return prisma.vendorProfile.update({
+    where: {
+      userId,
+    },
+    data: {
+      verificationStatus: "REJECTED",
+      rejectionReason: data.rejectionReason,
+      verifiedAt: null,
+    },
+    select: {
+      id: true,
+      userId: true,
+      verificationStatus: true,
+      verifiedAt: true,
+      rejectionReason: true,
+    },
+  });
+};
+

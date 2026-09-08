@@ -115,3 +115,48 @@ export const approveVendorApplication = async (
     ).send(c);
   }
 };
+
+export const rejectVendorApplication = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const userId = c.req.param("userId") as string;
+    const body = c.req.valid("json" as never);
+
+    const result =
+      await AdminVendorService.rejectVendorApplicationService(
+        userId,
+        body,
+      );
+
+    logger.info(
+      { userId },
+      "Vendor application rejected successfully",
+    );
+
+    return ApiResponse.success(
+      "Vendor application rejected successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to reject vendor application",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to reject vendor application",
+      500,
+    ).send(c);
+  }
+};
+
+

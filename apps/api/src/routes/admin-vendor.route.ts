@@ -3,8 +3,10 @@ import {
   getPendingVendorApplications,
   getVendorApplicationByUserId,
   approveVendorApplication,
+  rejectVendorApplication,
 } from "../controllers/admin-vendor.controller.js";
 import { authMiddleware, requireRole } from "../middlewares/auth.middleware.js";
+import { RejectVendorApplicationSchema } from "../validators/admin-vendor.validator.js";
 
 export const adminVendorRoutes = new OpenAPIHono();
 
@@ -218,3 +220,89 @@ adminVendorRoutes.openapi(
   }),
   approveVendorApplication as any,
 );
+
+adminVendorRoutes.openapi(
+  createRoute({
+    method: "patch",
+    path: "/vendors/{userId}/reject",
+    tags: ["Admin Vendor Review"],
+    summary: "Reject vendor application",
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+    request: {
+      params: z.object({
+        userId: z.string().openapi({
+          param: {
+            name: "userId",
+            in: "path",
+          },
+          example: "01a07f29-3ff9-716d-9c6e-52bb006b78d4",
+        }),
+      }),
+      body: {
+        content: {
+          "application/json": {
+            schema: RejectVendorApplicationSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description: "Vendor application rejected successfully",
+      },
+      400: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Vendor application is not pending or request validation failed",
+      },
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+      403: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Forbidden - Insufficient permissions",
+      },
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Vendor application not found",
+      },
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Failed to reject vendor application",
+      },
+    },
+    middleware: [authMiddleware, requireRole("ADMIN")],
+  }),
+  rejectVendorApplication as any,
+);
+
