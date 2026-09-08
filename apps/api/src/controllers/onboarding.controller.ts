@@ -5,6 +5,7 @@ import type {
   UpdateVendorEligibilityInput,
   UpdateVendorExpertiseInput,
   CreateUserExperienceInput,
+  CreateUserCertificationInput,
 } from "../types/index.js";
 import * as OnboardingService from "../services/onboarding.service.js";
 import ApiResponse from "../utils/api-response.js";
@@ -206,6 +207,51 @@ export const createUserExperience = async (
 
     return ApiResponse.error(
       "Failed to add experience",
+      500,
+    ).send(c);
+  }
+};
+
+export const createUserCertification = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const userId = c.get("userId") as string;
+
+    const body =
+      await c.req.json<CreateUserCertificationInput>();
+
+    const result =
+      await OnboardingService.createUserCertificationService(
+        userId,
+        body,
+      );
+
+    logger.info(
+      { userId },
+      "Certification added successfully",
+    );
+
+    return ApiResponse.success(
+      "Certification added successfully",
+      result,
+      201,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to add certification",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to add certification",
       500,
     ).send(c);
   }

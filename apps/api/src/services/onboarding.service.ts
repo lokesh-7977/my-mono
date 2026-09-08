@@ -11,6 +11,8 @@ import type {
   VendorExpertiseResponse,
   CreateUserExperienceInput,
   UserExperienceResponse,
+  CreateUserCertificationInput,
+  UserCertificationResponse,
 } from "../types/index.js";
 import { CustomError } from "../utils/custom-error.js";
 
@@ -169,6 +171,36 @@ export const createUserExperienceService = async (
   );
 
   return experience;
+};
+
+export const createUserCertificationService = async (
+  userId: string,
+  data: CreateUserCertificationInput,
+): Promise<UserCertificationResponse> => {
+  const existingProfile =
+    await OnboardingRepository.findVendorProfileByUserId(userId);
+
+  if (!existingProfile) {
+    logger.warn(
+      { userId },
+      "Vendor certification creation failed: vendor profile not found",
+    );
+
+    throw new CustomError("Vendor profile not found", 404);
+  }
+
+  const certification =
+    await OnboardingRepository.createUserCertification(
+      userId,
+      data,
+    );
+
+  logger.info(
+    { userId, certificationId: certification.id },
+    "Vendor certification created successfully",
+  );
+
+  return certification;
 };
 
 

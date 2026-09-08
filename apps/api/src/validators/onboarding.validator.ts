@@ -124,6 +124,32 @@ export const CreateUserExperienceSchema = z.object({
     }),
 });
 
+export const CreateUserCertificationSchema = z.object({
+  title: z.string().min(1).openapi({
+    example: "Basic Mountaineering Certificate",
+  }),
+
+  issuingOrganization: z.string().min(1).openapi({
+    example: "Nehru Institute of Mountaineering",
+  }),
+
+  certificateNumber: z.string().optional().openapi({
+    example: "NIM-BMC-2025-001",
+  }),
+
+  certificateUrl: z.string().url().openapi({
+    example: "https://example.com/certificate.pdf",
+  }),
+
+  issuedAt: z.string().datetime().optional().openapi({
+    example: "2025-01-01T00:00:00.000Z",
+  }),
+
+  expiresAt: z.string().datetime().optional().openapi({
+    example: "2030-01-01T00:00:00.000Z",
+  }),
+});
+
 
 
 

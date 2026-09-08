@@ -5,6 +5,7 @@ import type {
   UpdateVendorEligibilitySchema,
   UpdateVendorExpertiseSchema,
   CreateUserExperienceSchema,
+  CreateUserCertificationSchema,
 } from "../validators/onboarding.validator.js";
 
 export type UpdateOnboardingProfileInput =
@@ -89,6 +90,24 @@ export type UserExperienceResponse = {
   userId: string;
   description: string;
   imageUrls: string[];
+  verificationStatus:
+    | "PENDING"
+    | "APPROVED"
+    | "REJECTED";
+};
+
+export type CreateUserCertificationInput =
+  z.infer<typeof CreateUserCertificationSchema>;
+
+export type UserCertificationResponse = {
+  id: string;
+  userId: string;
+  title: string;
+  issuingOrganization: string;
+  certificateNumber: string | null;
+  certificateUrl: string;
+  issuedAt: Date | null;
+  expiresAt: Date | null;
   verificationStatus:
     | "PENDING"
     | "APPROVED"

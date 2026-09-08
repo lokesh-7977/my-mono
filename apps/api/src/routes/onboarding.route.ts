@@ -5,6 +5,7 @@ import {
   UpdateVendorEligibilitySchema,
   UpdateVendorExpertiseSchema,
   CreateUserExperienceSchema,
+  CreateUserCertificationSchema,
 } from "../validators/onboarding.validator.js";
 import {
   updateOnboardingProfile,
@@ -12,6 +13,7 @@ import {
   updateVendorEligibility,
   updateVendorExpertise,
   createUserExperience,
+  createUserCertification,
 } from "../controllers/onboarding.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -365,6 +367,73 @@ onboardingRoutes.openapi(
     middleware: [authMiddleware],
   }),
   createUserExperience as any,
+);
+
+onboardingRoutes.openapi(
+  createRoute({
+    method: "post",
+    path: "/certifications",
+    tags: ["Onboarding"],
+    summary: "Add vendor certification",
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: CreateUserCertificationSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      201: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description: "Certification added successfully",
+      },
+      400: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Invalid request body",
+      },
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Vendor profile not found",
+      },
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Failed to add certification",
+      },
+    },
+    middleware: [authMiddleware],
+  }),
+  createUserCertification as any,
 );
 
 

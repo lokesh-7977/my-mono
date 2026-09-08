@@ -11,6 +11,8 @@ import type {
   VendorExpertiseResponse,
   CreateUserExperienceInput,
   UserExperienceResponse,
+  CreateUserCertificationInput,
+  UserCertificationResponse,
 } from "../types/index.js";
 
 export const updateOnboardingProfile = async (
@@ -129,6 +131,39 @@ export const createUserExperience = async (
       userId: true,
       description: true,
       imageUrls: true,
+      verificationStatus: true,
+    },
+  });
+};
+
+export const createUserCertification = async (
+  userId: string,
+  data: CreateUserCertificationInput,
+): Promise<UserCertificationResponse> => {
+  return prisma.userCertification.create({
+    data: {
+      id: uuidv7(),
+      userId,
+      title: data.title,
+      issuingOrganization: data.issuingOrganization,
+      certificateNumber: data.certificateNumber,
+      certificateUrl: data.certificateUrl,
+      issuedAt: data.issuedAt
+        ? new Date(data.issuedAt)
+        : null,
+      expiresAt: data.expiresAt
+        ? new Date(data.expiresAt)
+        : null,
+    },
+    select: {
+      id: true,
+      userId: true,
+      title: true,
+      issuingOrganization: true,
+      certificateNumber: true,
+      certificateUrl: true,
+      issuedAt: true,
+      expiresAt: true,
       verificationStatus: true,
     },
   });
