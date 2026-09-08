@@ -2,6 +2,7 @@ import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 
 import { authRoutes } from "./routes/auth.route.js";
+import { onboardingRoutes } from "./routes/onboarding.route.js";
 
 const app = new OpenAPIHono();
 
@@ -37,6 +38,8 @@ app.get(
 
 // Routes
 app.route("/api/auth", authRoutes);
+app.route("/api/onboarding", onboardingRoutes);
+
 
 // Basic route
 app.get("/", (c) => {
