@@ -41,3 +41,19 @@ export const UpdateOnboardingProfileSchema = z.object({
     example: "https://example.com/profile.jpg",
   }),
 });
+
+export const CreateVendorProfileSchema = z.object({
+  vendorType: z
+    .enum([
+      "TREK_LEADER",
+      "LOCAL_TRAIL_GUIDE",
+      "MOUNTAINEER",
+      "EXPERIENCE_ORGANIZER",
+      "ACTIVITY_HOST",
+      "CAMP_OPERATOR",
+    ])
+    .openapi({
+      example: "TREK_LEADER",
+    }),
+});
+

@@ -3,6 +3,8 @@ import * as OnboardingRepository from "../repositories/onboarding.repository.js"
 import type {
   UpdateOnboardingProfileInput,
   OnboardingProfileResponse,
+  CreateVendorProfileInput,
+  VendorProfileResponse,
 } from "../types/index.js";
 import { CustomError } from "../utils/custom-error.js";
 
@@ -40,4 +42,37 @@ export const updateOnboardingProfileService = async (
 
   return updatedUser;
 };
+
+export const createVendorProfileService = async (
+  userId: string,
+  data: CreateVendorProfileInput,
+): Promise<VendorProfileResponse> => {
+  const existingProfile =
+    await OnboardingRepository.findVendorProfileByUserId(userId);
+
+  if (existingProfile) {
+    logger.warn(
+      { userId },
+      "Vendor profile creation failed: vendor profile already exists",
+    );
+
+    throw new CustomError(
+      "Vendor profile already exists",
+      409,
+    );
+  }
+
+  const profile = await OnboardingRepository.createVendorProfile(
+    userId,
+    data,
+  );
+
+  logger.info(
+    { userId, vendorProfileId: profile.id },
+    "Vendor profile created successfully",
+  );
+
+  return profile;
+};
+
 

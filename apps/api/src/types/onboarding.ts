@@ -1,5 +1,8 @@
 import type { z } from "@hono/zod-openapi";
-import type { UpdateOnboardingProfileSchema } from "../validators/onboarding.validator.js";
+import type {
+  UpdateOnboardingProfileSchema,
+  CreateVendorProfileSchema,
+} from "../validators/onboarding.validator.js";
 
 export type UpdateOnboardingProfileInput =
   z.infer<typeof UpdateOnboardingProfileSchema>;
@@ -28,3 +31,25 @@ export type UpdateUserProfileData = {
   languages: string[];
   avatarUrl?: string;
 };
+
+export type CreateVendorProfileInput =
+  z.infer<typeof CreateVendorProfileSchema>;
+
+export type VendorProfileResponse = {
+  id: string;
+  userId: string;
+  vendorType:
+    | "TREK_LEADER"
+    | "LOCAL_TRAIL_GUIDE"
+    | "MOUNTAINEER"
+    | "EXPERIENCE_ORGANIZER"
+    | "ACTIVITY_HOST"
+    | "CAMP_OPERATOR"
+    | null;
+  verificationStatus:
+    | "DRAFT"
+    | "PENDING"
+    | "APPROVED"
+    | "REJECTED";
+};
+

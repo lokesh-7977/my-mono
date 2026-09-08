@@ -1,6 +1,12 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { UpdateOnboardingProfileSchema } from "../validators/onboarding.validator.js";
-import { updateOnboardingProfile } from "../controllers/onboarding.controller.js";
+import {
+  UpdateOnboardingProfileSchema,
+  CreateVendorProfileSchema,
+} from "../validators/onboarding.validator.js";
+import {
+  updateOnboardingProfile,
+  createVendorProfile,
+} from "../controllers/onboarding.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 export const onboardingRoutes = new OpenAPIHono();
@@ -86,3 +92,71 @@ onboardingRoutes.openapi(
   }),
   updateOnboardingProfile as any,
 );
+
+onboardingRoutes.openapi(
+  createRoute({
+    method: "post",
+    path: "/vendor-profile",
+    tags: ["Onboarding"],
+    summary: "Create vendor profile",
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: CreateVendorProfileSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      201: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description: "Vendor profile created successfully",
+      },
+      400: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Invalid request body",
+      },
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+      409: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Vendor profile already exists",
+      },
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Failed to create vendor profile",
+      },
+    },
+    middleware: [authMiddleware],
+  }),
+  createVendorProfile as any,
+);
+

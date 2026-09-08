@@ -1,7 +1,10 @@
 import { prisma } from "../utils/prisma.js";
+import { uuidv7 } from "uuidv7";
 import type {
   UpdateUserProfileData,
   OnboardingProfileResponse,
+  CreateVendorProfileInput,
+  VendorProfileResponse,
 } from "../types/index.js";
 
 export const updateOnboardingProfile = async (
@@ -35,4 +38,32 @@ export const findUserById = async (userId: string) => {
     },
   });
 };
+
+export const createVendorProfile = async (
+  userId: string,
+  data: CreateVendorProfileInput,
+): Promise<VendorProfileResponse> => {
+  return prisma.vendorProfile.create({
+    data: {
+      id: uuidv7(),
+      userId,
+      vendorType: data.vendorType,
+    },
+    select: {
+      id: true,
+      userId: true,
+      vendorType: true,
+      verificationStatus: true,
+    },
+  });
+};
+
+export const findVendorProfileByUserId = async (userId: string) => {
+  return prisma.vendorProfile.findUnique({
+    where: {
+      userId,
+    },
+  });
+};
+
 
