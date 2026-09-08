@@ -257,6 +257,47 @@ export const createUserCertification = async (
   }
 };
 
+export const submitVendorProfile = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const userId = c.get("userId") as string;
+
+    const result =
+      await OnboardingService.submitVendorProfileService(
+        userId,
+      );
+
+    logger.info(
+      { userId },
+      "Vendor profile submitted successfully",
+    );
+
+    return ApiResponse.success(
+      "Vendor profile submitted successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to submit vendor profile",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to submit vendor profile",
+      500,
+    ).send(c);
+  }
+};
+
 
 
 

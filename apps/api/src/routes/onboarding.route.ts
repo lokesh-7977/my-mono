@@ -14,6 +14,7 @@ import {
   updateVendorExpertise,
   createUserExperience,
   createUserCertification,
+  submitVendorProfile,
 } from "../controllers/onboarding.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -434,6 +435,65 @@ onboardingRoutes.openapi(
     middleware: [authMiddleware],
   }),
   createUserCertification as any,
+);
+
+onboardingRoutes.openapi(
+  createRoute({
+    method: "post",
+    path: "/submit",
+    tags: ["Onboarding"],
+    summary: "Submit vendor profile for admin review",
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description: "Vendor profile submitted successfully",
+      },
+      400: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Vendor profile already submitted or approved",
+      },
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Vendor profile not found",
+      },
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Failed to submit vendor profile",
+      },
+    },
+    middleware: [authMiddleware],
+  }),
+  submitVendorProfile as any,
 );
 
 

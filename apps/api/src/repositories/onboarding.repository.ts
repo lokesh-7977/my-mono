@@ -13,6 +13,7 @@ import type {
   UserExperienceResponse,
   CreateUserCertificationInput,
   UserCertificationResponse,
+  VendorSubmitResponse,
 } from "../types/index.js";
 
 export const updateOnboardingProfile = async (
@@ -165,6 +166,26 @@ export const createUserCertification = async (
       issuedAt: true,
       expiresAt: true,
       verificationStatus: true,
+    },
+  });
+};
+
+export const submitVendorProfile = async (
+  userId: string,
+): Promise<VendorSubmitResponse> => {
+  return prisma.vendorProfile.update({
+    where: {
+      userId,
+    },
+    data: {
+      verificationStatus: "PENDING",
+      submittedAt: new Date(),
+    },
+    select: {
+      id: true,
+      userId: true,
+      verificationStatus: true,
+      submittedAt: true,
     },
   });
 };

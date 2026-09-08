@@ -13,6 +13,7 @@ import type {
   UserExperienceResponse,
   CreateUserCertificationInput,
   UserCertificationResponse,
+  VendorSubmitResponse,
 } from "../types/index.js";
 import { CustomError } from "../utils/custom-error.js";
 
@@ -201,6 +202,55 @@ export const createUserCertificationService = async (
   );
 
   return certification;
+};
+
+export const submitVendorProfileService = async (
+  userId: string,
+): Promise<VendorSubmitResponse> => {
+  const vendorProfile =
+    await OnboardingRepository.findVendorProfileByUserId(userId);
+
+  if (!vendorProfile) {
+    logger.warn(
+      { userId },
+      "Vendor profile submission failed: vendor profile not found",
+    );
+
+    throw new CustomError("Vendor profile not found", 404);
+  }
+
+  if (vendorProfile.verificationStatus === "PENDING") {
+    logger.warn(
+      { userId },
+      "Vendor profile submission failed: vendor profile already submitted",
+    );
+
+    throw new CustomError(
+      "Vendor profile already submitted",
+      400,
+    );
+  }
+
+  if (vendorProfile.verificationStatus === "APPROVED") {
+    logger.warn(
+      { userId },
+      "Vendor profile submission failed: vendor profile already approved",
+    );
+
+    throw new CustomError(
+      "Vendor profile already approved",
+      400,
+    );
+  }
+
+  const result = await OnboardingRepository.submitVendorProfile(userId);
+
+  logger.info(
+    { userId, vendorProfileId: result.id },
+    "Vendor profile submitted successfully",
+  );
+
+  return result;
 };
 
 

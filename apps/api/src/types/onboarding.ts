@@ -114,6 +114,17 @@ export type UserCertificationResponse = {
     | "REJECTED";
 };
 
+export type VendorSubmitResponse = {
+  id: string;
+  userId: string;
+  verificationStatus:
+    | "DRAFT"
+    | "PENDING"
+    | "APPROVED"
+    | "REJECTED";
+  submittedAt: Date | null;
+};
+
 
 
 
