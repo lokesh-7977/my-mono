@@ -3,6 +3,7 @@ import type {
   UpdateOnboardingProfileInput,
   CreateVendorProfileInput,
   UpdateVendorEligibilityInput,
+  UpdateVendorExpertiseInput,
 } from "../types/index.js";
 import * as OnboardingService from "../services/onboarding.service.js";
 import ApiResponse from "../utils/api-response.js";
@@ -128,6 +129,47 @@ export const updateVendorEligibility = async (
     ).send(c);
   }
 };
+
+export const updateVendorExpertise = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const userId = c.get("userId") as string;
+
+    const body = await c.req.json<UpdateVendorExpertiseInput>();
+
+    const result = await OnboardingService.updateVendorExpertiseService(
+      userId,
+      body,
+    );
+
+    logger.info(
+      { userId },
+      "Vendor expertise updated successfully",
+    );
+
+    return ApiResponse.success(
+      "Vendor expertise updated successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error({ error }, "Failed to update vendor expertise");
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to update vendor expertise",
+      500,
+    ).send(c);
+  }
+};
+
 
 
 

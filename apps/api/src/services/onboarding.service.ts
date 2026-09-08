@@ -7,6 +7,8 @@ import type {
   VendorProfileResponse,
   UpdateVendorEligibilityInput,
   VendorEligibilityResponse,
+  UpdateVendorExpertiseInput,
+  VendorExpertiseResponse,
 } from "../types/index.js";
 import { CustomError } from "../utils/custom-error.js";
 
@@ -105,6 +107,39 @@ export const updateVendorEligibilityService = async (
 
   return updatedProfile;
 };
+
+export const updateVendorExpertiseService = async (
+  userId: string,
+  data: UpdateVendorExpertiseInput,
+): Promise<VendorExpertiseResponse> => {
+  const existingProfile =
+    await OnboardingRepository.findVendorProfileByUserId(userId);
+
+  if (!existingProfile) {
+    logger.warn(
+      { userId },
+      "Vendor expertise update failed: vendor profile not found",
+    );
+
+    throw new CustomError(
+      "Vendor profile not found",
+      404,
+    );
+  }
+
+  const updatedProfile = await OnboardingRepository.updateVendorExpertise(
+    userId,
+    data,
+  );
+
+  logger.info(
+    { userId, vendorProfileId: updatedProfile.id },
+    "Vendor expertise updated successfully",
+  );
+
+  return updatedProfile;
+};
+
 
 
 

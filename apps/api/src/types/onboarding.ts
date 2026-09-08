@@ -3,6 +3,7 @@ import type {
   UpdateOnboardingProfileSchema,
   CreateVendorProfileSchema,
   UpdateVendorEligibilitySchema,
+  UpdateVendorExpertiseSchema,
 } from "../validators/onboarding.validator.js";
 
 export type UpdateOnboardingProfileInput =
@@ -67,5 +68,17 @@ export type VendorEligibilityResponse = {
   agreesToInsuranceTerms: boolean;
   agreesToSafetyStandards: boolean;
 };
+
+export type UpdateVendorExpertiseInput =
+  z.infer<typeof UpdateVendorExpertiseSchema>;
+
+export type VendorExpertiseResponse = {
+  id: string;
+  userId: string;
+  experienceYears: number | null;
+  treksLed: number | null;
+  regionsWorkedIn: string[];
+};
+
 
 

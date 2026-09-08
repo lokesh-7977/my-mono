@@ -7,6 +7,8 @@ import type {
   VendorProfileResponse,
   UpdateVendorEligibilityInput,
   VendorEligibilityResponse,
+  UpdateVendorExpertiseInput,
+  VendorExpertiseResponse,
 } from "../types/index.js";
 
 export const updateOnboardingProfile = async (
@@ -89,6 +91,26 @@ export const updateVendorEligibility = async (
     },
   });
 };
+
+export const updateVendorExpertise = async (
+  userId: string,
+  data: UpdateVendorExpertiseInput,
+): Promise<VendorExpertiseResponse> => {
+  return prisma.vendorProfile.update({
+    where: {
+      userId,
+    },
+    data,
+    select: {
+      id: true,
+      userId: true,
+      experienceYears: true,
+      treksLed: true,
+      regionsWorkedIn: true,
+    },
+  });
+};
+
 
 
 

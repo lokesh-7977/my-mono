@@ -3,11 +3,13 @@ import {
   UpdateOnboardingProfileSchema,
   CreateVendorProfileSchema,
   UpdateVendorEligibilitySchema,
+  UpdateVendorExpertiseSchema,
 } from "../validators/onboarding.validator.js";
 import {
   updateOnboardingProfile,
   createVendorProfile,
   updateVendorEligibility,
+  updateVendorExpertise,
 } from "../controllers/onboarding.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -228,5 +230,73 @@ onboardingRoutes.openapi(
   }),
   updateVendorEligibility as any,
 );
+
+onboardingRoutes.openapi(
+  createRoute({
+    method: "patch",
+    path: "/vendor-profile/expertise",
+    tags: ["Onboarding"],
+    summary: "Update vendor expertise",
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: UpdateVendorExpertiseSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description: "Vendor expertise updated successfully",
+      },
+      400: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Invalid request body",
+      },
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Vendor profile not found",
+      },
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Failed to update vendor expertise",
+      },
+    },
+    middleware: [authMiddleware],
+  }),
+  updateVendorExpertise as any,
+);
+
 
 

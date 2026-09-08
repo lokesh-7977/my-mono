@@ -78,4 +78,34 @@ export const UpdateVendorEligibilitySchema = z.object({
   }),
 });
 
+export const UpdateVendorExpertiseSchema = z.object({
+  experienceYears: z
+    .number()
+    .int()
+    .min(0)
+    .openapi({
+      example: 5,
+    }),
+
+  treksLed: z
+    .number()
+    .int()
+    .min(0)
+    .openapi({
+      example: 20,
+    }),
+
+  regionsWorkedIn: z
+    .array(z.string())
+    .min(1)
+    .openapi({
+      example: [
+        "Uttarakhand",
+        "Himachal Pradesh",
+        "Kashmir",
+      ],
+    }),
+});
+
+
 
