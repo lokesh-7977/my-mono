@@ -4,6 +4,7 @@ import type {
   CreateVendorProfileInput,
   UpdateVendorEligibilityInput,
   UpdateVendorExpertiseInput,
+  CreateUserExperienceInput,
 } from "../types/index.js";
 import * as OnboardingService from "../services/onboarding.service.js";
 import ApiResponse from "../utils/api-response.js";
@@ -165,6 +166,46 @@ export const updateVendorExpertise = async (
 
     return ApiResponse.error(
       "Failed to update vendor expertise",
+      500,
+    ).send(c);
+  }
+};
+
+export const createUserExperience = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const userId = c.get("userId") as string;
+
+    const body = await c.req.json<CreateUserExperienceInput>();
+
+    const result = await OnboardingService.createUserExperienceService(
+      userId,
+      body,
+    );
+
+    logger.info(
+      { userId },
+      "Experience added successfully",
+    );
+
+    return ApiResponse.success(
+      "Experience added successfully",
+      result,
+      201,
+    ).send(c);
+  } catch (error) {
+    logger.error({ error }, "Failed to add experience");
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to add experience",
       500,
     ).send(c);
   }

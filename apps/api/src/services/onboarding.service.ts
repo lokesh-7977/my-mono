@@ -9,6 +9,8 @@ import type {
   VendorEligibilityResponse,
   UpdateVendorExpertiseInput,
   VendorExpertiseResponse,
+  CreateUserExperienceInput,
+  UserExperienceResponse,
 } from "../types/index.js";
 import { CustomError } from "../utils/custom-error.js";
 
@@ -139,6 +141,36 @@ export const updateVendorExpertiseService = async (
 
   return updatedProfile;
 };
+
+export const createUserExperienceService = async (
+  userId: string,
+  data: CreateUserExperienceInput,
+): Promise<UserExperienceResponse> => {
+  const existingProfile =
+    await OnboardingRepository.findVendorProfileByUserId(userId);
+
+  if (!existingProfile) {
+    logger.warn(
+      { userId },
+      "User experience creation failed: vendor profile not found",
+    );
+
+    throw new CustomError("Vendor profile not found", 404);
+  }
+
+  const experience = await OnboardingRepository.createUserExperience(
+    userId,
+    data,
+  );
+
+  logger.info(
+    { userId, experienceId: experience.id },
+    "User experience created successfully",
+  );
+
+  return experience;
+};
+
 
 
 

@@ -9,6 +9,8 @@ import type {
   VendorEligibilityResponse,
   UpdateVendorExpertiseInput,
   VendorExpertiseResponse,
+  CreateUserExperienceInput,
+  UserExperienceResponse,
 } from "../types/index.js";
 
 export const updateOnboardingProfile = async (
@@ -110,6 +112,28 @@ export const updateVendorExpertise = async (
     },
   });
 };
+
+export const createUserExperience = async (
+  userId: string,
+  data: CreateUserExperienceInput,
+): Promise<UserExperienceResponse> => {
+  return prisma.userExperience.create({
+    data: {
+      id: uuidv7(),
+      userId,
+      description: data.description,
+      imageUrls: data.imageUrls,
+    },
+    select: {
+      id: true,
+      userId: true,
+      description: true,
+      imageUrls: true,
+      verificationStatus: true,
+    },
+  });
+};
+
 
 
 

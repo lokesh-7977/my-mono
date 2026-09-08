@@ -107,5 +107,23 @@ export const UpdateVendorExpertiseSchema = z.object({
     }),
 });
 
+export const CreateUserExperienceSchema = z.object({
+  description: z.string().min(1).openapi({
+    example:
+      "Led Hampta Pass trek with a group of 20 trekkers.",
+  }),
+
+  imageUrls: z
+    .array(z.string().url())
+    .min(1)
+    .openapi({
+      example: [
+        "https://example.com/experience1.jpg",
+        "https://example.com/experience2.jpg",
+      ],
+    }),
+});
+
+
 
 

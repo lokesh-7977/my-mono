@@ -4,6 +4,7 @@ import type {
   CreateVendorProfileSchema,
   UpdateVendorEligibilitySchema,
   UpdateVendorExpertiseSchema,
+  CreateUserExperienceSchema,
 } from "../validators/onboarding.validator.js";
 
 export type UpdateOnboardingProfileInput =
@@ -79,6 +80,21 @@ export type VendorExpertiseResponse = {
   treksLed: number | null;
   regionsWorkedIn: string[];
 };
+
+export type CreateUserExperienceInput =
+  z.infer<typeof CreateUserExperienceSchema>;
+
+export type UserExperienceResponse = {
+  id: string;
+  userId: string;
+  description: string;
+  imageUrls: string[];
+  verificationStatus:
+    | "PENDING"
+    | "APPROVED"
+    | "REJECTED";
+};
+
 
 
 
