@@ -85,3 +85,15 @@ export type VendorApplicationDetailsResponse = {
     }[];
   };
 };
+
+export type VendorReviewResponse = {
+  id: string;
+  userId: string;
+  verificationStatus:
+    | "DRAFT"
+    | "PENDING"
+    | "APPROVED"
+    | "REJECTED";
+  verifiedAt: Date | null;
+  rejectionReason: string | null;
+};

@@ -3,6 +3,7 @@ import * as AdminVendorRepository from "../repositories/admin-vendor.repository.
 import type {
   PendingVendorApplicationResponse,
   VendorApplicationDetailsResponse,
+  VendorReviewResponse,
 } from "../types/index.js";
 import { CustomError } from "../utils/custom-error.js";
 
@@ -41,4 +42,51 @@ export const getVendorApplicationByUserIdService = async (
   );
 
   return application;
+};
+
+export const approveVendorApplicationService = async (
+  userId: string,
+): Promise<VendorReviewResponse> => {
+  const application =
+    await AdminVendorRepository.getVendorApplicationByUserId(userId);
+
+  if (!application) {
+    logger.warn(
+      { userId },
+      "Vendor application approval failed: vendor application not found",
+    );
+
+    throw new CustomError(
+      "Vendor application not found",
+      404,
+    );
+  }
+
+  if (application.verificationStatus !== "PENDING") {
+    logger.warn(
+      {
+        userId,
+        verificationStatus: application.verificationStatus,
+      },
+      "Vendor application approval failed: application is not pending",
+    );
+
+    throw new CustomError(
+      "Only pending vendor applications can be approved",
+      400,
+    );
+  }
+
+  const result =
+    await AdminVendorRepository.approveVendorApplication(userId);
+
+  logger.info(
+    {
+      userId,
+      vendorProfileId: result.id,
+    },
+    "Vendor application approved successfully",
+  );
+
+  return result;
 };

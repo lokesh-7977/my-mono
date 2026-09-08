@@ -76,3 +76,42 @@ export const getVendorApplicationByUserId = async (
     ).send(c);
   }
 };
+
+export const approveVendorApplication = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const userId = c.req.param("userId") as string;
+
+    const result =
+      await AdminVendorService.approveVendorApplicationService(userId);
+
+    logger.info(
+      { userId },
+      "Vendor application approved successfully",
+    );
+
+    return ApiResponse.success(
+      "Vendor application approved successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to approve vendor application",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to approve vendor application",
+      500,
+    ).send(c);
+  }
+};
