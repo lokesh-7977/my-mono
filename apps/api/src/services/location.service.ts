@@ -1,7 +1,7 @@
-import { searchLocations , findLocationByIdRepo } from "../repositories/location.repository.js";
+import { searchLocations , findLocationByIdRepo , getLocationChildren} from "../repositories/location.repository.js";
 import type { Location } from "@mono/database";
 import { CustomError } from "../utils/custom-error.js";
-import type { LocationByIdResponse, LocationHierarchyItem } from "../types/location.js";
+import type { LocationByIdResponse, LocationHierarchyItem , LocationChildResponse} from "../types/location.js";
 
 
 
@@ -65,4 +65,25 @@ export const getLocationByIdService = async (
 
     breadcrumb,
   };
+};
+
+export const getLocationChildrenService = async (
+  locationId: string,
+): Promise<LocationChildResponse[]> => {
+  const location =
+    await findLocationByIdRepo(locationId);
+
+  if (!location) {
+    throw new CustomError(
+      "Location not found",
+      404,
+    );
+  }
+
+  const children =
+    await getLocationChildren(
+      locationId,
+    );
+
+  return children;
 };

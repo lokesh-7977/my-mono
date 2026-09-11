@@ -16,3 +16,13 @@ export type LocationByIdResponse = {
 
   breadcrumb: LocationHierarchyItem[];
 };
+
+
+export type LocationChildResponse = {
+  id: string;
+  name: string;
+  type: LocationType;
+  sourceCode: string;
+  localBodyType: string | null;
+  parentId: string | null;
+};

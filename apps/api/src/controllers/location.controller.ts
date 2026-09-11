@@ -112,3 +112,43 @@ export const getLocationById = async (
     ).send(c);
   }
 };
+
+
+export const getLocationChildren = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const locationId =
+      c.req.param("id");
+
+      if(!locationId){
+          return ApiResponse.error(
+        "Refresh token missing",
+        401,
+      ).send(c);
+      }
+
+    const result =
+      await LocationService.getLocationChildrenService(
+        locationId,
+      );
+
+    return ApiResponse.success(
+      "Location children fetched successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to fetch location children",
+      500,
+    ).send(c);
+  }
+};

@@ -4,7 +4,7 @@ import {
   z,
 } from "@hono/zod-openapi";
 
-import { getLocationById, searchLocations } from "../controllers/location.controller.js";
+import { getLocationById, getLocationChildren, searchLocations } from "../controllers/location.controller.js";
 import { LocationIdParamSchema, SearchLocationQuerySchema } from "../validators/location.validator.js";
 
 export const LocationRoutes =
@@ -136,3 +136,53 @@ LocationRoutes.openapi(
   getLocationById as any,
 );
 
+LocationRoutes.openapi(
+  createRoute({
+    method: "get",
+
+    path: "/{id}/children",
+
+    tags: ["Location"],
+
+    summary:
+      "Get direct child locations",
+
+    request: {
+      params: LocationIdParamSchema,
+    },
+
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description:
+          "Location children fetched successfully",
+      },
+
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Location not found",
+      },
+
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Failed to fetch location children",
+      },
+    },
+  }),
+
+  getLocationChildren as any,
+);
