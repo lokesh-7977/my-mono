@@ -19,3 +19,13 @@ export const SearchLocationQuerySchema = z.object({
       description: "Maximum number of location results to return",
     }),
 });
+
+
+export const LocationIdParamSchema = z.object({
+  id: z
+    .string()
+    .min(1)
+    .openapi({
+      example: "ULB:252220",
+    }),
+});

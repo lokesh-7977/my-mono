@@ -18,3 +18,13 @@ export const searchLocations = async (
   });
 };
 
+
+export const findLocationByIdRepo = async (
+  locationId: string,
+) => {
+  return prisma.location.findUnique({
+    where: {
+      id: locationId,
+    },
+  });
+};

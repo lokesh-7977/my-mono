@@ -58,3 +58,57 @@ export const searchLocations = async (
     ).send(c);
   }
 };
+
+
+
+export const getLocationById = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const locationId = c.req.param("id");
+
+    if (!locationId) {
+      logger.warn(
+        "Location fetch attempted without location id",
+      );
+
+      return ApiResponse.error(
+        "Location id is required",
+        400,
+      ).send(c);
+    }
+
+    const result =
+      await LocationService.getLocationByIdService(
+        locationId,
+      );
+
+    logger.info(
+      { locationId },
+      "Location fetched successfully",
+    );
+
+    return ApiResponse.success(
+      "Location fetched successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to fetch location",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to fetch location",
+      500,
+    ).send(c);
+  }
+};

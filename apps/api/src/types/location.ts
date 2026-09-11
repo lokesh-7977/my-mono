@@ -1,4 +1,18 @@
-import { type Location } from "@mono/database";
+import { LocationType } from "@mono/database";
 
+export type LocationHierarchyItem = {
+  id: string;
+  name: string;
+  type: LocationType;
+};
 
-export type LocationByIdResponse = Location | null;
+export type LocationByIdResponse = {
+  id: string;
+  name: string;
+  type: LocationType;
+  sourceCode: string;
+  localBodyType: string | null;
+  parentId: string | null;
+
+  breadcrumb: LocationHierarchyItem[];
+};

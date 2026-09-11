@@ -4,8 +4,8 @@ import {
   z,
 } from "@hono/zod-openapi";
 
-import { searchLocations } from "../controllers/location.controller.js";
-import { SearchLocationQuerySchema } from "../validators/location.validator.js";
+import { getLocationById, searchLocations } from "../controllers/location.controller.js";
+import { LocationIdParamSchema, SearchLocationQuerySchema } from "../validators/location.validator.js";
 
 export const LocationRoutes =
   new OpenAPIHono();
@@ -83,3 +83,56 @@ LocationRoutes.openapi(
 
   searchLocations as any,
 );
+
+
+LocationRoutes.openapi(
+  createRoute({
+    method: "get",
+
+    path: "/{id}",
+
+    tags: ["Location"],
+
+    summary:
+      "Get location by id with hierarchy",
+
+    request: {
+      params: LocationIdParamSchema,
+    },
+
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description:
+          "Location fetched successfully",
+      },
+
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Location not found",
+      },
+
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Failed to fetch location",
+      },
+    },
+  }),
+
+  getLocationById as any,
+);
+
