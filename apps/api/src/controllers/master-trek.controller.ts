@@ -409,5 +409,59 @@ export const getAllMasterTreksUser = async (
 };
 
 
+export const getMasterTrekByIdUser = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const trekId = c.req.param("id");
+
+    if (!trekId) {
+      logger.warn(
+        "User master trek fetch attempted without trek id",
+      );
+
+      return ApiResponse.error(
+        "Trek ID is required",
+        400,
+      ).send(c);
+    }
+
+    const result =
+      await MasterTrekService.getMasterTrekByIdUserService(
+        trekId,
+      );
+
+    logger.info(
+      { trekId },
+      "Master trek fetched successfully for user",
+    );
+
+    return ApiResponse.success(
+      "Trek fetched successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to fetch master trek for user",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to fetch trek",
+      500,
+    ).send(c);
+  }
+};
+
+
+
 
 

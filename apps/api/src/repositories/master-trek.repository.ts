@@ -382,5 +382,62 @@ export const getAllMasterTreksUser = async (
   });
 };
 
+export const getMasterTrekByIdUser = async (
+  trekId: string,
+) => {
+  return prisma.masterTrek.findUnique({
+    where: {
+      id: trekId,
+    },
+
+    include: {
+      location: true,
+      activities: true,
+
+      routes: {
+        include: {
+          itineraryDays: {
+            include: {
+              activities: true,
+            },
+          },
+        },
+      },
+
+      nearbyPlaces: {
+        include: {
+          nearbyPlace: {
+            include: {
+              location: true,
+            },
+          },
+        },
+      },
+
+      packages: {
+        where: {
+          visibility: "PUBLIC",
+          status: "PUBLISHED",
+        },
+        include: {
+          schedules: {
+            where: {
+              status: "OPEN",
+              availableSeats: {
+                gt: 0,
+              },
+            },
+            select: {
+              price: true,
+              currency: true,
+            },
+          },
+        },
+      },
+    },
+  });
+};
+
+
 
 

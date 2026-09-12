@@ -112,5 +112,35 @@ export type GetAllMasterTreksUserResponse = {
   hasNextPage: boolean;
 };
 
+export type MasterTrekUserResponse =
+  Prisma.MasterTrekGetPayload<{
+    include: {
+      location: true;
+      activities: true;
+      routes: {
+        include: {
+          itineraryDays: {
+            include: {
+              activities: true;
+            };
+          };
+        };
+      };
+      nearbyPlaces: {
+        include: {
+          nearbyPlace: {
+            include: {
+              location: true;
+            };
+          };
+        };
+      };
+    };
+  }> & {
+    startingPrice: number | null;
+    currency: string | null;
+  };
+
+
 
 

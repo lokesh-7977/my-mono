@@ -18,9 +18,10 @@ import {
     getAllMasterTreksVendor,
     getMasterTrekByIdVendor,
     getAllMasterTreksUser,
+    getMasterTrekByIdUser,
 } from "../repositories/master-trek.repository.js";
 
-import type {CreateMasterTrekRequest, GetAllMasterTreksResponse, GetAllMasterTreksUserResponse, GetAllMasterTreksVendorResponse, MasterTrekByIdResponse, MasterTrekUserListItemResponse, MasterTrekVendorResponse, UpdateMasterTrekRequest} from "../types/index.js";
+import type {CreateMasterTrekRequest, GetAllMasterTreksResponse, GetAllMasterTreksUserResponse, GetAllMasterTreksVendorResponse, MasterTrekByIdResponse, MasterTrekUserListItemResponse, MasterTrekUserResponse, MasterTrekVendorResponse, UpdateMasterTrekRequest} from "../types/index.js";
 import {CustomError} from "../utils/custom-error.js";
 import type { MasterTrek } from "@mono/database";
 import {  uuidv7 } from "uuidv7";
@@ -680,6 +681,41 @@ export const getAllMasterTreksUserService = async (
     hasNextPage,
   };
 };
+
+
+export const getMasterTrekByIdUserService = async (
+  trekId: string,
+): Promise<MasterTrekUserResponse> => {
+  const trek = await getMasterTrekByIdUser(trekId);
+
+  if (!trek) {
+    throw new CustomError(
+      "Trek not found",
+      404,
+    );
+  }
+
+  let startingPrice: number | null = null;
+  let currency: string | null = null;
+
+  for (const pkg of trek.packages) {
+    for (const schedule of pkg.schedules) {
+      if (startingPrice === null || schedule.price < startingPrice) {
+        startingPrice = schedule.price;
+        currency = schedule.currency;
+      }
+    }
+  }
+
+  const { packages, ...rest } = trek;
+
+  return {
+    ...rest,
+    startingPrice,
+    currency,
+  };
+};
+
 
 
 
