@@ -1,9 +1,9 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 
-import { CreateMasterTrekSchema } from "../validators/master-trek.validator.js";
+import { CreateMasterTrekSchema, UpdateMasterTrekSchema } from "../validators/master-trek.validator.js";
 
 
-import { createMasterTrek } from "../controllers/master-trek.controller.js";
+import { createMasterTrek, updateMasterTrek } from "../controllers/master-trek.controller.js";
 
 import {authMiddleware,requireRole} from "../middlewares/auth.middleware.js"
 
@@ -108,4 +108,101 @@ MasterTrekRoutes.openapi(
   }),
 
   createMasterTrek as any,
+);
+
+
+MasterTrekRoutes.openapi(
+  createRoute({
+    method: "patch",
+    path: "/{id}",
+
+    tags: ["Trek"],
+
+    summary: "Update master trek",
+
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+
+    request: {
+      params: z.object({
+        id: z.string().min(1).openapi({
+          example: "019abc123",
+        }),
+      }),
+
+      body: {
+        content: {
+          "application/json": {
+            schema: UpdateMasterTrekSchema,
+          },
+        },
+      },
+    },
+
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description: "Trek updated successfully",
+      },
+
+      400: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Invalid request",
+      },
+
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+
+      403: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Forbidden - Admin only",
+      },
+
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Trek not found",
+      },
+
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Failed to update trek",
+      },
+    },
+
+    middleware: [
+      authMiddleware,
+      requireRole("ADMIN"),
+    ],
+  }),
+
+  updateMasterTrek as any,
 );

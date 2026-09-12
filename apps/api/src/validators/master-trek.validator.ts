@@ -380,3 +380,8 @@ export const CreateMasterTrekSchema = z.object({
       ],
     }),
 });
+
+
+
+export const UpdateMasterTrekSchema =
+  CreateMasterTrekSchema.partial();

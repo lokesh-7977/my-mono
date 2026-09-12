@@ -103,3 +103,99 @@ export const findLocationById = async (
     },
   });
 };
+
+export const deleteRoutesByTrekId = async (
+  trekId: string,
+) => {
+  return prisma.trekRoute.deleteMany({
+    where: {
+      masterTrekId: trekId,
+    },
+  });
+};
+
+export const updateMasterTrekRepo = async (
+  trekId: string,
+  data: any,
+) => {
+  return prisma.masterTrek.update({
+    where: {
+      id: trekId,
+    },
+    data,
+  });
+};
+
+export const findNearbyLinks = async (
+  trekId: string,
+) => {
+  return prisma.trekNearbyPlace.findMany({
+    where: {
+      trekId,
+    },
+  });
+};
+
+
+export const deleteNearbyLinks = async (
+  trekId: string,
+) => {
+  return prisma.trekNearbyPlace.deleteMany({
+    where: {
+      trekId,
+    },
+  });
+};
+
+export const deleteNearbyPlacesByIds = async (
+  ids: string[],
+) => {
+  if (!ids.length) return;
+
+  return prisma.nearbyPlace.deleteMany({
+    where: {
+      id: {
+        in: ids,
+      },
+    },
+  });
+};
+
+
+
+export const getCompleteMasterTrek = async (
+  trekId: string,
+) => {
+  return prisma.masterTrek.findUnique({
+    where: {
+      id: trekId,
+    },
+
+    include: {
+      location : true,
+      createdBy: true,
+      activities: true,
+
+      routes: {
+        include: {
+          itineraryDays: {
+            include: {
+              activities: true,
+            },
+          },
+        },
+      },
+
+      nearbyPlaces: {
+        include: {
+          nearbyPlace: {
+            include :{
+              location: true,
+            }
+          }
+        },
+      },
+       packages: true,
+    },
+  });
+};

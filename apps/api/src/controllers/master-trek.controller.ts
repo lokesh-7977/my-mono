@@ -3,7 +3,7 @@ import ApiResponse from "../utils/api-response.js";
 import { CustomError } from "../utils/custom-error.js";
 import * as MasterTrekService from "../services/master-trek.service.js"
 import { logger } from "../utils/logger.js";
-import type { CreateMasterTrekRequest } from "../types/index.js";
+import type { CreateMasterTrekRequest, UpdateMasterTrekRequest } from "../types/index.js";
 
 
 export const createMasterTrek = async (
@@ -47,4 +47,61 @@ export const createMasterTrek = async (
             500,
         ).send(c);
     }
+};
+
+
+export const updateMasterTrek = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const trekId = c.req.param("id");
+
+    if (!trekId) {
+      logger.warn(
+        "Master trek update attempted without trek id",
+      );
+
+      return ApiResponse.error(
+        "Trek ID is required",
+        400,
+      ).send(c);
+    }
+
+    const body =
+      await c.req.json<UpdateMasterTrekRequest>();
+
+    const result =
+      await MasterTrekService.updateMasterTrekService(
+        trekId,
+        body,
+      );
+
+    logger.info(
+      { trekId },
+      "Master trek updated successfully",
+    );
+
+    return ApiResponse.success(
+      "Trek updated successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to update master trek",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to update trek",
+      500,
+    ).send(c);
+  }
 };
