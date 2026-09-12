@@ -199,3 +199,43 @@ export const getCompleteMasterTrek = async (
     },
   });
 };
+
+
+export const getMasterTrekByIdAdmin = async (
+  trekId: string,
+) => {
+  return prisma.masterTrek.findUnique({
+    where: {
+      id: trekId,
+    },
+
+    include: {
+      location:true,
+      createdBy: true,
+      activities: true,
+
+      routes: {
+        include: {
+          itineraryDays: {
+            include: {
+              activities: true,
+            },
+          },
+        },
+      },
+
+      nearbyPlaces: {
+        include: {
+          nearbyPlace:{
+            include:{
+              location:true,
+            }
+          }
+
+        },
+      },
+
+      packages: true,
+    },
+  });
+};

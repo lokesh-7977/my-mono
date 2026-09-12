@@ -12,6 +12,7 @@ import {
     deleteNearbyPlacesByIds,
     getCompleteMasterTrek,
     findMasterTrekById,
+    getMasterTrekByIdAdmin,
 } from "../repositories/master-trek.repository.js";
 
 import type {CreateMasterTrekRequest, MasterTrekByIdResponse, UpdateMasterTrekRequest} from "../types/index.js";
@@ -506,4 +507,21 @@ export const updateMasterTrekService = async (
       500,
     );
   }
+};
+
+
+export const getMasterTrekByIdAdminService = async (
+  trekId: string,
+): Promise<MasterTrekByIdResponse | null> => {
+  const trek =
+    await getMasterTrekByIdAdmin(trekId);
+
+  if (!trek) {
+    throw new CustomError(
+      "Trek not found",
+      404,
+    );
+  }
+
+  return trek;
 };
