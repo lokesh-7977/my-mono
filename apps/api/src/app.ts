@@ -3,6 +3,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 
 import { authRoutes } from "./routes/auth.route.js";
 import { LocationRoutes } from "./routes/location.route.js";
+import { MasterTrekRoutes } from "./routes/master-trek.route.js";
 
 const app = new OpenAPIHono();
 
@@ -39,6 +40,8 @@ app.get(
 // Routes
 app.route("/api/auth", authRoutes);
 app.route("/api/location", LocationRoutes);
+app.route("/api/master-trek", MasterTrekRoutes);
+
 
 // Basic route
 app.get("/", (c) => {
