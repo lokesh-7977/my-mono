@@ -3,7 +3,7 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { CreateMasterTrekSchema, UpdateMasterTrekSchema } from "../validators/master-trek.validator.js";
 
 
-import { createMasterTrek, deleteMasterTrek, getAllMasterTreksAdmin, getMasterTrekByIdAdmin, updateMasterTrek } from "../controllers/master-trek.controller.js";
+import { createMasterTrek, deleteMasterTrek, getAllMasterTreksAdmin, getAllMasterTreksVendor, getMasterTrekByIdAdmin, updateMasterTrek } from "../controllers/master-trek.controller.js";
 
 import {authMiddleware,requireRole} from "../middlewares/auth.middleware.js"
 
@@ -207,67 +207,7 @@ MasterTrekRoutes.openapi(
   updateMasterTrek as any,
 );
 
-MasterTrekRoutes.openapi(
-  createRoute({
-    method: "get",
-    path: "/{id}",
 
-    tags: ["Trek"],
-    summary: "Get master trek for Admin by id",
-
-    security: [
-      {
-        bearerAuth: [],
-      },
-    ],
-
-    request: {
-      params: z.object({
-        id: z.string().min(1).openapi({
-          example:
-            "01a06b03-00bf-790e-937b-32ec6617b322",
-        }),
-      }),
-    },
-
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: SuccessSchema,
-          },
-        },
-        description:
-          "Trek fetched successfully",
-      },
-
-      404: {
-        content: {
-          "application/json": {
-            schema: ErrorSchema,
-          },
-        },
-        description: "Trek not found",
-      },
-
-      500: {
-        content: {
-          "application/json": {
-            schema: ErrorSchema,
-          },
-        },
-        description: "Failed to fetch trek",
-      },
-    },
-
-    middleware: [
-      authMiddleware,
-      requireRole("ADMIN"),
-    ],
-  }),
-
-  getMasterTrekByIdAdmin as any,
-);
 
 
 
@@ -441,3 +381,154 @@ MasterTrekRoutes.openapi(
   getAllMasterTreksAdmin as any,
 );
 
+
+MasterTrekRoutes.openapi(
+  createRoute({
+    method: "get",
+    path: "/vendor",
+
+    tags: ["Trek"],
+    summary:
+      "Get all master treks for vendor",
+
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+
+    request: {
+      query: z.object({
+        cursor: z
+          .string()
+          .optional()
+          .openapi({
+            example:
+              "01a06b03-00bf-790e-937b-32ec6617b322",
+          }),
+
+        limit: z.coerce
+          .number()
+          .int()
+          .min(1)
+          .max(50)
+          .default(10)
+          .openapi({
+            example: 10,
+          }),
+      }),
+    },
+
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description:
+          "Treks fetched successfully",
+      },
+
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+
+      403: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Vendor access required",
+      },
+
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Failed to fetch treks",
+      },
+    },
+
+    middleware: [
+      authMiddleware,
+      requireRole("VENDOR"),
+    ],
+  }),
+
+  getAllMasterTreksVendor as any,
+);
+
+
+
+MasterTrekRoutes.openapi(
+  createRoute({
+    method: "get",
+    path: "/{id}",
+
+    tags: ["Trek"],
+    summary: "Get master trek for Admin by id",
+
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+
+    request: {
+      params: z.object({
+        id: z.string().min(1).openapi({
+          example:
+            "01a06b03-00bf-790e-937b-32ec6617b322",
+        }),
+      }),
+    },
+
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description:
+          "Trek fetched successfully",
+      },
+
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Trek not found",
+      },
+
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Failed to fetch trek",
+      },
+    },
+
+    middleware: [
+      authMiddleware,
+      requireRole("ADMIN"),
+    ],
+  }),
+
+  getMasterTrekByIdAdmin as any,
+);

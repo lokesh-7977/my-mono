@@ -1,5 +1,5 @@
 import {prisma} from "../utils/prisma.js";
-import type { MasterTrekListItemResponse } from "../types/index.js";
+import type { MasterTrekListItemResponse, MasterTrekVendorListItemResponse } from "../types/index.js";
 
 export const findMasterTrekById = async (trekId: string) => {
     console.log("trekId :",trekId );
@@ -274,4 +274,29 @@ export const getAllMasterTreksAdmin = async (
       createdAt: "desc",
     },
   });
-};
+};
+
+export const getAllMasterTreksVendor = async (
+  limit: number,
+  cursor?: string,
+): Promise<MasterTrekVendorListItemResponse[]> => {
+  return prisma.masterTrek.findMany({
+    take: limit + 1,
+
+    ...(cursor && {
+      cursor: {
+        id: cursor,
+      },
+      skip: 1,
+    }),
+
+    include: {
+      location: true,
+    },
+
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};
+

@@ -54,4 +54,18 @@ export type GetAllMasterTreksResponse = {
   treks: MasterTrekListItemResponse[];
   nextCursor: string | null;
   hasNextPage: boolean;
-};
+};
+
+export type MasterTrekVendorListItemResponse =
+  Prisma.MasterTrekGetPayload<{
+    include: {
+      location: true;
+    };
+  }>;
+
+export type GetAllMasterTreksVendorResponse = {
+  treks: MasterTrekVendorListItemResponse[];
+  nextCursor: string | null;
+  hasNextPage: boolean;
+};
+
