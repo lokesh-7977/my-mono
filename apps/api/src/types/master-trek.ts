@@ -68,4 +68,32 @@ export type GetAllMasterTreksVendorResponse = {
   nextCursor: string | null;
   hasNextPage: boolean;
 };
+
+export type MasterTrekVendorResponse =
+  Prisma.MasterTrekGetPayload<{
+    include: {
+      location: true;
+      createdBy: true;
+      activities: true;
+      routes: {
+        include: {
+          itineraryDays: {
+            include: {
+              activities: true;
+            };
+          };
+        };
+      };
+      nearbyPlaces: {
+        include: {
+          nearbyPlace: {
+            include: {
+              location: true;
+            };
+          };
+        };
+      };
+    };
+  }>;
+
 

@@ -3,7 +3,7 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { CreateMasterTrekSchema, UpdateMasterTrekSchema } from "../validators/master-trek.validator.js";
 
 
-import { createMasterTrek, deleteMasterTrek, getAllMasterTreksAdmin, getAllMasterTreksVendor, getMasterTrekByIdAdmin, updateMasterTrek } from "../controllers/master-trek.controller.js";
+import { createMasterTrek, deleteMasterTrek, getAllMasterTreksAdmin, getAllMasterTreksVendor, getMasterTrekByIdAdmin, getMasterTrekByIdVendor, updateMasterTrek } from "../controllers/master-trek.controller.js";
 
 import {authMiddleware,requireRole} from "../middlewares/auth.middleware.js"
 
@@ -472,6 +472,81 @@ MasterTrekRoutes.openapi(
 
 
 MasterTrekRoutes.openapi(
+  createRoute({
+    method: "get",
+    path: "/vendor/{id}",
+
+    tags: ["Trek"],
+    summary: "Get master trek for vendor",
+
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+
+    request: {
+      params: z.object({
+        id: z.string().min(1).openapi({
+          example:
+            "01a06b03-00bf-790e-937b-32ec6617b322",
+        }),
+      }),
+    },
+
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description:
+          "Trek fetched successfully",
+      },
+
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Trek not found",
+      },
+
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Failed to fetch trek",
+      },
+    },
+
+    middleware: [
+      authMiddleware,
+      requireRole("VENDOR"),
+    ],
+  }),
+
+  getMasterTrekByIdVendor as any,
+);
+
+
+
+MasterTrekRoutes.openapi(
+
   createRoute({
     method: "get",
     path: "/{id}",

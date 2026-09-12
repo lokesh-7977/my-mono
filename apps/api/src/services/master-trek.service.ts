@@ -16,9 +16,10 @@ import {
     deleteMasterTrekById,
     getAllMasterTreksAdmin,
     getAllMasterTreksVendor,
+    getMasterTrekByIdVendor,
 } from "../repositories/master-trek.repository.js";
 
-import type {CreateMasterTrekRequest, GetAllMasterTreksResponse, GetAllMasterTreksVendorResponse, MasterTrekByIdResponse, UpdateMasterTrekRequest} from "../types/index.js";
+import type {CreateMasterTrekRequest, GetAllMasterTreksResponse, GetAllMasterTreksVendorResponse, MasterTrekByIdResponse, MasterTrekVendorResponse, UpdateMasterTrekRequest} from "../types/index.js";
 import {CustomError} from "../utils/custom-error.js";
 import type { MasterTrek } from "@mono/database";
 import {  uuidv7 } from "uuidv7";
@@ -609,4 +610,22 @@ export const getAllMasterTreksVendorService = async (
     hasNextPage,
   };
 };
+
+
+export const getMasterTrekByIdVendorService = async (
+  trekId: string,
+): Promise<MasterTrekVendorResponse> => {
+  const trek =
+    await getMasterTrekByIdVendor(trekId);
+
+  if (!trek) {
+    throw new CustomError(
+      "Trek not found",
+      404,
+    );
+  }
+
+  return trek;
+};
+
 

@@ -306,4 +306,59 @@ export const getAllMasterTreksVendor = async (
     ).send(c);
   }
 };
+
+
+export const getMasterTrekByIdVendor = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const trekId = c.req.param("id");
+
+    if (!trekId) {
+      logger.warn(
+        "Vendor master trek fetch attempted without trek id",
+      );
+
+      return ApiResponse.error(
+        "Trek ID is required",
+        400,
+      ).send(c);
+    }
+
+    const result =
+      await MasterTrekService.getMasterTrekByIdVendorService(
+        trekId,
+      );
+
+    logger.info(
+      { trekId },
+      "Master trek fetched successfully for vendor",
+    );
+
+    return ApiResponse.success(
+      "Trek fetched successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to fetch master trek for vendor",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to fetch trek",
+      500,
+    ).send(c);
+  }
+};
+
+
 
