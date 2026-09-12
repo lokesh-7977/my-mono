@@ -42,3 +42,16 @@ export type MasterTrekByIdResponse =
   Prisma.MasterTrekGetPayload<{
     include: typeof masterTrekAdminInclude;
   }>;
+
+export type MasterTrekListItemResponse =
+  Prisma.MasterTrekGetPayload<{
+    include: {
+      location: true;
+    };
+  }>;
+
+export type GetAllMasterTreksResponse = {
+  treks: MasterTrekListItemResponse[];
+  nextCursor: string | null;
+  hasNextPage: boolean;
+};

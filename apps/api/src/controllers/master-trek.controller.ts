@@ -210,3 +210,51 @@ export const deleteMasterTrek = async (
     ).send(c);
   }
 };
+
+
+export const getAllMasterTreksAdmin = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const cursor =
+      c.req.query("cursor");
+
+    const limit = Number(
+      c.req.query("limit") ?? 10,
+    );
+
+    const result =
+      await MasterTrekService.getAllMasterTreksAdminService(
+        limit,
+        cursor,
+      );
+
+    logger.info(
+      { limit, cursor },
+      "Master treks fetched successfully for admin",
+    );
+
+    return ApiResponse.success(
+      "Treks fetched successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to fetch master treks for admin",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to fetch treks",
+      500,
+    ).send(c);
+  }
+};

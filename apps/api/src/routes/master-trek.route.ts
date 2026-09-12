@@ -3,7 +3,7 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { CreateMasterTrekSchema, UpdateMasterTrekSchema } from "../validators/master-trek.validator.js";
 
 
-import { createMasterTrek, deleteMasterTrek, getMasterTrekByIdAdmin, updateMasterTrek } from "../controllers/master-trek.controller.js";
+import { createMasterTrek, deleteMasterTrek, getAllMasterTreksAdmin, getMasterTrekByIdAdmin, updateMasterTrek } from "../controllers/master-trek.controller.js";
 
 import {authMiddleware,requireRole} from "../middlewares/auth.middleware.js"
 
@@ -352,3 +352,92 @@ MasterTrekRoutes.openapi(
 
   deleteMasterTrek as any,
 );
+
+
+MasterTrekRoutes.openapi(
+  createRoute({
+    method: "get",
+    path: "/",
+
+    tags: ["Trek"],
+    summary:
+      "Get all master treks for Admin",
+
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+
+    request: {
+      query: z.object({
+        cursor: z
+          .string()
+          .optional()
+          .openapi({
+            example:
+              "01a06b03-00bf-790e-937b-32ec6617b322",
+          }),
+
+        limit: z.coerce
+          .number()
+          .int()
+          .min(1)
+          .max(50)
+          .default(10)
+          .openapi({
+            example: 10,
+          }),
+      }),
+    },
+
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description:
+          "Treks fetched successfully",
+      },
+
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+
+      403: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Forbidden - Admin only",
+      },
+
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Failed to fetch treks",
+      },
+    },
+
+    middleware: [
+      authMiddleware,
+      requireRole("ADMIN"),
+    ],
+  }),
+
+  getAllMasterTreksAdmin as any,
+);
+

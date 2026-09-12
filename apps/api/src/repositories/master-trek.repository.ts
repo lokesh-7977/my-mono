@@ -1,4 +1,5 @@
 import {prisma} from "../utils/prisma.js";
+import type { MasterTrekListItemResponse } from "../types/index.js";
 
 export const findMasterTrekById = async (trekId: string) => {
     console.log("trekId :",trekId );
@@ -250,3 +251,27 @@ export const deleteMasterTrekById= async (
     },
   });
 };
+
+export const getAllMasterTreksAdmin = async (
+  limit: number,
+  cursor?: string,
+): Promise<MasterTrekListItemResponse[]> => {
+  return prisma.masterTrek.findMany({
+    take: limit + 1,
+
+    ...(cursor && {
+      cursor: {
+        id: cursor,
+      },
+      skip: 1,
+    }),
+
+    include: {
+      location: true,
+    },
+
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};
