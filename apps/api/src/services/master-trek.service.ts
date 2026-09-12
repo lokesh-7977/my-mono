@@ -13,6 +13,7 @@ import {
     getCompleteMasterTrek,
     findMasterTrekById,
     getMasterTrekByIdAdmin,
+    deleteMasterTrekById,
 } from "../repositories/master-trek.repository.js";
 
 import type {CreateMasterTrekRequest, MasterTrekByIdResponse, UpdateMasterTrekRequest} from "../types/index.js";
@@ -524,4 +525,25 @@ export const getMasterTrekByIdAdminService = async (
   }
 
   return trek;
+};
+
+
+export const deleteMasterTrekService = async (
+  trekId: string,
+) => {
+  const existing =
+    await findMasterTrekById(trekId);
+
+  if (!existing) {
+    throw new CustomError(
+      "Trek not found",
+      404,
+    );
+  }
+
+  await deleteMasterTrekById(trekId);
+
+  return {
+    id: trekId,
+  };
 };

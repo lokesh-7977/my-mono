@@ -157,3 +157,56 @@ export const getMasterTrekByIdAdmin = async (
     ).send(c);
   }
 };
+
+
+export const deleteMasterTrek = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const trekId = c.req.param("id");
+
+    if (!trekId) {
+      logger.warn(
+        "Master trek delete attempted without trek id",
+      );
+
+      return ApiResponse.error(
+        "Trek ID is required",
+        400,
+      ).send(c);
+    }
+
+    const result =
+      await MasterTrekService.deleteMasterTrekService(
+        trekId,
+      );
+
+    logger.info(
+      { trekId },
+      "Master trek deleted successfully",
+    );
+
+    return ApiResponse.success(
+      "Trek deleted successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to delete master trek",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to delete trek",
+      500,
+    ).send(c);
+  }
+};

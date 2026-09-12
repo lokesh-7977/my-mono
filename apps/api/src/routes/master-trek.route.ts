@@ -3,7 +3,7 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { CreateMasterTrekSchema, UpdateMasterTrekSchema } from "../validators/master-trek.validator.js";
 
 
-import { createMasterTrek, getMasterTrekByIdAdmin, updateMasterTrek } from "../controllers/master-trek.controller.js";
+import { createMasterTrek, deleteMasterTrek, getMasterTrekByIdAdmin, updateMasterTrek } from "../controllers/master-trek.controller.js";
 
 import {authMiddleware,requireRole} from "../middlewares/auth.middleware.js"
 
@@ -267,4 +267,88 @@ MasterTrekRoutes.openapi(
   }),
 
   getMasterTrekByIdAdmin as any,
+);
+
+
+
+MasterTrekRoutes.openapi(
+  createRoute({
+    method: "delete",
+    path: "/{id}",
+
+    tags: ["Trek"],
+    summary: "Delete master trek",
+
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+
+    request: {
+      params: z.object({
+        id: z.string().min(1).openapi({
+          example:
+            "01a06b03-00bf-790e-937b-32ec6617b322",
+        }),
+      }),
+    },
+
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description:
+          "Trek deleted successfully",
+      },
+
+      401: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Unauthorized",
+      },
+
+      403: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Forbidden - Admin only",
+      },
+
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Trek not found",
+      },
+
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Failed to delete trek",
+      },
+    },
+
+    middleware: [
+      authMiddleware,
+      requireRole("ADMIN"),
+    ],
+  }),
+
+  deleteMasterTrek as any,
 );

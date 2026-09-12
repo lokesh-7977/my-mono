@@ -239,3 +239,14 @@ export const getMasterTrekByIdAdmin = async (
     },
   });
 };
+
+
+export const deleteMasterTrekById= async (
+  trekId: string,
+) => {
+  return prisma.masterTrek.delete({
+    where: {
+      id: trekId,
+    },
+  });
+};
