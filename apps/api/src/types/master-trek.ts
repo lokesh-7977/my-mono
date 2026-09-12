@@ -96,4 +96,21 @@ export type MasterTrekVendorResponse =
     };
   }>;
 
+export type MasterTrekUserListItemResponse =
+  Prisma.MasterTrekGetPayload<{
+    include: {
+      location: true;
+    };
+  }> & {
+    startingPrice: number | null;
+    currency: string | null;
+  };
+
+export type GetAllMasterTreksUserResponse = {
+  treks: MasterTrekUserListItemResponse[];
+  nextCursor: string | null;
+  hasNextPage: boolean;
+};
+
+
 

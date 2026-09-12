@@ -338,4 +338,49 @@ export const getMasterTrekByIdVendor = async (
   });
 };
 
+export const getAllMasterTreksUser = async (
+  limit: number,
+  cursor?: string,
+) => {
+  return prisma.masterTrek.findMany({
+    take: limit + 1,
+
+    ...(cursor && {
+      cursor: {
+        id: cursor,
+      },
+      skip: 1,
+    }),
+
+    include: {
+      location: true,
+      packages: {
+        where: {
+          visibility: "PUBLIC",
+          status: "PUBLISHED",
+        },
+        include: {
+          schedules: {
+            where: {
+              status: "OPEN",
+              availableSeats: {
+                gt: 0,
+              },
+            },
+            select: {
+              price: true,
+              currency: true,
+            },
+          },
+        },
+      },
+    },
+
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};
+
+
 

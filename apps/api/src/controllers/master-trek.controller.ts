@@ -361,4 +361,53 @@ export const getMasterTrekByIdVendor = async (
 };
 
 
+export const getAllMasterTreksUser = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const cursor =
+      c.req.query("cursor");
+
+    const limit = Number(
+      c.req.query("limit") ?? 10,
+    );
+
+    const result =
+      await MasterTrekService.getAllMasterTreksUserService(
+        limit,
+        cursor,
+      );
+
+    logger.info(
+      { limit, cursor },
+      "Master treks fetched successfully for user",
+    );
+
+    return ApiResponse.success(
+      "Treks fetched successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to fetch master treks for user",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to fetch treks",
+      500,
+    ).send(c);
+  }
+};
+
+
+
 

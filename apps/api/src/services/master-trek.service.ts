@@ -17,9 +17,10 @@ import {
     getAllMasterTreksAdmin,
     getAllMasterTreksVendor,
     getMasterTrekByIdVendor,
+    getAllMasterTreksUser,
 } from "../repositories/master-trek.repository.js";
 
-import type {CreateMasterTrekRequest, GetAllMasterTreksResponse, GetAllMasterTreksVendorResponse, MasterTrekByIdResponse, MasterTrekVendorResponse, UpdateMasterTrekRequest} from "../types/index.js";
+import type {CreateMasterTrekRequest, GetAllMasterTreksResponse, GetAllMasterTreksUserResponse, GetAllMasterTreksVendorResponse, MasterTrekByIdResponse, MasterTrekUserListItemResponse, MasterTrekVendorResponse, UpdateMasterTrekRequest} from "../types/index.js";
 import {CustomError} from "../utils/custom-error.js";
 import type { MasterTrek } from "@mono/database";
 import {  uuidv7 } from "uuidv7";
@@ -627,5 +628,58 @@ export const getMasterTrekByIdVendorService = async (
 
   return trek;
 };
+
+
+export const getAllMasterTreksUserService = async (
+  limit: number,
+  cursor?: string,
+): Promise<GetAllMasterTreksUserResponse> => {
+  const treks =
+    await getAllMasterTreksUser(
+      limit,
+      cursor,
+    );
+
+  const hasNextPage =
+    treks.length > limit;
+
+  const data = hasNextPage
+    ? treks.slice(0, limit)
+    : treks;
+
+  const nextCursor =
+    hasNextPage && data.length > 0
+      ? data[data.length - 1].id
+      : null;
+
+  const formattedTreks: MasterTrekUserListItemResponse[] = data.map((trek) => {
+    let startingPrice: number | null = null;
+    let currency: string | null = null;
+
+    for (const pkg of trek.packages) {
+      for (const schedule of pkg.schedules) {
+        if (startingPrice === null || schedule.price < startingPrice) {
+          startingPrice = schedule.price;
+          currency = schedule.currency;
+        }
+      }
+    }
+
+    const { packages, ...rest } = trek;
+
+    return {
+      ...rest,
+      startingPrice,
+      currency,
+    };
+  });
+
+  return {
+    treks: formattedTreks,
+    nextCursor,
+    hasNextPage,
+  };
+};
+
 
 
