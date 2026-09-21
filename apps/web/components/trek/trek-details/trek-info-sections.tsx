@@ -1,8 +1,8 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { cn } from "@repo/ui/lib/utils";
+import { Button } from "@repo/ui/components/button";
 
 interface InfoCardProps {
   heading: string;

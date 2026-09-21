@@ -1,5 +1,5 @@
 "use client"
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { Circle, Info, LockKeyhole, MapPin, Search } from "lucide-react";
 import { TrekItems } from "./trek-select-step";
 

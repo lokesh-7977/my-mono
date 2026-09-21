@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";

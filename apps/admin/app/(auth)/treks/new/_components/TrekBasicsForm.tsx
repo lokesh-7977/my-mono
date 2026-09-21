@@ -1,8 +1,8 @@
 "use client";
 import { toast } from "sonner";
 import { Info, ArrowRight, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@repo/ui/components/button";
+import { cn } from "@repo/ui/lib/utils";
 
 import { PackageDetails } from "../page";
 import FormTextArea from "@/components/shared/form-textarea";

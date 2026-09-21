@@ -2,8 +2,8 @@
 
 import { DayPicker } from "@daypicker/react";
 import "@daypicker/react/style.css";
-import { cn } from "@/lib/utils";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { cn } from "@repo/ui/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "@repo/ui/components/popover";
 import { DateRange } from "@daypicker/react";
 
 interface DatePickerProps {

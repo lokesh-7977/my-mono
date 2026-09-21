@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode } from "react";
 import { UploadCloud, X, FileImage } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { useDragDropFileUpload, UseDragDropFileUploadProps, FileWithPreview } from "@/hooks/use-drag-drop-file-upload";
 
 export type { FileWithPreview };

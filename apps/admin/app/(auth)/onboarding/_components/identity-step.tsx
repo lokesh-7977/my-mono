@@ -2,10 +2,10 @@
 import CameraPlus from "@/components/icons/camera-plus";
 import FormInput from "@/components/shared/form-input";
 import FormSelect from "@/components/shared/form-select";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import { LockKeyhole, Plus } from "lucide-react";
 import FormTextArea from "@/components/shared/form-textarea";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@repo/ui/components/checkbox";
 import { useState } from "react";
 import FormMultiSelect from "@/components/shared/form-multi-select";
 

@@ -10,7 +10,7 @@ import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { SearchBar } from "@/components/shared/search-bar";
 
 /* ── Types ── */

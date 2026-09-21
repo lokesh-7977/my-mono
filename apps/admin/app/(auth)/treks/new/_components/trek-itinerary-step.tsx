@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import { ArrowRight, Info, Mountain, Car, Clock, Route, AlertCircle, Pencil } from "lucide-react";
 import Image from "next/image";
 

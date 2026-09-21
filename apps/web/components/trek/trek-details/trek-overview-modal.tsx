@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@repo/ui/components/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface TrekOverviewModalProps {

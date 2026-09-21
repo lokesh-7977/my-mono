@@ -106,7 +106,7 @@ const featuredTreksList = [
 
 import { useCarouselScroll } from "@/hooks/use-carousel-scroll";
 import { TrekCard } from "@/components/shared/trek-card";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import NavButton from "@/components/shared/nav-button";
 
 export function PopularPackages() {

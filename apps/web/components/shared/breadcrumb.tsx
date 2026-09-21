@@ -7,7 +7,7 @@ import {
     BreadcrumbLink,
     BreadcrumbSeparator,
     BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
+} from "@repo/ui/components/breadcrumb";
 
 export default function Breadcrumb() {
     return (

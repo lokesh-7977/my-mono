@@ -1,6 +1,6 @@
 import { DayPicker, DayButtonProps } from "@daypicker/react";
 import "@daypicker/react/style.css";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { Info, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { useSchedule, type Schedule, STATUS } from "./schedule-context";

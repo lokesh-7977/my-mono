@@ -6,9 +6,9 @@ import FormTextArea from "@/components/shared/form-textarea";
 import { RotateCcw, Trash2 } from "lucide-react";
 import DragDropFileUpload from "@/components/shared/drag-drop-file-upload";
 import FormLabel from "@/components/shared/form-label";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import TrekkerIcon from "@/components/icons/trekker-icon";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import ImagePlusIcon from "@/components/icons/image-plus-icon";
 const region = [
     { id: "1", title: "Himachal Pradesh" },

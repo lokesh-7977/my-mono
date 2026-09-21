@@ -1,7 +1,7 @@
 "use client"
 
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Dialog, DialogDescription, DialogTitle, DialogContent, DialogClose } from "../ui/dialog"
+import { Dialog, DialogDescription, DialogTitle, DialogContent, DialogClose } from "@repo/ui/components/dialog"
 import { ArrowLeft, ArrowRight, GalleryHorizontal, Grid2x2, X } from "lucide-react";
 import { motion, useAnimation } from "motion/react";
 import { useEffect, useState } from "react";

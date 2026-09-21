@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 
 export default function StickySidebar({ children, className }: { children: React.ReactNode, className?: string }) {
   return (

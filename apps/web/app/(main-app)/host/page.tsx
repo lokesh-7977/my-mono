@@ -3,7 +3,7 @@ import { Navbar } from "@/components/shared/navbar";
 import { CuratorHeader } from "@/components/host/curator-header";
 import { CertificationsSection } from "@/components/host/certifications-section";
 import { MountainPhilosophy } from "@/components/host/mountain-philosophy";
-import Divider from "@/components/ui/divider";
+import Divider from "@repo/ui/components/divider";
 import { CuratedExperiences } from "@/components/home/curated-experiences";
 import { SafetyManifesto } from "@/components/host/safety-manifesto";
 import { TrekMemories } from "@/components/host/trek-memories";

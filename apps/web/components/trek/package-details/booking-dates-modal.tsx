@@ -7,11 +7,11 @@ import {
     DialogTitle,
     DialogTrigger,
     DialogDescription
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+} from "@repo/ui/components/dialog";
+import { Button } from "@repo/ui/components/button";
 import { Check, Edit2, ArrowRight } from "lucide-react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 
 

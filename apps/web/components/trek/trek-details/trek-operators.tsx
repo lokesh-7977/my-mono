@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Star, ArrowRight, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 
 const operators = [
   {

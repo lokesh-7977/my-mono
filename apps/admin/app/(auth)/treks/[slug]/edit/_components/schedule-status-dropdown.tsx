@@ -8,7 +8,7 @@ import {
     DropdownMenuTrigger,
     DropdownMenuContent,
     DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+} from "@repo/ui/components/dropdown-menu";
 import {
     Dialog,
     DialogContent,
@@ -17,7 +17,7 @@ import {
     DialogDescription,
     DialogFooter,
     DialogClose,
-} from "@/components/ui/dialog";
+} from "@repo/ui/components/dialog";
 
 type ScheduleStatusDropdownProps = {
     status: string;

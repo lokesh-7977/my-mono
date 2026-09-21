@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { STATUS } from "./schedule-context";
 
 const statusVariants: Record<string, string> = {

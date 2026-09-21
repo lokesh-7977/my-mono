@@ -9,8 +9,8 @@ import {
   Route,
   Download,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@repo/ui/components/button";
+import { cn } from "@repo/ui/lib/utils";
 
 const itineraryDays = [
   {
@@ -87,7 +87,7 @@ export function TrekItinerary() {
       {/* Timeline Section */}
       <div className="relative flex flex-col gap-9.5 mt-10">
         {/* Continuous Vertical Line */}
-        <div className="absolute left-[3px] top-0 w-[2px] bg-zinc-100 h-full" />
+        <div className="absolute left-0.75 top-0 w-0.5 bg-zinc-100 h-full" />
 
         {itineraryDays.map((day, index) => (
           <div key={index} className="relative pl-10 flex flex-col gap-10 md:flex-row pt-4">
@@ -125,7 +125,7 @@ export function TrekItinerary() {
               </p>
             </div>
 
-            <div className="shrink-0 size-[160px] relative rounded-2xl overflow-hidden shadow-sm group cursor-pointer">
+            <div className="shrink-0 size-40 relative rounded-2xl overflow-hidden shadow-sm group cursor-pointer">
               <Image
                 src={day.image}
                 alt={day.title}

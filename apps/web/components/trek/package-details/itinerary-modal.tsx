@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import { Mountain, Car, Route, ArrowRight, Download, ArrowLeft, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import {
     Dialog,
     DialogContent,
     DialogTitle,
     DialogDescription,
-} from "@/components/ui/dialog";
+} from "@repo/ui/components/dialog";
 import { useState, Fragment } from "react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { motion, AnimatePresence } from "motion/react";

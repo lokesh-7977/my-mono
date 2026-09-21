@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import { BadgeCheck, ShieldCheck } from "lucide-react";
 import { BookingDatesModal } from "./booking-dates-modal";
 

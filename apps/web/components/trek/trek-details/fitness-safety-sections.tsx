@@ -1,7 +1,7 @@
 "use client";
 
 import { FileText, Shield, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import { PulseHeart, MedicalBriefcase } from "@/components/icons";
 export function FitnessSafetySections() {
   return (

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Navbar } from "@/components/shared/navbar";
 import Sidebar from "./_components/sidebar";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import IdentityStep from "./_components/identity-step";
 import FormFooter from "./_components/form-footer";
 import RoleStep from "./_components/role-step";

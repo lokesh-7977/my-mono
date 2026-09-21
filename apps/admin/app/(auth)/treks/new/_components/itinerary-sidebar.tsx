@@ -1,5 +1,5 @@
 import { Plus, Tent, TreePine, CheckCircle2, Trash, AlertTriangle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { format } from "date-fns";
 import { ItineraryItem, isItemValid } from "./itinerary-editor";
 

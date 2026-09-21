@@ -2,9 +2,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Pencil, Trash, Users, X } from "lucide-react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@repo/ui/lib/utils";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@repo/ui/components/sheet";
+import { Checkbox } from "@repo/ui/components/checkbox";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useMounted } from "@/hooks/use-mounted";
 import { useSchedule, type Schedule } from "./schedule-context";

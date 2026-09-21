@@ -4,7 +4,7 @@ import DragDropFileUpload from "@/components/shared/drag-drop-file-upload";
 import FormInput from "@/components/shared/form-input";
 import FormLabel from "@/components/shared/form-label";
 import FormSelect from "@/components/shared/form-select";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import { getYear } from "date-fns";
 import { Trash2, Eye, FileText, PlusCircle } from "lucide-react";
 import { useState } from "react";

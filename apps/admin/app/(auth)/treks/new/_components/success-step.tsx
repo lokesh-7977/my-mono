@@ -1,6 +1,6 @@
 import { CircleCheck, CirclePlus, Clock, LayoutPanelLeft, MapPin, Signal, SquareArrowOutUpRight } from "lucide-react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 
 export function SuccessStep() {
   return (

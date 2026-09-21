@@ -1,5 +1,5 @@
 import AwardBadge from "@/components/icons/award-badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import { Shield } from "lucide-react";
 import OnboardingStepper from "./onboarding-stepper";
 

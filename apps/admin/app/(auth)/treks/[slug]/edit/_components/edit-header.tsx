@@ -1,6 +1,6 @@
 import { Ban } from "lucide-react";
 import BulkCancelModal from "./bulk-cancel-modal";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 
 export function EditHeader() {
     return (

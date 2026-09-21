@@ -1,7 +1,7 @@
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@repo/ui/components/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { X } from "lucide-react";
 type Props = {
     children: React.ReactNode

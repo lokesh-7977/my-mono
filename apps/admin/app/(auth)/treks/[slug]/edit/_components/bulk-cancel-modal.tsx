@@ -1,6 +1,6 @@
 "use client";
 import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import {
     Dialog,
     DialogContent,
@@ -9,12 +9,12 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@repo/ui/components/dialog";
 import { useSchedule } from "./schedule-context";
 import { format } from "date-fns";
 import { getDateId } from "@/lib/dates";
 import MultiSelectFilter from "./multi-select-filter";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@repo/ui/components/checkbox";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 

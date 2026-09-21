@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Bell } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { cn } from "@repo/ui/lib/utils";
+import { Button } from "@repo/ui/components/button";
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);

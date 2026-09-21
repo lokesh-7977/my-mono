@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import TrekkerIcon from "@/components/icons/trekker-icon";
 import { Check } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 
 const roles = [
     {

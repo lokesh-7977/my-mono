@@ -10,7 +10,7 @@ import TrekHighlights from "@/components/trek/trek-details/trek-highlights";
 import { PopularPackages } from "@/components/trek/trek-details/popular-packages";
 import { TrekInfoSections } from "@/components/trek/trek-details/trek-info-sections";
 import { FitnessSafetySections } from "@/components/trek/trek-details/fitness-safety-sections";
-import Divider from "@/components/ui/divider";
+import Divider from "@repo/ui/components/divider";
 import { FaqMission } from "@/components/home/faq-mission";
 import { CuratedExperiences } from "@/components/home/curated-experiences";
 import BookingCTA from "@/components/trek/trek-details/booking-cta";

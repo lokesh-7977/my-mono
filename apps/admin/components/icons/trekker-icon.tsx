@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "@/lib/utils"
+import { cn } from "@repo/ui/lib/utils"
 
 interface TrekkerIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number | string

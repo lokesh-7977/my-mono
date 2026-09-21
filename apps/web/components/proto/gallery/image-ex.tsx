@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { useContext, useRef } from "react";
 import { GalleryDispatchContext } from "./gallery-context";
 

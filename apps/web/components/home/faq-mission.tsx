@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { Plus, Minus, MoveRight, ChevronDown, ChevronUp } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { MAIN_EMAIL } from "@/lib/constants";
-import { Button } from "../ui/button";
+import { Button } from "@repo/ui/components/button";
 
 const faqs = [
   {

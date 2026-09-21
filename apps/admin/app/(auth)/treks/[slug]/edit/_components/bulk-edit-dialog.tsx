@@ -9,7 +9,7 @@ import {
     DialogDescription,
     DialogFooter,
     DialogClose,
-} from "@/components/ui/dialog";
+} from "@repo/ui/components/dialog";
 import { type Schedule } from "./schedule-context";
 
 type BulkEditDialogProps = {

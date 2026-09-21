@@ -1,6 +1,6 @@
 "use client";
-import { cn } from "@/lib/utils";
-import { Popover, PopoverContent, PopoverAnchor, PopoverClose } from "../ui/popover";
+import { cn } from "@repo/ui/lib/utils";
+import { Popover, PopoverContent, PopoverAnchor, PopoverClose } from "@repo/ui/components/popover";
 import { useState, useRef } from "react";
 
 type Props = {

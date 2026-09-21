@@ -2,7 +2,7 @@ import { LockKeyhole, MapPin } from "lucide-react";
 import Clock from "@/components/icons/clock";
 import Elevation from "@/components/icons/elevation";
 import { getDifficultySVG } from "@/components/icons/get-difficulty-icon";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import { TrekItems } from "./trek-select-step";
 
 type StepContentProps = {

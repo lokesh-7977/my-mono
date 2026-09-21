@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Heart, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 
 export function TrekFitness() {
   return (

@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import { ArrowRight, Info, CircleCheck, XCircle, CirclePlus, Trash2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import FormInput from "@/components/shared/form-input";
 import FormTextArea from "@/components/shared/form-textarea";
 

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import { GitCompare, Heart, Share2 } from "lucide-react";
 
 export default function PackageHeader() {

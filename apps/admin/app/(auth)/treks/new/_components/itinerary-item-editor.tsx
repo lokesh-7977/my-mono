@@ -1,6 +1,6 @@
 import { Eye, Trash2, Image as ImageIcon, Ruler, Mountain, CloudUpload, Timer, TrashIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Label } from "@/components/ui/label";
+import { cn } from "@repo/ui/lib/utils";
+import { Label } from "@repo/ui/components/label";
 import { toast } from "sonner";
 import { ItineraryItem } from "./itinerary-editor";
 

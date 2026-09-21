@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import { Check, ChevronDown, X, Plus } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
+import { cn } from "@repo/ui/lib/utils";
+import { Badge } from "@repo/ui/components/badge";
 import {
   Command,
   CommandEmpty,
@@ -11,12 +11,12 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/components/ui/command";
+} from "@repo/ui/components/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@repo/ui/components/popover";
 import FormLabel from "./form-label";
 
 export interface FormMultiSelectOption {

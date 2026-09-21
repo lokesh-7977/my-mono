@@ -6,7 +6,7 @@ import StickySidebar from "@/components/shared/sticky-sidebar";
 import { PackageGallery } from "@/components/trek/package-details/package-gallery";
 import PackageHeader from "@/components/trek/package-details/package-header";
 import { TrekStats } from "@/components/trek/trek-details/trek-stats";
-import Divider from "@/components/ui/divider";
+import Divider from "@repo/ui/components/divider";
 import PackageIntro from "@/components/trek/package-details/package-intro";
 import PackageItinerary from "@/components/trek/package-details/package-itinerary";
 import { PackageInfoSections } from "@/components/trek/package-details/package-info-sections";

@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import { X } from "lucide-react";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { cloneElement, ReactElement, HTMLAttributes, useId, useState } from "react";

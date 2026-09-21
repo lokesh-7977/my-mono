@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { Popover, PopoverContent, PopoverTrigger, PopoverClose } from "../ui/popover";
+import { cn } from "@repo/ui/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger, PopoverClose } from "@repo/ui/components/popover";
 
 type Props = {
     classname?: string;
