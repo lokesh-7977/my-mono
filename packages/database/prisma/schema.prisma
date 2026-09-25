@@ -21,16 +21,11 @@ enum UserStatus {
   SUSPENDED
 }
 
-enum TrekLevel {
-  GUIDE
-  LEADER
-  MOUNTAINEER
-}
-
 enum Difficulty {
   EASY
-  MEDIUM
-  HARD
+  MODERATE
+  DIFFICULT
+  PRO
 }
 
 enum TrekStatus {
@@ -74,6 +69,75 @@ enum PaymentStatus {
   REFUNDED
 }
 
+enum LocationType {
+  COUNTRY
+  STATE
+  DISTRICT
+  SUBDISTRICT
+  URBAN_LOCAL_BODY
+}
+
+enum VendorType {
+  TREK_LEADER
+  LOCAL_TRAIL_GUIDE
+  MOUNTAINEER
+  EXPERIENCE_ORGANIZER
+  ACTIVITY_HOST
+  CAMP_OPERATOR
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum VendorVerificationStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum TeamMemberRole {
+  OWNER
+  MEMBER
+}
+
+enum TeamMemberStatus {
+  ACTIVE
+  LEFT
+  REMOVED
+}
+
+enum TeamInvitationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum ScheduleType {
+  FIXED
+  FLEXIBLE
+}
+
+enum DepositType {
+  PERCENTAGE
+  FIXED
+}
+
+enum PaymentType {
+  FULL
+  DEPOSIT
+  BALANCE
+}
+
+enum ExperienceSource {
+  SELF_SUBMITTED
+  PLATFORM
+}
+
 model User {
   id        String  @id @map("_id")
   googleId  String  @unique
@@ -85,10 +149,13 @@ model User {
   status    UserStatus @default(ACTIVE)
   isDeleted Boolean    @default(false)
 
-  trekLevel       TrekLevel @default(GUIDE)
-  experienceYears Int       @default(0)
-  phone           String?
-  bio             String?
+  phone     String?
+  address   String?
+  city      String?
+  state     String?
+  country   String?
+  pinCode   String?
+  languages String[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -100,6 +167,42 @@ model User {
   masterTreks        MasterTrek[]
   packages           Package[]
   packageBookings    PackageBooking[]
+  vendorProfile      VendorProfile?
+
+  createdTeams        Team[]           @relation("TeamCreator")
+  teamMemberships     TeamMember[]
+  teamInvitations     TeamInvitation[] @relation("TeamInvitedUser")
+  sentTeamInvitations TeamInvitation[] @relation("TeamInviter")
+  reviews             Review[]
+}
+
+model VendorProfile {
+  id     String @id @map("_id")
+  userId String @unique
+
+  vendorType VendorType?
+
+  experienceYears Int?
+  treksLed        Int?
+  regionsWorkedIn String[]
+
+  isAgeEligible            Boolean @default(false)
+  hasRequiredExperience    Boolean @default(false)
+  hasFirstAidCertification Boolean @default(false)
+  hasSmartphoneAndWhatsApp Boolean @default(false)
+  agreesToInsuranceTerms   Boolean @default(false)
+  agreesToSafetyStandards  Boolean @default(false)
+
+  verificationStatus VendorVerificationStatus @default(DRAFT)
+
+  submittedAt     DateTime?
+  verifiedAt      DateTime?
+  rejectionReason String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Session {
@@ -118,14 +221,22 @@ model UserExperience {
   id     String @id @map("_id")
   userId String
 
-  trekName           String
-  difficulty         Difficulty
-  roleDuringTrek     String
-  completedAt        DateTime
-  duration           Int
-  altitude           Float?
-  proofUrl           String?
-  verificationStatus String
+  trekName       String?
+  difficulty     Difficulty?
+  roleDuringTrek String?
+  completedAt    DateTime?
+  duration       Int?
+  altitude       Float?
+
+  description String
+  imageUrls   String[]
+  proofUrl    String?
+
+  verificationStatus VerificationStatus @default(PENDING)
+
+  source     ExperienceSource @default(SELF_SUBMITTED)
+  packageId  String?
+  scheduleId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -141,9 +252,9 @@ model UserCertification {
   issuingOrganization String
   certificateNumber   String?
   certificateUrl      String
-  issuedAt            DateTime
+  issuedAt            DateTime?
   expiresAt           DateTime?
-  verificationStatus  String
+  verificationStatus  VerificationStatus @default(PENDING)
   verifiedAt          DateTime?
 
   createdAt DateTime @default(now())
@@ -177,6 +288,139 @@ model UserBadge {
   @@unique([userId, badgeId])
 }
 
+model Location {
+  id   String       @id @map("_id")
+  name String
+  type LocationType
+
+  sourceCode    String
+  localBodyType String?
+
+  parentId String?
+
+  parent Location? @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  children Location[] @relation("LocationHierarchy")
+
+  masterTreks  MasterTrek[]
+  nearbyPlaces NearbyPlace[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  packages  Package[]
+}
+
+model Team {
+  id String @id @map("_id")
+
+  name        String
+  description String?
+  logoUrl     String?
+
+  createdByUserId String
+
+  city    String?
+  state   String?
+  country String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  createdBy User @relation("TeamCreator", fields: [createdByUserId], references: [id])
+
+  members     TeamMember[]
+  invitations TeamInvitation[]
+  packages    Package[]
+  experiences TeamExperience[]
+}
+
+model TeamExperience {
+  id String @id @map("_id")
+
+  teamId     String
+  packageId  String
+  scheduleId String @unique
+
+  trekName    String
+  difficulty  Difficulty?
+  completedAt DateTime
+  duration    Int?
+  altitude    Float?
+  imageUrls   String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  team Team @relation(fields: [teamId], references: [id])
+}
+
+model TeamMember {
+  id String @id @map("_id")
+
+  teamId String
+  userId String
+
+  role   TeamMemberRole   @default(MEMBER)
+  status TeamMemberStatus @default(ACTIVE)
+
+  joinedAt  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, userId])
+}
+
+model TeamInvitation {
+  id String @id @map("_id")
+
+  teamId String
+
+  invitedUserId String?
+  email         String
+
+  invitedByUserId String
+
+  status    TeamInvitationStatus @default(PENDING)
+  expiresAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  invitedUser User? @relation("TeamInvitedUser", fields: [invitedUserId], references: [id])
+
+  invitedBy User @relation("TeamInviter", fields: [invitedByUserId], references: [id])
+}
+
+model Review {
+  id String @id @map("_id")
+
+  userId    String
+  packageId String
+  bookingId String @unique
+
+  rating            Int
+  guideExpertise    Int
+  safetyProtocols   Int
+  logisticsAndCare  Int
+  sustainableImpact Int
+
+  title     String?
+  comment   String?
+  imageUrls String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User           @relation(fields: [userId], references: [id])
+  package Package        @relation(fields: [packageId], references: [id])
+  booking PackageBooking @relation(fields: [bookingId], references: [id])
+}
+
 model MasterTrek {
   id String @id @map("_id")
 
@@ -192,11 +436,10 @@ model MasterTrek {
   distanceKm     Float?
   distinctRoutes Int        @default(1)
 
-  baseLocation String
-  state        String
-  country      String @default("India")
-  latitude     Float?
-  longitude    Float?
+  locationId String
+  location   Location @relation(fields: [locationId], references: [id])
+  latitude   Float?
+  longitude  Float?
 
   bestSeason       String?
   beginnerFriendly Boolean @default(false)
@@ -228,6 +471,21 @@ model MasterTrek {
   activities  Activity[] @relation(fields: [activityIds], references: [id])
 
   packages Package[]
+  faqs     MasterTrekFaq[]
+}
+
+model MasterTrekFaq {
+  id           String @id @map("_id")
+  masterTrekId String
+
+  question String
+  answer   String
+  order    Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  masterTrek MasterTrek @relation(fields: [masterTrekId], references: [id], onDelete: Cascade)
 }
 
 model TrekRoute {
@@ -272,6 +530,8 @@ model TrekItineraryDay {
   duration   String?
   altitude   Float?
 
+  imageUrls String[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -293,10 +553,8 @@ model Activity {
   itineraryDayIds String[]
   itineraryDays   TrekItineraryDay[] @relation(fields: [itineraryDayIds], references: [id])
 
-  createdAt              DateTime              @default(now())
-  updatedAt              DateTime              @updatedAt
-  packageItineraryDayIds String[]
-  packageItineraryDays   PackageItineraryDay[] @relation(fields: [packageItineraryDayIds], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model NearbyPlace {
@@ -304,7 +562,8 @@ model NearbyPlace {
 
   name        String
   description String?
-  location    String?
+  locationId  String?
+  location    Location? @relation(fields: [locationId], references: [id])
   latitude    Float?
   longitude   Float?
   imageUrl    String?
@@ -333,29 +592,47 @@ model TrekNearbyPlace {
 model Package {
   id String @id @map("_id")
 
+  locationId String?
+  difficulty Difficulty?
+  distanceKm Float?
+
   createdByUserId String
+  teamId          String?
   masterTrekId    String
-  routeId         String
+  routeId         String?
 
-  title       String
-  description String?
-  visibility  PackageVisibility @default(PUBLIC)
-  status      PackageStatus     @default(DRAFT)
+  galleryImages String[]
 
-  minParticipants Int?
-  maxParticipants Int?
-  meetingPoint    String?
-  instructions    String?
+  scheduleType ScheduleType @default(FIXED)
+
+  inclusions  String[]
+  exclusions  String[]
+  packingList String[]
+
+  fitnessAndExperienceRequirement String?
+
+  title        String?
+  description  String?
+  visibility   PackageVisibility @default(PUBLIC)
+  status       PackageStatus     @default(DRAFT)
+  durationDays Int?
+
+  meetingPoint String?
+  instructions String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   createdBy  User       @relation(fields: [createdByUserId], references: [id])
   masterTrek MasterTrek @relation(fields: [masterTrekId], references: [id])
-  route      TrekRoute  @relation(fields: [routeId], references: [id])
+  route      TrekRoute? @relation(fields: [routeId], references: [id])
 
   itineraryDays PackageItineraryDay[]
   schedules     PackageSchedule[]
+  team          Team?                 @relation(fields: [teamId], references: [id])
+
+  location Location? @relation(fields: [locationId], references: [id])
+  reviews  Review[]
 }
 
 model PackageItineraryDay {
@@ -372,8 +649,7 @@ model PackageItineraryDay {
   duration      String?
   altitude      Float?
 
-  activityIds String[]
-  activities  Activity[] @relation(fields: [activityIds], references: [id])
+  imageUrls String[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -391,11 +667,11 @@ model PackageSchedule {
   bookingStartDate DateTime?
   bookingEndDate   DateTime?
 
-  price    Float
   currency String @default("INR")
 
-  capacity       Int
-  availableSeats Int
+  minParticipants Int
+  maxParticipants Int
+  availableSeats  Int
 
   status             ScheduleStatus @default(DRAFT)
   publishedAt        DateTime?
@@ -404,6 +680,19 @@ model PackageSchedule {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  price Float?
+
+  adultPrice Float?
+  childPrice Float?
+
+  allowPartialPayment Boolean @default(false)
+
+  depositType  DepositType?
+  depositValue Float?
+
+  balanceDueDaysBeforeStart Int?
+  cancellationPolicy        String?
 
   package  Package          @relation(fields: [packageId], references: [id], onDelete: Cascade)
   bookings PackageBooking[]
@@ -414,11 +703,35 @@ model PackageBooking {
   userId     String
   scheduleId String
 
+  adultCount Int @default(1)
+  childCount Int @default(0)
+
+  // Booking contact snapshot
+  firstName String?
+  lastName  String?
+  email     String?
+  phone     String?
+  address   String?
+  city      String?
+  state     String?
+  country   String?
+  pinCode   String?
+  message   String?
+
+  subtotal       Float
+  discountAmount Float @default(0)
+  bookingFee     Float @default(0)
+  totalAmount    Float
+
+  currency       String    @default("INR")
+  balanceDueDate DateTime?
+
   status BookingStatus @default(PENDING)
 
   bookedAt           DateTime  @default(now())
   cancelledAt        DateTime?
   cancellationReason String?
+  review             Review?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -428,15 +741,17 @@ model PackageBooking {
 
   payments Payment[]
 
-  @@unique([userId, scheduleId])
+  @@index([userId])
+  @@index([scheduleId])
 }
 
 model Payment {
   id        String @id @map("_id")
   bookingId String
 
-  amount   Float
-  currency String @default("INR")
+  amount      Float
+  currency    String      @default("INR")
+  paymentType PaymentType
 
   paymentGateway   String?
   gatewayOrderId   String?
