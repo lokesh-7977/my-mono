@@ -1,6 +1,7 @@
 export interface AuthUser {
   name: string | null;
   email: string;
+  avatarUrl: string | null;
 }
 
 export interface AuthSession {
@@ -11,6 +12,7 @@ export interface AuthSession {
 export interface GoogleLoginResponseData {
   name: string | null;
   email: string;
+  avatarUrl: string | null;
   accessToken: string;
 }
 
@@ -20,6 +22,7 @@ export interface SessionResponseData {
     name: string | null;
     email: string;
     role: string;
+    avatarUrl: string | null;
   };
   accessToken: string;
 }

@@ -17,7 +17,7 @@ export async function googleLogin(idToken: string): Promise<AuthSession> {
   });
 
   return {
-    user: { name: data.name, email: data.email },
+    user: { name: data.name, email: data.email, avatarUrl: data.avatarUrl },
     accessToken: data.accessToken,
   };
 }
@@ -46,7 +46,11 @@ export async function getSession(
     });
 
     return {
-      user: { name: data.user.name, email: data.user.email },
+      user: {
+        name: data.user.name,
+        email: data.user.email,
+        avatarUrl: data.user.avatarUrl,
+      },
       accessToken: data.accessToken,
     };
   } catch {
