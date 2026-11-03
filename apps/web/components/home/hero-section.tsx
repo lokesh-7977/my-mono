@@ -11,7 +11,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@repo/ui/lib/utils";
-import { SearchBar } from "@/components/shared/search-bar";
+// import { SearchBar } from "@/components/shared/search-bar";
 
 /* ── Types ── */
 interface SlideItem {
@@ -75,10 +75,10 @@ export function HeroSection({ slides }: HeroSectionProps) {
   };
 
   return (
-    <section className="relative w-full max-w-[1440px] mx-auto px-0 sm:px-6 lg:px-8">
+    <section className="relative w-full max-w-360 mx-auto px-0 sm:px-6 lg:px-8">
       {/* ─── Hero Banner ─── */}
       <div
-        className="relative w-full h-[520px] md:h-[620px] overflow-hidden md:rounded-[24px] rounded-b-[14px]"
+        className="relative w-full h-130 md:h-155 overflow-hidden md:rounded-3xl rounded-b-[14px]"
         role="group"
         aria-roledescription="carousel"
         aria-label="Hero image carousel"
@@ -103,7 +103,7 @@ export function HeroSection({ slides }: HeroSectionProps) {
               src={slides[currentIndex].img}
               alt={slides[currentIndex].title}
               fill
-              className="object-cover md:rounded-[24px] rounded-b-[14px]"
+              className="object-cover md:rounded-3xl rounded-b-[14px]"
               priority={currentIndex === 0}
               quality={90}
               sizes="100vw"
@@ -174,7 +174,7 @@ export function HeroSection({ slides }: HeroSectionProps) {
         </span>
 
         {/* ─── Category Tabs (inside hero, above search bar) ─── */}
-        <div className="absolute bottom-[72px] left-1/2 -translate-x-1/2 z-20 hidden md:flex items-center gap-8">
+        <div className="absolute bottom-18 left-1/2 -translate-x-1/2 z-20 hidden md:flex items-center gap-8">
           {["Treks", "Experiences", "Places To Visit"].map((tab) => (
             <button
               key={tab}
@@ -188,7 +188,7 @@ export function HeroSection({ slides }: HeroSectionProps) {
             >
               {tab}
               {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white rounded-full" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white rounded-full" />
               )}
             </button>
           ))}
