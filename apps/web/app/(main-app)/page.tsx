@@ -52,8 +52,8 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection slides={slideitems} />
-        <SearchBarMobile className="-mt-[58px] hidden max-[800px]:block" />
-        <SearchBar className="-mt-[36px] max-[800px]:hidden" />
+        <SearchBarMobile className="-mt-14.5 hidden max-[800px]:block" />
+        <SearchBar className="-mt-9 max-[800px]:hidden" />
 
         {/* Added spacing above the next section due to the overlapping search bar */}
         <div className="pt-20">
