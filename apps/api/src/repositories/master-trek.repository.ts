@@ -398,6 +398,68 @@ export const getAllMasterTreksUser = async (
   });
 };
 
+export const getMasterTrekBySlugUser = async (
+  slug: string,
+) => {
+  return prisma.masterTrek.findUnique({
+    where: {
+      slug,
+    },
+
+    include: {
+      location: true,
+      activities: true,
+
+      routes: {
+        include: {
+          itineraryDays: {
+            include: {
+              activities: true,
+            },
+          },
+        },
+      },
+
+      nearbyPlaces: {
+        include: {
+          nearbyPlace: {
+            include: {
+              location: true,
+            },
+          },
+        },
+      },
+
+      faqs: {
+        orderBy: {
+          order: "asc",
+        },
+      },
+
+      packages: {
+        where: {
+          visibility: "PUBLIC",
+          status: "PUBLISHED",
+        },
+        include: {
+          schedules: {
+            where: {
+              status: "OPEN",
+              availableSeats: {
+                gt: 0,
+              },
+            },
+            select: {
+              price: true,
+              currency: true,
+            },
+          },
+        },
+      },
+    },
+  });
+};
+
 export const getMasterTrekByIdUser = async (
   trekId: string,
 ) => {

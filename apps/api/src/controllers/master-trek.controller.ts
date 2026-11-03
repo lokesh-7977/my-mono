@@ -410,6 +410,59 @@ export const getAllMasterTreksUser = async (
 };
 
 
+export const getMasterTrekBySlugUser = async (
+  c: Context,
+): Promise<Response> => {
+  try {
+    const slug = c.req.param("slug");
+
+    if (!slug) {
+      logger.warn(
+        "User master trek fetch attempted without trek slug",
+      );
+
+      return ApiResponse.error(
+        "Trek slug is required",
+        400,
+      ).send(c);
+    }
+
+    const result =
+      await MasterTrekService.getMasterTrekBySlugUserService(
+        slug,
+      );
+
+    logger.info(
+      { slug },
+      "Master trek fetched successfully for user",
+    );
+
+    return ApiResponse.success(
+      "Trek fetched successfully",
+      result,
+      200,
+    ).send(c);
+  } catch (error) {
+    logger.error(
+      { error },
+      "Failed to fetch master trek for user",
+    );
+
+    if (error instanceof CustomError) {
+      return ApiResponse.error(
+        error.message,
+        error.statusCode,
+      ).send(c);
+    }
+
+    return ApiResponse.error(
+      "Failed to fetch trek",
+      500,
+    ).send(c);
+  }
+};
+
+
 export const getMasterTrekByIdUser = async (
   c: Context,
 ): Promise<Response> => {

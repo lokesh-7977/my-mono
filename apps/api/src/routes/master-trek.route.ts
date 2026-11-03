@@ -3,7 +3,7 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { CreateMasterTrekSchema, UpdateMasterTrekSchema } from "../validators/master-trek.validator.js";
 
 
-import { createMasterTrek, deleteMasterTrek, getAllMasterTreksAdmin, getAllMasterTreksUser, getAllMasterTreksVendor, getMasterTrekByIdAdmin, getMasterTrekByIdUser, getMasterTrekByIdVendor, updateMasterTrek } from "../controllers/master-trek.controller.js";
+import { createMasterTrek, deleteMasterTrek, getAllMasterTreksAdmin, getAllMasterTreksUser, getAllMasterTreksVendor, getMasterTrekByIdAdmin, getMasterTrekByIdUser, getMasterTrekBySlugUser, getMasterTrekByIdVendor, updateMasterTrek } from "../controllers/master-trek.controller.js";
 
 import {authMiddleware,requireRole} from "../middlewares/auth.middleware.js"
 
@@ -599,6 +599,59 @@ MasterTrekRoutes.openapi(
   }),
 
   getAllMasterTreksUser as any,
+);
+
+
+
+MasterTrekRoutes.openapi(
+  createRoute({
+    method: "get",
+    path: "/public/slug/{slug}",
+
+    tags: ["Trek"],
+    summary: "Get master trek for user by slug",
+
+    request: {
+      params: z.object({
+        slug: z.string().min(1).openapi({
+          example: "kedarkantha-trek",
+        }),
+      }),
+    },
+
+    responses: {
+      200: {
+        content: {
+          "application/json": {
+            schema: SuccessSchema,
+          },
+        },
+        description:
+          "Trek fetched successfully",
+      },
+
+      404: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Trek not found",
+      },
+
+      500: {
+        content: {
+          "application/json": {
+            schema: ErrorSchema,
+          },
+        },
+        description:
+          "Failed to fetch trek",
+      },
+    },
+  }),
+
+  getMasterTrekBySlugUser as any,
 );
 
 
