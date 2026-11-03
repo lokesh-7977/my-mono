@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { MagicMountainIcon } from "../icons";
+import { useAuth } from "@/lib/auth/auth-context";
 
 const navLinks = [
   { name: "Trek", href: "/treks" },
@@ -17,6 +19,13 @@ const navLinks = [
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, logout, openLoginModal } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout();
+    router.push("/");
+  };
 
   return (
     <header className="bg-white w-full">
@@ -58,12 +67,21 @@ export function Navbar() {
           >
             Join a Community
           </Link>
-          <Link
-            href="/login"
-            className="border border-primary text-primary rounded-lg px-6 py-2.5 text-sm font-semibold hover:bg-primary hover:text-white transition-colors duration-200"
-          >
-            Login
-          </Link>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="border border-primary text-primary rounded-lg px-6 py-2.5 text-sm font-semibold hover:bg-primary hover:text-white transition-colors duration-200"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={openLoginModal}
+              className="border border-primary text-primary rounded-lg px-6 py-2.5 text-sm font-semibold hover:bg-primary hover:text-white transition-colors duration-200"
+            >
+              Login
+            </button>
+          )}
         </div>
 
         {/* Mobile */}
@@ -110,12 +128,27 @@ export function Navbar() {
             >
               Join a Community
             </Link>
-            <Link
-              href="/login"
-              className="border border-zinc-300 text-zinc-700 text-center rounded-lg py-3 text-base font-semibold"
-            >
-              Login
-            </Link>
+            {user ? (
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  handleLogout();
+                }}
+                className="border border-zinc-300 text-zinc-700 text-center rounded-lg py-3 text-base font-semibold"
+              >
+                Logout
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  openLoginModal();
+                }}
+                className="border border-zinc-300 text-zinc-700 text-center rounded-lg py-3 text-base font-semibold"
+              >
+                Login
+              </button>
+            )}
           </div>
         </div>
       )}
