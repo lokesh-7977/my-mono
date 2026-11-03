@@ -89,7 +89,23 @@ enum VendorVerificationStatus {
   APPROVED
   REJECTED
 }
+enum TeamMemberRole {
+  OWNER
+  MEMBER
+}
 
+enum TeamMemberStatus {
+  ACTIVE
+  LEFT
+  REMOVED
+}
+
+enum TeamInvitationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
 model User {
   id        String  @id @map("_id")
   googleId  String  @unique
@@ -120,6 +136,11 @@ model User {
   packages           Package[]
   packageBookings    PackageBooking[]
   vendorProfile      VendorProfile?
+
+  createdTeams        Team[]           @relation("TeamCreator")
+teamMemberships     TeamMember[]
+teamInvitations     TeamInvitation[] @relation("TeamInvitedUser")
+sentTeamInvitations TeamInvitation[] @relation("TeamInviter")
 }
 
 model VendorProfile {
@@ -230,6 +251,27 @@ model UserBadge {
   @@unique([userId, badgeId])
 }
 
+model Location {
+  id   String       @id @map("_id")
+  name String
+  type LocationType
+
+  sourceCode    String
+  localBodyType String?
+
+  parentId String?
+
+  parent Location? @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  children Location[] @relation("LocationHierarchy")
+
+  masterTreks  MasterTrek[]
+  nearbyPlaces NearbyPlace[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model MasterTrek {
   id String @id @map("_id")
 
@@ -245,11 +287,10 @@ model MasterTrek {
   distanceKm     Float?
   distinctRoutes Int        @default(1)
 
-  baseLocation String
-  state        String
-  country      String @default("India")
-  latitude     Float?
-  longitude    Float?
+  locationId String
+  location   Location @relation(fields: [locationId], references: [id])
+  latitude   Float?
+  longitude  Float?
 
   bestSeason       String?
   beginnerFriendly Boolean @default(false)
@@ -281,6 +322,21 @@ model MasterTrek {
   activities  Activity[] @relation(fields: [activityIds], references: [id])
 
   packages Package[]
+  faqs     MasterTrekFaq[]
+}
+
+model MasterTrekFaq {
+  id           String @id @map("_id")
+  masterTrekId String
+
+  question String
+  answer   String
+  order    Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  masterTrek MasterTrek @relation(fields: [masterTrekId], references: [id], onDelete: Cascade)
 }
 
 model TrekRoute {
@@ -325,6 +381,8 @@ model TrekItineraryDay {
   duration   String?
   altitude   Float?
 
+  imageUrls String[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -357,7 +415,8 @@ model NearbyPlace {
 
   name        String
   description String?
-  location    String?
+  locationId  String?
+  location    Location? @relation(fields: [locationId], references: [id])
   latitude    Float?
   longitude   Float?
   imageUrl    String?
