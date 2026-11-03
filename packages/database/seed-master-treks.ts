@@ -12,6 +12,12 @@ async function main() {
     );
   }
 
+  // District-level Location ids, from the LGD India seed (packages/database/prisma/location-seed.ts).
+  const UTTAR_KASHI = "DISTRICT:57"; // Uttarakhand
+  const CHAMOLI = "DISTRICT:47"; // Uttarakhand
+  const KULLU = "DISTRICT:20"; // Himachal Pradesh
+  const DARJEELING = "DISTRICT:309"; // West Bengal
+
   const treks = [
     {
       name: "Kedarkantha Trek",
@@ -24,8 +30,9 @@ async function main() {
       durationDays: 6,
       maxAltitude: 3800,
       distanceKm: 20,
-      baseLocation: "Sankri",
-      state: "Uttarakhand",
+      locationId: UTTAR_KASHI,
+      latitude: 31.04,
+      longitude: 78.23,
       bestSeason: "December to April",
       beginnerFriendly: true,
       overview: "A gentle climb through snow-covered meadows and forests to a stunning summit.",
@@ -45,8 +52,9 @@ async function main() {
       durationDays: 7,
       maxAltitude: 4300,
       distanceKm: 38,
-      baseLocation: "Govindghat",
-      state: "Uttarakhand",
+      locationId: CHAMOLI,
+      latitude: 30.65,
+      longitude: 79.5667,
       bestSeason: "July to September",
       beginnerFriendly: true,
       overview: "A moderate trek along the Pushpawati river into a UNESCO-listed valley.",
@@ -64,8 +72,9 @@ async function main() {
       durationDays: 5,
       maxAltitude: 4270,
       distanceKm: 26,
-      baseLocation: "Jobra (near Manali)",
-      state: "Himachal Pradesh",
+      locationId: KULLU,
+      latitude: 32.2432,
+      longitude: 77.1892,
       bestSeason: "June to September",
       beginnerFriendly: false,
       overview: "A crossover trek through two contrasting valleys via a high mountain pass.",
@@ -83,8 +92,9 @@ async function main() {
       durationDays: 8,
       maxAltitude: 5029,
       distanceKm: 53,
-      baseLocation: "Lohajung",
-      state: "Uttarakhand",
+      locationId: CHAMOLI,
+      latitude: 30.1667,
+      longitude: 79.7333,
       bestSeason: "May to June, September to October",
       beginnerFriendly: false,
       overview: "A long high-altitude trek through alpine meadows to a glacial lake steeped in legend.",
@@ -102,8 +112,9 @@ async function main() {
       durationDays: 6,
       maxAltitude: 3734,
       distanceKm: 22,
-      baseLocation: "Lohajung",
-      state: "Uttarakhand",
+      locationId: CHAMOLI,
+      latitude: 30.1667,
+      longitude: 79.7333,
       bestSeason: "December to March",
       beginnerFriendly: true,
       overview: "A beginner-friendly winter trek to a frozen lake with close mountain views.",
@@ -121,8 +132,9 @@ async function main() {
       durationDays: 6,
       maxAltitude: 3636,
       distanceKm: 32,
-      baseLocation: "Manebhanjan",
-      state: "West Bengal",
+      locationId: DARJEELING,
+      latitude: 26.9833,
+      longitude: 88.0833,
       bestSeason: "October to December, March to May",
       beginnerFriendly: true,
       overview: "A ridge-line trek to the highest peak of West Bengal with views of four 8000m giants.",
@@ -134,7 +146,7 @@ async function main() {
   for (const trek of treks) {
     const created = await prisma.masterTrek.upsert({
       where: { slug: trek.slug },
-      update: {},
+      update: trek,
       create: {
         id: randomUUID(),
         createdById: creator.id,
