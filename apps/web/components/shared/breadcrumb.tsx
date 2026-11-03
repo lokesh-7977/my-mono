@@ -9,10 +9,18 @@ import {
     BreadcrumbPage,
 } from "@repo/ui/components/breadcrumb";
 
-export default function Breadcrumb() {
+interface BreadcrumbProps {
+    trekName?: string;
+    locationName?: string;
+}
+
+export default function Breadcrumb({
+    trekName = "Kashmir Great Lakes Trek",
+    locationName = "Jammu & Kashmir",
+}: BreadcrumbProps) {
     return (
         <div className="bg-zinc-50">
-            <div className="flex items-center justify-between max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div className="flex items-center justify-between max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-3">
                 <BreadcrumbRoot>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -28,13 +36,11 @@ export default function Breadcrumb() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link href="/treks/jammu-kashmir">Jammu & Kashmir</Link>
-                            </BreadcrumbLink>
+                            <BreadcrumbPage>{locationName}</BreadcrumbPage>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage>Kashmir Great Lakes Trek</BreadcrumbPage>
+                            <BreadcrumbPage>{trekName}</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </BreadcrumbRoot>

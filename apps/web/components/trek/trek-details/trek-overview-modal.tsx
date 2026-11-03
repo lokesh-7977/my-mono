@@ -13,9 +13,11 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface TrekOverviewModalProps {
   trekName: string;
+  description?: string;
+  howToReach?: string | null;
 }
 
-export function TrekOverviewModal({ trekName }: TrekOverviewModalProps) {
+export function TrekOverviewModal({ trekName, description, howToReach }: TrekOverviewModalProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -39,19 +41,17 @@ export function TrekOverviewModal({ trekName }: TrekOverviewModalProps) {
           {/* Content */}
           <div className="space-y-4 text-foreground leading-relaxed text-base">
             <p>
-              Nestled at an altitude of 15,700 feet, Roopkund is perhaps the most debated and enigmatic trekking destination in India.
-              Famous for the hundreds of human skeletons found at its edge, this high-altitude glacial lake offers more than just macabre mystery.
-            </p>
-            <p>
-              Your journey begins through ancient oak forests and opens up into the sprawling meadows of Ali and Bedni Bugyal—some of the largest alpine meadows in Asia. As the air thins, the landscape transforms from vibrant green to a stark, celestial white, culminating in a climb that tests your resolve and rewards you with panoramic views of Trishul and Nanda Ghunti.
+              {description ??
+                "Nestled high in the Himalayas, this trek offers some of the most rewarding mountain views in India."}
             </p>
 
-            {/* Highlighted Info Box */}
-            <div className="relative mt-5 p-6 bg-primary-50/40 border-l-[6px] border-primary">
-              <p className="text-foreground font-bold italic text-lg sm:text-xl leading-relaxed">
-                The trail is 9 km one way. A fit walker completes the ascent in 3-4 hours; a relaxed pace with stops takes 5-6 hours. Descent is typically 2-3 hours.
-              </p>
-            </div>
+            {howToReach && (
+              <div className="relative mt-5 p-6 bg-primary-50/40 border-l-[6px] border-primary">
+                <p className="text-foreground font-bold italic text-lg sm:text-xl leading-relaxed">
+                  {howToReach}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </DialogContent>

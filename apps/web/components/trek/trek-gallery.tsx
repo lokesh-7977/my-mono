@@ -25,7 +25,7 @@ export function TrekGallery({
   title = "Kashmir Great Lakes Trek",
   rating = 5.0,
   reviewsCount = "24K",
-  // location = "Jammu & Kashmir",
+  location = "Uttarakhand, Himalayas",
   images = [
     "https://images.scoutripper.com/treks/hampta-pass-trek/beauty-of-hampta-pass-trek.jpg",
     "https://images.scoutripper.com/treks/kashmir-great-lake-trek/Kashmir Great Lakes-bg.png",
@@ -74,7 +74,7 @@ export function TrekGallery({
               </div>
               <div className="flex items-center gap-1.5 text-primary">
                 <MapPin className="size-4" />
-                <span>Uttarakhand, Himalayas</span>
+                <span>{location}</span>
               </div>
               <button className="flex items-center gap-1.5 text-zinc-400 hover:text-foreground transition-colors">
                 <MapIcon className="size-4" />
@@ -187,7 +187,7 @@ export function TrekGallery({
 
         <GalleryModal
           {...galleryProps}
-          title="Hampta Pass Trek"
+          title={title}
         />
       </div>
     </section>

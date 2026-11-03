@@ -3,6 +3,8 @@
 import React from "react";
 import { Clock, Elevation, Route } from "@/components/icons";
 import { getDifficultySVG } from "@/components/icons/get-difficulty-icon";
+import type { TrekDifficulty } from "@/api/trek/trek.types";
+
 interface StatItemProps {
   icon: React.ReactNode;
   label: string;
@@ -29,13 +31,47 @@ export const GradeCard = ({ label = "Grade", value = "Moderate to Difficult" }: 
   </div>
 );
 
-export function TrekStats() {
+const DIFFICULTY_LABEL: Record<TrekDifficulty, string> = {
+  EASY: "Easy",
+  MEDIUM: "Moderate",
+  HARD: "Difficult",
+};
+
+const DIFFICULTY_ICON: Record<TrekDifficulty, "easy" | "moderate" | "difficult"> = {
+  EASY: "easy",
+  MEDIUM: "moderate",
+  HARD: "difficult",
+};
+
+interface TrekStatsProps {
+  durationDays?: number;
+  distinctRoutes?: number;
+  maxAltitude?: number | null;
+  difficulty?: TrekDifficulty;
+}
+
+export function TrekStats({
+  durationDays = 5,
+  distinctRoutes = 2,
+  maxAltitude = null,
+  difficulty = "MEDIUM",
+}: TrekStatsProps) {
+  const altitudeValue = maxAltitude
+    ? `${maxAltitude.toLocaleString()} mt. / ${Math.round(maxAltitude * 3.28084).toLocaleString()} ft`
+    : "N/A";
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      <StatCard icon={<Clock height="44px" width="44px" bg="var(--color-primary)" color="white" />} label="Duration" value="4-5 Days" />
-      <StatCard icon={<Route height="44px" width="44px" bg="var(--color-primary)" color="white" />} label="Distinct Routes" value="2" />
-      <StatCard icon={<Elevation height="44px" width="44px" bg="var(--color-primary)" color="white" />} label="Altitude" value="3,045 mt. / 14,565 ft" />
-      <GradeCard />
+      <StatCard icon={<Clock height="44px" width="44px" bg="var(--color-primary)" color="white" />} label="Duration" value={`${durationDays} Days`} />
+      <StatCard icon={<Route height="44px" width="44px" bg="var(--color-primary)" color="white" />} label="Distinct Routes" value={String(distinctRoutes)} />
+      <StatCard icon={<Elevation height="44px" width="44px" bg="var(--color-primary)" color="white" />} label="Altitude" value={altitudeValue} />
+      <div className="flex flex-col p-4 border border-magic-green rounded-xl h-full bg-magic-green/5">
+        <div className="relative w-12 h-12 mb-2">
+          {getDifficultySVG(DIFFICULTY_ICON[difficulty], "44px", "50px")}
+        </div>
+        <span className="text-xs uppercase">Grade</span>
+        <span className="text-base font-bold text-foreground leading-tight">{DIFFICULTY_LABEL[difficulty]}</span>
+      </div>
     </div>
   );
 }

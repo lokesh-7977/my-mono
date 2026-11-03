@@ -1,7 +1,19 @@
 import { Button } from "@repo/ui/components/button";
 import { BadgeCheck, ShieldCheck } from "lucide-react";
 
-export default function BookingCTA() {
+interface BookingCTAProps {
+    startingPrice?: number | null;
+    currency?: string | null;
+}
+
+const CURRENCY_SYMBOL: Record<string, string> = {
+    INR: "₹",
+    USD: "$",
+};
+
+export default function BookingCTA({ startingPrice = null, currency = null }: BookingCTAProps) {
+    const symbol = currency ? (CURRENCY_SYMBOL[currency] ?? `${currency} `) : "₹";
+
     return (
         <div className="rounded-2xl border border-zinc-200 shadow-[0_8px_40px_rgba(0,0,0,0.03)] p-8">
             <div className="flex flex-col gap-5">
@@ -9,11 +21,14 @@ export default function BookingCTA() {
                 <div className="flex justify-between items-start">
                     <div className="flex flex-col">
                         <span className="text-xs text-foreground/50 font-medium mb-1">Starting From</span>
-                        <div className="flex items-baseline gap-2">
-                            <span className="text-[24px] text-foreground font-bold leading-none">₹16,500</span>
-                            <span className="text-foreground/50 text-sm font-medium">/ trekker</span>
-                        </div>
-                        <span className="text-[#FF4D4D] text-sm font-bold line-through ml-1 mt-1">₹19,299</span>
+                        {startingPrice !== null ? (
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-[24px] text-foreground font-bold leading-none">{symbol}{startingPrice.toLocaleString()}</span>
+                                <span className="text-foreground/50 text-sm font-medium">/ trekker</span>
+                            </div>
+                        ) : (
+                            <span className="text-base text-foreground/60 font-semibold">Packages coming soon</span>
+                        )}
                     </div>
                     <ul className="text-xs text-foreground/50 font-medium space-y-1 text-right mt-1">
                         <li>• GST Included</li>
@@ -23,10 +38,10 @@ export default function BookingCTA() {
                 </div>
 
                 <div className="flex flex-col gap-2 mt-2">
-                    <Button className="w-full h-13.5 rounded-xl text-base font-bold cursor-pointer">
+                    <Button disabled={startingPrice === null} className="w-full h-13.5 rounded-xl text-base font-bold cursor-pointer disabled:cursor-not-allowed disabled:opacity-50">
                         Check All Options
                     </Button>
-                    <Button variant="ghost" className="w-full h-11 rounded-xl text-base font-bold hover:bg-transparent text-primary cursor-pointer">
+                    <Button disabled={startingPrice === null} variant="ghost" className="w-full h-11 rounded-xl text-base font-bold hover:bg-transparent text-primary cursor-pointer disabled:cursor-not-allowed disabled:opacity-50">
                         Check Popular Options
                     </Button>
                 </div>

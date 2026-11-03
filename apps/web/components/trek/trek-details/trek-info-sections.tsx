@@ -38,26 +38,36 @@ const InfoCard = ({ heading, title, description, buttonText, onClick, className 
   );
 };
 
-export function TrekInfoSections() {
+interface TrekInfoSectionsProps {
+  trekName?: string;
+  howToReach?: string | null;
+  permitInfo?: string | null;
+}
+
+export function TrekInfoSections({
+  trekName = "Kashmir Great Lakes Trek",
+  howToReach = null,
+  permitInfo = null,
+}: TrekInfoSectionsProps) {
   return (
     <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4">
       <div className="grid grid-cols-1 md:grid-cols-3">
         <InfoCard
           heading="Weather Conditions"
-          title="for Kashmir Great Lakes Trek"
-          description="Triund sits above McLeod Ganj in the Kangra district of Himachal Pradesh. The trek begins either from Dharamkot"
+          title={`for ${trekName}`}
+          description="Check seasonal weather patterns before you set out, since conditions in the Himalayas can shift quickly."
           buttonText="Check Weather"
         />
         <InfoCard
           heading="How to Reach"
-          title="Kashmir Great Lakes Trek"
-          description="Triund sits above McLeod Ganj in the Kangra district of Himachal Pradesh. The trek begins either from Dharamkot"
+          title={trekName}
+          description={howToReach ?? "Reach-route details for this trek haven't been published yet."}
           buttonText="View Routes"
         />
         <InfoCard
           heading="Things to Carry"
-          title="for Kashmir Great Lakes Trek"
-          description="Triund sits above McLeod Ganj in the Kangra district of Himachal Pradesh. The trek begins either from Dharamkot"
+          title={`for ${trekName}`}
+          description={permitInfo ?? "A standard packing checklist applies — warm layers, sturdy boots, and rain protection."}
           buttonText="View Checklist"
         />
       </div>

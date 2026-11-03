@@ -3,7 +3,18 @@
 import { FileText, Shield, ArrowRight } from "lucide-react";
 import { Button } from "@repo/ui/components/button";
 import { PulseHeart, MedicalBriefcase } from "@/components/icons";
-export function FitnessSafetySections() {
+
+interface FitnessSafetySectionsProps {
+  trekName?: string;
+  fitnessInfo?: string | null;
+  safetyInfo?: string | null;
+}
+
+export function FitnessSafetySections({
+  trekName = "Kashmir Great Lakes Trek",
+  fitnessInfo = null,
+  safetyInfo = null,
+}: FitnessSafetySectionsProps) {
   return (
     <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_590px] gap-12 items-start">
@@ -12,11 +23,11 @@ export function FitnessSafetySections() {
           <h3 className="font-bricolage-grotesque font-bold leading-tight text-xl md:text-[26px] mb-4">
             <span className="text-primary">Recommended Fitness</span>
             {" "}
-            <span className="text-foreground">for Kashmir Great Lakes Trek</span>
+            <span className="text-foreground">for {trekName}</span>
           </h3>
 
           <p className="text-base text-foreground leading-relaxed mb-6">
-            This trek generally requires Easy fitness and is suitable for beginners or first-time trekkers. Expect shorter walking hours, gentle trails, and a comfortable pace.
+            {fitnessInfo ?? "Basic cardiovascular fitness is recommended — expect several hours of walking a day on varied terrain."}
           </p>
 
           {/* Mindset Box */}
@@ -29,13 +40,13 @@ export function FitnessSafetySections() {
             <div className="flex flex-col gap-1">
               <span className="text-[#FA8232] font-bold text-lg">Mindset Matters</span>
               <p className="text-[#FA8232] text-base leading-relaxed font-medium">
-                Trekking is about patience and enjoying the journey. With a positive mindset, most people can complete easy treks comfortably.
+                Trekking is about patience and enjoying the journey. With a positive mindset, most people can complete this trek comfortably.
               </p>
             </div>
           </div>
 
           <Button className="h-11 flex items-center gap-2 bg-secondary text-foreground font-bold px-6 py-3 rounded-xl w-fit transition-all hover:bg-primary hover:text-primary-foreground group cursor-pointer text-sm">
-            View Easy Trek Fitness Guide
+            View Trek Fitness Guide
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </Button>
         </div>
@@ -48,7 +59,7 @@ export function FitnessSafetySections() {
           </div>
 
           <p className="text-white text-sm mb-5 leading-relaxed">
-            Kashmir great lakes requires strict AMS (Acute Mountain Sickness) monitoring. Our team carries pulse oximeters and oxygen cylinders.
+            {safetyInfo ?? "Follow your trek leader's guidance closely and report any symptoms of altitude sickness immediately."}
           </p>
 
           <div className="flex flex-col gap-3">
