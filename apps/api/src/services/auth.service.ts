@@ -98,6 +98,7 @@ export const googleLogin = async (
         name: user.name,
         email: user.email,
         role: user.role,
+        avatarUrl: user.avatarUrl,
         accessToken,
         refreshToken,
     };
@@ -326,6 +327,7 @@ export const verifySession = async (refreshToken: string) => {
             name: user.name,
             email: user.email,
             role: user.role,
+            avatarUrl: user.avatarUrl,
         },
         accessToken,
     };
@@ -343,6 +345,7 @@ export const getCurrentUser = async (userId: string) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        avatarUrl: user.avatarUrl,
     };
 };
 

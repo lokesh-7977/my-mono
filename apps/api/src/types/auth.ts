@@ -39,6 +39,7 @@ export interface AuthUserResponse {
   name: string | null;
   email: string;
   role: UserRole;
+  avatarUrl: string | null;
   accessToken: string;
   refreshToken: string;
 }

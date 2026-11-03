@@ -39,6 +39,7 @@ export const googleLogin = async (c: Context): Promise<Response> => {
             {
                 name: result.name,
                 email: result.email,
+                avatarUrl: result.avatarUrl,
                 accessToken: result.accessToken,
             },
         ).send(c);
