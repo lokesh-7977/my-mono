@@ -1,11 +1,21 @@
 import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
+import { cors } from "hono/cors";
 
 import { authRoutes } from "./routes/auth.route.js";
 import { onboardingRoutes } from "./routes/onboarding.route.js";
 import { adminVendorRoutes } from "./routes/admin-vendor.route.js";
+import config from "./config/index.js";
 
 const app = new OpenAPIHono();
+
+app.use(
+    "*",
+    cors({
+        origin: config.WEB_ORIGIN,
+        credentials: true,
+    }),
+);
 
 app.openAPIRegistry.registerComponent(
     "securitySchemes",

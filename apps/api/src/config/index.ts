@@ -23,6 +23,8 @@ const envSchema = z.object({
     NODE_ENV: z
         .enum(["development", "production"])
         .default("development"),
+
+    WEB_ORIGIN: z.string().default("http://localhost:3002"),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

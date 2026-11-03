@@ -38,13 +38,16 @@ export const setRefreshTokenCookie = (
         httpOnly: true,
         secure: config.NODE_ENV === "production",
         sameSite: "Lax",
-        path: "/api/auth/refresh",
+        // Path is "/" (not scoped to /api/auth/refresh) so apps/web's Next.js
+        // server can read this cookie on page requests and resolve the
+        // session server-side, avoiding a client-side auth-state flash.
+        path: "/",
         maxAge: REFRESH_TOKEN_MAX_AGE,
     });
 };
 
 export const clearRefreshTokenCookie = (c: Context): void => {
     deleteCookie(c, "refreshToken", {
-        path: "/api/auth/refresh",
+        path: "/",
     });
 };

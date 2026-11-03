@@ -60,6 +60,74 @@ export const googleLogin = async (c: Context): Promise<Response> => {
 };
 
 
+export const getSession = async (c: Context): Promise<Response> => {
+    try {
+        const refreshToken = getCookie(c, "refreshToken");
+
+        if (!refreshToken) {
+            return ApiResponse.error(
+                "No active session",
+                401,
+            ).send(c);
+        }
+
+        const result = await AuthService.verifySession(refreshToken);
+
+        return ApiResponse.success(
+            "Session verified",
+            result,
+        ).send(c);
+    } catch (error) {
+        if (error instanceof CustomError) {
+            return ApiResponse.error(
+                error.message,
+                error.statusCode,
+            ).send(c);
+        }
+
+        return ApiResponse.error(
+            "Unable to verify session",
+            401,
+        ).send(c);
+    }
+};
+
+
+export const getCurrentUser = async (c: Context): Promise<Response> => {
+    try {
+        const userId = c.get("userId") as string | undefined;
+
+        if (!userId) {
+            return ApiResponse.error(
+                "Unauthorized",
+                401,
+            ).send(c);
+        }
+
+        const user = await AuthService.getCurrentUser(userId);
+
+        return ApiResponse.success(
+            "Current user fetched successfully",
+            user,
+        ).send(c);
+    } catch (error) {
+        logger.error({ error }, "Fetching current user failed");
+
+        if (error instanceof CustomError) {
+            return ApiResponse.error(
+                error.message,
+                error.statusCode,
+            ).send(c);
+        }
+
+        return ApiResponse.error(
+            "An error occurred while fetching current user",
+            500,
+        ).send(c);
+    }
+};
+
+
 export const logout = async (
     c: Context,
 ): Promise<Response> => {

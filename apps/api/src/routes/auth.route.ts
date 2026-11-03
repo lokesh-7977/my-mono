@@ -3,7 +3,7 @@ import {
     GoogleLoginSchema
 } from "../validators/auth.validator.js"
 
-import { googleLogin, logout, refresh } from "../controllers/auth.controller.js"
+import { googleLogin, logout, refresh, getCurrentUser, getSession } from "../controllers/auth.controller.js"
 
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -152,5 +152,77 @@ authRoutes.openapi(
     }),
 
     refresh as any,
+);
+
+
+authRoutes.openapi(
+    createRoute({
+        method: "get",
+        path: "/session",
+        tags: ["Auth"],
+        summary: "Check current session via the refresh-token cookie (no rotation)",
+        responses: {
+            200: {
+                content: {
+                    "application/json": {
+                        schema: SuccessSchema,
+                    },
+                },
+                description: "Session verified",
+            },
+            401: {
+                content: {
+                    "application/json": {
+                        schema: ErrorSchema,
+                    },
+                },
+                description: "No active session",
+            },
+        },
+    }),
+    getSession as any,
+);
+
+
+authRoutes.openapi(
+    createRoute({
+        method: "get",
+        path: "/me",
+        tags: ["Auth"],
+        summary: "Get current authenticated user",
+        security: [
+            {
+                bearerAuth: [],
+            },
+        ],
+        responses: {
+            200: {
+                content: {
+                    "application/json": {
+                        schema: SuccessSchema,
+                    },
+                },
+                description: "Current user fetched successfully",
+            },
+            401: {
+                content: {
+                    "application/json": {
+                        schema: ErrorSchema,
+                    },
+                },
+                description: "Unauthorized",
+            },
+            404: {
+                content: {
+                    "application/json": {
+                        schema: ErrorSchema,
+                    },
+                },
+                description: "User not found",
+            },
+        },
+        middleware: [authMiddleware],
+    }),
+    getCurrentUser as any,
 );
 

@@ -274,4 +274,76 @@ export const refresh = async (
     };
 };
 
+export const verifySession = async (refreshToken: string) => {
+    let payload;
+
+    try {
+        payload = await JwtService.verifyRefreshToken(refreshToken);
+    } catch {
+        throw new CustomError("Invalid or expired refresh token", 401);
+    }
+
+    const { id: userId, sessionId, role } = payload;
+
+    const session = await AuthRepository.findSessionById(sessionId);
+
+    if (!session || session.userId !== userId) {
+        throw new CustomError("Invalid session", 401);
+    }
+
+    if (session.isRevoked) {
+        throw new CustomError("Session has been revoked", 401);
+    }
+
+    if (session.expiresAt <= new Date()) {
+        throw new CustomError("Session has expired", 401);
+    }
+
+    const isValid = await argon2.verify(
+        session.refreshTokenHash,
+        refreshToken,
+    );
+
+    if (!isValid) {
+        throw new CustomError("Invalid refresh token", 401);
+    }
+
+    const user = await AuthRepository.findById(userId);
+
+    if (!user || user.isDeleted) {
+        throw new CustomError("User not found", 404);
+    }
+
+    const accessToken = await JwtService.signAccessToken({
+        id: userId,
+        sessionId,
+        role,
+    });
+
+    return {
+        user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+        },
+        accessToken,
+    };
+};
+
+export const getCurrentUser = async (userId: string) => {
+    const user = await AuthRepository.findById(userId);
+
+    if (!user || user.isDeleted) {
+        throw new CustomError("User not found", 404);
+    }
+
+    return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+    };
+};
+
 
