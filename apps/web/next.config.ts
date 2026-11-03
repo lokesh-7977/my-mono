@@ -43,6 +43,23 @@ const nextConfig: NextConfig = {
     ],
     qualities: [50, 75, 90],
   },
+  async headers() {
+    return [
+      {
+        // Google Sign-In communicates back to the page via postMessage from
+        // a cross-origin popup/iframe. The default Cross-Origin-Opener-Policy
+        // isolates that and silently blocks the message in some browsers;
+        // "same-origin-allow-popups" keeps isolation while permitting it.
+        source: "/:path*",
+        headers: [
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin-allow-popups",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
