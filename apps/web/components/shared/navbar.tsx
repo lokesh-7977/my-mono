@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { MagicMountainIcon } from "../icons";
 import { useAuth } from "@/lib/auth/auth-context";
+import { UserMenu } from "@/components/auth/user-menu";
 
 const navLinks = [
   { name: "Trek", href: "/treks" },
@@ -68,12 +69,7 @@ export function Navbar() {
             Join a Community
           </Link>
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="border border-primary text-primary rounded-lg px-6 py-2.5 text-sm font-semibold hover:bg-primary hover:text-white transition-colors duration-200"
-            >
-              Logout
-            </button>
+            <UserMenu />
           ) : (
             <button
               onClick={openLoginModal}
