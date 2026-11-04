@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { MapPin, Star } from "lucide-react";
 import { CarouselSection } from "@/components/shared/carousel-section";
 import type { NearbyPlace } from "@/lib/nearby-places-mock";
@@ -19,7 +20,8 @@ export function NearbyPlaces({ places }: NearbyPlacesProps) {
       scrollAmount={280}
     >
       {places.map((place) => (
-        <div
+        <Link
+          href={`/location/${place.slug}`}
           key={place.id}
           className="group flex flex-col shrink-0 snap-start w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-[calc(20%-19.2px)]"
         >
@@ -37,12 +39,14 @@ export function NearbyPlaces({ places }: NearbyPlacesProps) {
             </div>
           </div>
 
-          <h3 className="text-base font-bold text-foreground mb-1">{place.name}</h3>
+          <h3 className="text-base font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+            {place.name}
+          </h3>
           <div className="flex items-center gap-1.5">
             <MapPin className="size-3.5 text-primary" />
             <span className="text-meta font-medium text-primary">{place.location}</span>
           </div>
-        </div>
+        </Link>
       ))}
     </CarouselSection>
   );
