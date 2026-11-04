@@ -23,6 +23,11 @@ interface TrekPageProps {
     params: Promise<{ trekSlug: string }>;
 }
 
+// Without this, Next treats the route as fully static (no dynamic APIs used)
+// and serves the first-ever render forever — trek content edited later (by
+// an admin, or this session's seed scripts) would never show up.
+export const revalidate = 300;
+
 export async function generateMetadata({ params }: TrekPageProps): Promise<Metadata> {
     const { trekSlug } = await params;
     const trek = await getTrekBySlug(trekSlug);
@@ -47,9 +52,9 @@ export default async function TrekPage({ params }: TrekPageProps) {
         notFound();
     }
 
-    const galleryImages = [trek.coverImageUrl, ...trek.galleryImages].filter(
-        (url): url is string => Boolean(url),
-    );
+    const galleryImages = Array.from(
+        new Set([trek.coverImageUrl, ...trek.galleryImages].filter(Boolean)),
+    ) as string[];
 
     return (
         <div className="bg-white min-h-screen">
@@ -107,7 +112,10 @@ export default async function TrekPage({ params }: TrekPageProps) {
                     safetyInfo={trek.safetyInfo}
                 />
                 <Divider />
-                <FaqMission />
+                <FaqMission
+                    heading={`${trek.name} FAQs`}
+                    faqs={trek.faqs.map((faq) => ({ question: faq.question, answer: faq.answer }))}
+                />
                 <Divider />
                 <CuratedExperiences />
             </main>

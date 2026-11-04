@@ -6,7 +6,7 @@ import { cn } from "@repo/ui/lib/utils";
 import { MAIN_EMAIL } from "@/lib/constants";
 import { Button } from "@repo/ui/components/button";
 
-const faqs = [
+const defaultFaqs = [
   {
     question: "Who are we, and what is our mission?",
     answer: "Scoutripper is an adventure-focused travel platform dedicated to bringing unforgettable trekking and outdoor experiences to explorers of all levels. We specialize in organizing curated treks, expeditions, and nature-based adventures in some of the most breathtaking landscapes, primarily in the Indian Himalayas. Our mission is to connect adventurers with nature through guided experiences that are safe, eco-friendly, and authentic, helping people discover the joy of trekking and the beauty of the wilderness.\nWhether you're a first-time trekker or a seasoned adventurer, Scoutripper offers personalized itineraries and professional guidance to make every journey memorable.",
@@ -29,19 +29,32 @@ const faqs = [
   },
 ];
 
-export function FaqMission() {
+interface FaqMissionProps {
+  heading?: string;
+  faqs?: { question: string; answer: string }[];
+}
+
+export function FaqMission({
+  heading = "Frequently Asked Questions",
+  faqs = defaultFaqs,
+}: FaqMissionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [isSeeMore, setIsSeeMore] = useState<boolean>(false);
+
+  if (faqs.length === 0) {
+    return null;
+  }
+
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <section className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex flex-col gap-6 lg:gap-10 w-full mx-auto">
         <div className="w-full">
-          <h2 className="text-[28px] md:text-[32px] font-bold leading-tight text-foreground w-full text-center mb-3">Frequently Asked Questions</h2>
+          <h2 className="text-[28px] md:text-[32px] font-bold leading-tight text-foreground w-full text-center mb-3">{heading}</h2>
           <p className="text-sm text-zinc-400 w-full text-center">Didn’t find your answer? Write to us at <a href={`mailto:${MAIN_EMAIL}`}>{MAIN_EMAIL}</a> and we’ll be happy to help.</p>
         </div>
 
         {/* Right Side: FAQs */}
-        <div className={cn("flex-1 flex flex-col max-w-[850px] mx-auto w-full")}>
+        <div className={cn("flex-1 flex flex-col max-w-212.5 mx-auto w-full")}>
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             const isVisible = isSeeMore || index < 3;
