@@ -14,7 +14,7 @@ interface CarouselSectionProps {
 }
 
 export function CarouselSection({ title, subtitle, scrollAmount = 350, children }: CarouselSectionProps) {
-  const { scrollRef, isAtStart, isAtEnd, scrollLeft, scrollRight, checkScrollPosition } = useCarouselScroll(scrollAmount);
+  const { scrollRef, isAtStart, isAtEnd, canScroll, scrollLeft, scrollRight, checkScrollPosition } = useCarouselScroll(scrollAmount);
 
   return (
     <section className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-10 overflow-hidden">
@@ -24,19 +24,24 @@ export function CarouselSection({ title, subtitle, scrollAmount = 350, children 
             <h2 className="text-2xl font-bold text-foreground font-bricolage-grotesque leading-tight">
               {title}
             </h2>
-            {/* No listing route exists yet, so this has nowhere to navigate to. */}
-            <Button className="h-9 px-4 rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white cursor-pointer text-xs font-semibold transition-all group">
-              View All
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-            </Button>
+            {/* No listing route exists yet, so this has nowhere to navigate to.
+                Also hidden when everything already fits on screen — nothing more to view. */}
+            {canScroll && (
+              <Button className="h-9 px-4 rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white cursor-pointer text-xs font-semibold transition-all group">
+                View All
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+              </Button>
+            )}
           </div>
           {subtitle && <p className="text-sm text-zinc-400 font-medium mt-1">{subtitle}</p>}
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
-          <NavButton onClick={scrollLeft} type="prev" disabled={isAtStart} ariaLabel="Previous" />
-          <NavButton onClick={scrollRight} type="next" disabled={isAtEnd} ariaLabel="Next" />
-        </div>
+        {canScroll && (
+          <div className="flex items-center gap-3 shrink-0">
+            <NavButton onClick={scrollLeft} type="prev" disabled={isAtStart} ariaLabel="Previous" />
+            <NavButton onClick={scrollRight} type="next" disabled={isAtEnd} ariaLabel="Next" />
+          </div>
+        )}
       </div>
 
       <div
