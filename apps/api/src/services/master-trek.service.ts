@@ -687,17 +687,28 @@ export const getAllMasterTreksUserService = async (
 
     for (const pkg of trek.packages) {
       for (const schedule of pkg.schedules) {
-        if (startingPrice === null || schedule.price < startingPrice) {
-          startingPrice = schedule.price;
-          currency = schedule.currency;
+        const displayPrice =
+          schedule.price !== null
+            ? schedule.price
+            : schedule.adultPrice !== null &&
+                schedule.childPrice !== null
+              ? Math.min(
+                  schedule.adultPrice,
+                  schedule.childPrice,
+                )
+              : null;
+
+        if (displayPrice !== null) {
+          if (startingPrice === null || displayPrice < startingPrice) {
+            startingPrice = displayPrice;
+            currency = schedule.currency;
+          }
         }
       }
     }
 
-    const { packages, ...rest } = trek;
-
     return {
-      ...rest,
+      ...trek,
       startingPrice,
       currency,
     };
@@ -728,17 +739,28 @@ export const getMasterTrekBySlugUserService = async (
 
   for (const pkg of trek.packages) {
     for (const schedule of pkg.schedules) {
-      if (startingPrice === null || schedule.price < startingPrice) {
-        startingPrice = schedule.price;
-        currency = schedule.currency;
+      const displayPrice =
+        schedule.price !== null
+          ? schedule.price
+          : schedule.adultPrice !== null &&
+              schedule.childPrice !== null
+            ? Math.min(
+                schedule.adultPrice,
+                schedule.childPrice,
+              )
+            : null;
+
+      if (displayPrice !== null) {
+        if (startingPrice === null || displayPrice < startingPrice) {
+          startingPrice = displayPrice;
+          currency = schedule.currency;
+        }
       }
     }
   }
 
-  const { packages, ...rest } = trek;
-
   return {
-    ...rest,
+    ...trek,
     startingPrice,
     currency,
   };
@@ -761,17 +783,28 @@ export const getMasterTrekByIdUserService = async (
 
   for (const pkg of trek.packages) {
     for (const schedule of pkg.schedules) {
-      if (startingPrice === null || schedule.price < startingPrice) {
-        startingPrice = schedule.price;
-        currency = schedule.currency;
+      const displayPrice =
+        schedule.price !== null
+          ? schedule.price
+          : schedule.adultPrice !== null &&
+              schedule.childPrice !== null
+            ? Math.min(
+                schedule.adultPrice,
+                schedule.childPrice,
+              )
+            : null;
+
+      if (displayPrice !== null) {
+        if (startingPrice === null || displayPrice < startingPrice) {
+          startingPrice = displayPrice;
+          currency = schedule.currency;
+        }
       }
     }
   }
 
-  const { packages, ...rest } = trek;
-
   return {
-    ...rest,
+    ...trek,
     startingPrice,
     currency,
   };

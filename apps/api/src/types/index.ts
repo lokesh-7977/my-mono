@@ -4,3 +4,8 @@ export * from "./master-trek.js";
 export * from "./onboarding.js";
 export * from "./admin-vendor.js";
 export * from "./team.js";
+export * from "./booking.js";
+export * from "./package.js";
+export * from "./payment.js";
+export * from "./review.js";
+export * from "./vendor.js";

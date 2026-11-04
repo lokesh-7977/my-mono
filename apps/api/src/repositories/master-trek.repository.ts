@@ -358,6 +358,8 @@ export const getAllMasterTreksUser = async (
   limit: number,
   cursor?: string,
 ) => {
+  const now = new Date();
+
   return prisma.masterTrek.findMany({
     take: limit + 1,
 
@@ -382,10 +384,12 @@ export const getAllMasterTreksUser = async (
               availableSeats: {
                 gt: 0,
               },
+              startDate: {
+                gte: now,
+              },
             },
-            select: {
-              price: true,
-              currency: true,
+            orderBy: {
+              startDate: "asc",
             },
           },
         },
@@ -401,6 +405,8 @@ export const getAllMasterTreksUser = async (
 export const getMasterTrekBySlugUser = async (
   slug: string,
 ) => {
+  const now = new Date();
+
   return prisma.masterTrek.findUnique({
     where: {
       slug,
@@ -448,10 +454,12 @@ export const getMasterTrekBySlugUser = async (
               availableSeats: {
                 gt: 0,
               },
+              startDate: {
+                gte: now,
+              },
             },
-            select: {
-              price: true,
-              currency: true,
+            orderBy: {
+              startDate: "asc",
             },
           },
         },
@@ -463,6 +471,8 @@ export const getMasterTrekBySlugUser = async (
 export const getMasterTrekByIdUser = async (
   trekId: string,
 ) => {
+  const now = new Date();
+
   return prisma.masterTrek.findUnique({
     where: {
       id: trekId,
@@ -510,10 +520,12 @@ export const getMasterTrekByIdUser = async (
               availableSeats: {
                 gt: 0,
               },
+              startDate: {
+                gte: now,
+              },
             },
-            select: {
-              price: true,
-              currency: true,
+            orderBy: {
+              startDate: "asc",
             },
           },
         },
