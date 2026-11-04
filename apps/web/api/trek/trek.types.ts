@@ -1,4 +1,4 @@
-export type TrekDifficulty = "EASY" | "MEDIUM" | "HARD";
+export type TrekDifficulty = "EASY" | "MODERATE" | "DIFFICULT" | "PRO";
 export type TrekStatus = "DRAFT" | "ACTIVE" | "INACTIVE" | "ARCHIVED";
 
 export interface TrekLocation {

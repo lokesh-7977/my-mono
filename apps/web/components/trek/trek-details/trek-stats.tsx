@@ -33,14 +33,16 @@ export const GradeCard = ({ label = "Grade", value = "Moderate to Difficult" }: 
 
 const DIFFICULTY_LABEL: Record<TrekDifficulty, string> = {
   EASY: "Easy",
-  MEDIUM: "Moderate",
-  HARD: "Difficult",
+  MODERATE: "Moderate",
+  DIFFICULT: "Difficult",
+  PRO: "Pro",
 };
 
-const DIFFICULTY_ICON: Record<TrekDifficulty, "easy" | "moderate" | "difficult"> = {
+const DIFFICULTY_ICON: Record<TrekDifficulty, "easy" | "moderate" | "difficult" | "pro"> = {
   EASY: "easy",
-  MEDIUM: "moderate",
-  HARD: "difficult",
+  MODERATE: "moderate",
+  DIFFICULT: "difficult",
+  PRO: "pro",
 };
 
 interface TrekStatsProps {
@@ -54,7 +56,7 @@ export function TrekStats({
   durationDays = 5,
   distinctRoutes = 2,
   maxAltitude = null,
-  difficulty = "MEDIUM",
+  difficulty = "MODERATE",
 }: TrekStatsProps) {
   const altitudeValue = maxAltitude
     ? `${maxAltitude.toLocaleString()} mt. / ${Math.round(maxAltitude * 3.28084).toLocaleString()} ft`
