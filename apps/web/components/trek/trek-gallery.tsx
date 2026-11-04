@@ -59,7 +59,7 @@ export function TrekGallery({
 
   return (
     <section className="w-full">
-      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-1">
+      <div className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-1">
         {/* Header Title & Actions */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
           <div>

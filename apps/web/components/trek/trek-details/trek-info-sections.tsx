@@ -50,7 +50,7 @@ export function TrekInfoSections({
   permitInfo = null,
 }: TrekInfoSectionsProps) {
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4">
+    <section className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4">
       <div className="grid grid-cols-1 md:grid-cols-3">
         <InfoCard
           heading="Weather Conditions"

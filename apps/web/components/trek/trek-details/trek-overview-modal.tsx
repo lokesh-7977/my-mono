@@ -27,7 +27,7 @@ export function TrekOverviewModal({ trekName, description, howToReach }: TrekOve
           Show More <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[95vw] sm:max-w-[850px] p-9 rounded-3xl gap-0 border-none shadow-2xl">
+      <DialogContent className="max-w-[95vw] sm:max-w-212.5 p-9 rounded-3xl gap-0 border-none shadow-2xl">
         <VisuallyHidden>
           <DialogTitle>{trekName} Overview</DialogTitle>
         </VisuallyHidden>
