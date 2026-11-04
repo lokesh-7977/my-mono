@@ -46,8 +46,8 @@ const operators = [
 
 function OperatorCard({ operator }: { operator: typeof operators[0] }) {
   return (
-    <div className="bg-white rounded-[32px] border border-zinc-100 p-8 flex flex-col items-center text-center transition-all hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:-translate-y-1">
-      <div className="relative w-[120px] h-[120px] rounded-[32px] overflow-hidden mb-6 shadow-sm">
+    <div className="bg-white rounded-4xl border border-zinc-100 p-8 flex flex-col items-center text-center transition-all hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:-translate-y-1">
+      <div className="relative w-30 h-30 rounded-4xl overflow-hidden mb-6 shadow-sm">
         <Image
           src={operator.image}
           alt={operator.name}
