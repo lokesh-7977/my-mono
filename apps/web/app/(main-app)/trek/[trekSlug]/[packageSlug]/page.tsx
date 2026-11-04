@@ -25,8 +25,16 @@ export default function TrekPackagePage() {
         <div className="bg-white min-h-screen">
             <Navbar />
             <main>
-                <Breadcrumb />
-                <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+                <Breadcrumb
+                    items={[
+                        { label: "Treks", href: "/treks" },
+                        { label: "Jammu & Kashmir" },
+                        { label: "Kashmir Great Lakes Trek" },
+                    ]}
+                    backHref="/treks"
+                    backLabel="All Treks"
+                />
+                <div className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_400px] gap-10 lg:gap-12 mt-7">
                         <div className="lg:col-span-2 flex flex-col gap-6">
                             <PackageGallery />

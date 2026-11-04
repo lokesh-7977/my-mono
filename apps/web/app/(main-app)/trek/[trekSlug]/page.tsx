@@ -19,6 +19,7 @@ import NeedHelpCard from "@/components/shared/need-help-card";
 import { TrekGallery } from "@/components/trek/trek-gallery";
 import { NearbyPlaces } from "@/components/trek/trek-details/nearby-places";
 import { MOCK_NEARBY_PLACES } from "@/lib/nearby-places-mock";
+import { getLocationAncestorCrumbs } from "@/lib/location-ancestor-mock";
 import { getTrekBySlug } from "@/api/trek/trek.api";
 
 interface TrekPageProps {
@@ -62,7 +63,15 @@ export default async function TrekPage({ params }: TrekPageProps) {
         <div className="bg-white min-h-screen">
             <Navbar />
             <main>
-                <Breadcrumb trekName={trek.name} locationName={trek.location.name} />
+                <Breadcrumb
+                    items={[
+                        { label: "Treks", href: "/treks" },
+                        ...getLocationAncestorCrumbs(trek.location),
+                        { label: trek.name },
+                    ]}
+                    backHref="/treks"
+                    backLabel="All Treks"
+                />
                 <TrekGallery
                     title={trek.name}
                     location={trek.location.name}
