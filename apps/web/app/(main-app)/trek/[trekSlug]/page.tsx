@@ -17,6 +17,8 @@ import { CuratedExperiences } from "@/components/home/curated-experiences";
 import BookingCTA from "@/components/trek/trek-details/booking-cta";
 import NeedHelpCard from "@/components/shared/need-help-card";
 import { TrekGallery } from "@/components/trek/trek-gallery";
+import { NearbyPlaces } from "@/components/trek/trek-details/nearby-places";
+import { MOCK_NEARBY_PLACES } from "@/lib/nearby-places-mock";
 import { getTrekBySlug } from "@/api/trek/trek.api";
 
 interface TrekPageProps {
@@ -118,6 +120,8 @@ export default async function TrekPage({ params }: TrekPageProps) {
                     heading={`${trek.name} FAQs`}
                     faqs={trek.faqs.map((faq) => ({ question: faq.question, answer: faq.answer }))}
                 />
+                <Divider />
+                <NearbyPlaces places={MOCK_NEARBY_PLACES} />
                 <Divider />
                 <CuratedExperiences />
             </main>
