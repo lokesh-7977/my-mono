@@ -4,20 +4,20 @@ import React, { useState } from "react";
 import Image from "next/image";
 import {
   Mountain,
-  ArrowRight,
   Car,
   Route,
-  Download,
 } from "lucide-react";
-import { Button } from "@repo/ui/components/button";
 import { cn } from "@repo/ui/lib/utils";
 import type { TrekRoute } from "@/api/trek/trek.types";
+import ItineraryModal from "../itinerary-modal";
 
 interface TrekItineraryProps {
   trekName?: string;
   routes?: TrekRoute[];
   fallbackImage?: string | null;
 }
+
+const PREVIEW_DAY_COUNT = 2;
 
 export function TrekItinerary({
   trekName = "Kashmir Great Lakes",
@@ -41,6 +41,17 @@ export function TrekItinerary({
 
   const activeRoute = routes.find((route) => route.id === activeRouteId) ?? routes[0];
   const itineraryDays = activeRoute?.itineraryDays ?? [];
+  const previewDays = itineraryDays.slice(0, PREVIEW_DAY_COUNT);
+
+  const modalDays = itineraryDays.map((day) => ({
+    day: `DAY ${String(day.dayNumber).padStart(2, "0")}`,
+    title: day.title,
+    altitude: day.altitude ? `${day.altitude.toLocaleString()} FT` : "",
+    duration: day.duration ?? "",
+    distance: day.distanceKm ? `${day.distanceKm} KM` : "",
+    description: day.description ?? "",
+    image: day.imageUrls[0] ?? fallbackImage ?? "",
+  }));
 
   return (
     <section className="border-t border-zinc-200 pt-6">
@@ -74,13 +85,13 @@ export function TrekItinerary({
         </div>
       )}
 
-      {/* Timeline Section */}
-      {itineraryDays.length > 0 ? (
+      {/* Timeline Section (preview only) */}
+      {previewDays.length > 0 ? (
         <div className="relative flex flex-col gap-9.5 mt-10">
           {/* Continuous Vertical Line */}
           <div className="absolute left-0.75 top-0 w-0.5 bg-zinc-100 h-full" />
 
-          {itineraryDays.map((day) => {
+          {previewDays.map((day) => {
             const image = day.imageUrls[0] ?? fallbackImage;
 
             return (
@@ -147,18 +158,9 @@ export function TrekItinerary({
         </p>
       )}
 
-      {/* Footer Actions */}
+      {/* Full itinerary modal (also renders the footer actions) */}
       {itineraryDays.length > 0 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mt-8">
-          <Button className="w-full sm:w-auto px-6 h-12 rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white cursor-pointer text-base font-semibold transition-all">
-            View Full {itineraryDays.length} Day Itinerary
-            <ArrowRight className="size-4.5 ml-2" />
-          </Button>
-          <Button variant={"ghost"} className="cursor-pointer h-12 hover:bg-transparent hover:text-primary text-base font-semibold">
-            <Download className="size-5 mr-2" />
-            Download Itinerary
-          </Button>
-        </div>
+        <ItineraryModal days={modalDays} trekName={trekName} />
       )}
     </section>
   );

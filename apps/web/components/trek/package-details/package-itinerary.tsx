@@ -5,7 +5,7 @@ import {
     Car,
     Route,
 } from "lucide-react";
-import ItineraryModal from "./itinerary-modal";
+import ItineraryModal from "../itinerary-modal";
 
 const itineraryDays = [
     {
@@ -86,7 +86,7 @@ export default function PackageItinerary() {
             {/* Timeline Section */}
             <div className="relative flex flex-col gap-9.5 mt-10">
                 {/* Continuous Vertical Line */}
-                <div className="absolute left-[3px] top-0 w-[2px] bg-zinc-100 h-full" />
+                <div className="absolute left-0.75 top-0 w-0.5 bg-zinc-100 h-full" />
 
                 {previewDays.map((day, index) => (
                     <div key={index} className="relative pl-10 flex flex-col gap-10 md:flex-row pt-4">
@@ -124,7 +124,7 @@ export default function PackageItinerary() {
                             </p>
                         </div>
 
-                        <div className="shrink-0 size-[160px] relative rounded-2xl overflow-hidden shadow-sm group cursor-pointer">
+                        <div className="shrink-0 size-40 relative rounded-2xl overflow-hidden shadow-sm group cursor-pointer">
                             <Image
                                 src={day.image}
                                 alt={day.title}

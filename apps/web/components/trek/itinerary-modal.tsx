@@ -25,9 +25,10 @@ interface ItineraryDay {
 
 interface ItineraryModalProps {
     days: ItineraryDay[];
+    trekName?: string;
 }
 
-export default function ItineraryModal({ days }: ItineraryModalProps) {
+export default function ItineraryModal({ days, trekName = "this trek" }: ItineraryModalProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDayIndex, setSelectedDayIndex] = useState(0);
 
@@ -66,7 +67,7 @@ export default function ItineraryModal({ days }: ItineraryModalProps) {
 
             {/* Full Itinerary Modal */}
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogContent className="max-w-[95vw] sm:max-w-[1020px] p-9 rounded-3xl gap-0">
+                <DialogContent className="max-w-[95vw] sm:max-w-255 p-9 rounded-3xl gap-0">
                     <VisuallyHidden>
                         <DialogTitle>Full Itinerary</DialogTitle>
                         <DialogDescription>Detailed day-by-day breakdown</DialogDescription>
@@ -75,12 +76,8 @@ export default function ItineraryModal({ days }: ItineraryModalProps) {
                     {/* Header */}
                     <div className="mb-6">
                         <h2 className="text-[26px] font-bold text-foreground">
-                            <span className="text-primary">Itinerary</span> for Kashmir Great Lakes Trek
+                            <span className="text-primary">Itinerary</span> for {trekName}
                         </h2>
-                        <h3 className="text-base font-bold text-foreground mt-4 mb-2">Be trek-ready with the right essentials</h3>
-                        <p className="text-base text-muted-foreground max-w-4xl leading-relaxed">
-                            Every trek requires a basic set of gear to ensure safety, comfort, and enjoyment. Don&#39;t worry — we&#39;ve created a simple, difficulty-based checklist to help you pack smart.
-                        </p>
                     </div>
 
                     {/* Stepper */}
@@ -95,7 +92,7 @@ export default function ItineraryModal({ days }: ItineraryModalProps) {
 
                         <div className="flex-1 flex items-center justify-between relative px-2">
                             {/* Continuous Background Line */}
-                            <div className="absolute left-[24px] right-[24px] top-1/2 -translate-y-1/2 h-[2px] z-0">
+                            <div className="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-0.5 z-0">
                                 <div className="w-full h-full bg-zinc-100 absolute left-0 top-0" />
                                 <div
                                     className="h-full bg-primary absolute left-0 top-0 transition-all duration-700 ease-in-out"
@@ -162,7 +159,7 @@ export default function ItineraryModal({ days }: ItineraryModalProps) {
                                 </motion.div>
                             </AnimatePresence>
 
-                            <div className="absolute top-4 left-4 px-3 py-1.5 bg-primary/90 backdrop-blur-sm text-white text-xs tracking-wider font-semibold rounded-xl z-10 overflow-hidden flex items-center justify-center min-w-[74px]">
+                            <div className="absolute top-4 left-4 px-3 py-1.5 bg-primary/90 backdrop-blur-sm text-white text-xs tracking-wider font-semibold rounded-xl z-10 overflow-hidden flex items-center justify-center min-w-18.5">
                                 <span className="mr-1">STEP</span>
                                 <AnimatePresence mode="popLayout" initial={false}>
                                     <motion.span
@@ -191,7 +188,7 @@ export default function ItineraryModal({ days }: ItineraryModalProps) {
                                     transition={{ duration: 0.2, ease: "easeOut" }}
                                     className="flex flex-col"
                                 >
-                                    <h3 className="text-[24px] font-bold text-foreground mb-4 leading-snug">
+                                    <h3 className="text-6 font-bold text-foreground mb-4 leading-snug">
                                         {selectedDay.title}
                                     </h3>
 
