@@ -8,7 +8,7 @@ import { TrekContent } from "@/components/trek/trek-details/trek-content";
 import StickySidebar from "@/components/shared/sticky-sidebar";
 import { TrekItinerary } from "@/components/trek/trek-details/trek-itinerary";
 import TrekHighlights from "@/components/trek/trek-details/trek-highlights";
-import { PopularPackages } from "@/components/trek/trek-details/popular-packages";
+import { FeaturedPackages } from "@/components/trek/trek-details/featured-packages";
 import { TrekInfoSections } from "@/components/trek/trek-details/trek-info-sections";
 import { FitnessSafetySections } from "@/components/trek/trek-details/fitness-safety-sections";
 import Divider from "@repo/ui/components/divider";
@@ -99,7 +99,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
                     </div>
                 </div>
                 <Divider className="mt-9.5" />
-                <PopularPackages />
+                <FeaturedPackages />
                 <Divider className="mt-9.5" />
                 <TrekInfoSections
                     trekName={trek.name}
