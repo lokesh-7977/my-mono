@@ -15,7 +15,7 @@ export function TrekContent({
   return (
 
     <section className="border-t border-zinc-200 pt-6">
-      <h2 className="text-[26px] font-bold text-foreground mb-4 font-bricolage-grotesque">
+      <h2 className="text-heading font-bold text-foreground mb-4 font-bricolage-grotesque">
         {trekName} Overview
       </h2>
       <div className="prose prose-zinc prose-sm text-foreground max-w-none space-y-8 text-base mb-4">

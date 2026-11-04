@@ -41,10 +41,10 @@ const difficulties: DifficultyLevel[] = [
 export function DifficultySelector() {
     return (
         <section
-            className="w-full mx-auto max-w-[1540px] overflow-hidden bg-cover xl:bg-contain  bg-bottom mt-10 bg-no-repeat"
+            className="w-full mx-auto max-w-385 overflow-hidden bg-cover xl:bg-contain  bg-bottom mt-10 bg-no-repeat"
             style={{ backgroundImage: 'url("/trek-category-bg.png")' }}
         >
-            <div className="w-full max-w-[1064px] mx-auto py-16 max-[1100]:px-4 text-center">
+            <div className="w-full max-w-266 mx-auto py-16 max-[1100]:px-4 text-center">
 
                 {/* Headings */}
                 <div className="flex flex-col items-center mb-10">
@@ -70,10 +70,10 @@ export function DifficultySelector() {
                         <Link
                             key={diff.level}
                             href={`/treks?difficulty=${diff.title.toLowerCase()}`}
-                            className="group bg-white rounded-2xl flex gap-3 flex-col items-center justify-center shadow-[0px_4px_12px_rgba(0,0,0,0.04)] hover:shadow-lg transition-all duration-300 h-[194px] w-[200px] shrink-0"
+                            className="group bg-white rounded-2xl flex gap-3 flex-col items-center justify-center shadow-raised-sm hover:shadow-lg transition-all duration-300 h-48.5 w-50 shrink-0"
                         >
                             {/* Image Container */}
-                            <div className="w-[82px] h-[76px] rounded-xl overflow-hidden relative transition-transform group-hover:-translate-y-1">
+                            <div className="w-20.5 h-19 rounded-xl overflow-hidden relative transition-transform group-hover:-translate-y-1">
                                 <Image
                                     src={diff.img}
                                     alt={`${diff.title} difficulty`}
@@ -98,7 +98,7 @@ export function DifficultySelector() {
                     {/* Compare Treks Card */}
                     <Link
                         href="/compare"
-                        className="group rounded-xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.08)] hover:shadow-lg transition-all duration-300 relative flex flex-col items-center justify-end h-[194px] w-[200px] shrink-0"
+                        className="group rounded-xl overflow-hidden shadow-raised-strong hover:shadow-lg transition-all duration-300 relative flex flex-col items-center justify-end h-48.5 w-50 shrink-0"
                     >
                         <Image
                             src="https://www.scoutripper.com/img/features/compare-treks-light-img.png"
@@ -120,7 +120,7 @@ export function DifficultySelector() {
                 <div className="flex justify-center mb-8">
                     <Button
                         // size="lg"
-                        className="bg-linear-to-r from-primary to-magic-green text-white rounded-[10px] px-5 py-6 text-sm font-semibold cursor-pointer flex items-center justify-center gap-3 transition-opacity shadow-sm"
+                        className="bg-linear-to-r from-primary to-magic-green text-white rounded-base px-5 py-6 text-sm font-semibold cursor-pointer flex items-center justify-center gap-3 transition-opacity shadow-sm"
                     >
                         <MagicMountainIcon className="size-5" color="white" />
                         Ask Trek Genie

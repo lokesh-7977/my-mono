@@ -66,7 +66,7 @@ export function Testimonials() {
   const { scrollRef, isAtStart, isAtEnd, scrollLeft, scrollRight, checkScrollPosition } = useCarouselScroll(350);
 
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
+    <section className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
       <SectionHeader
         title="Hear From Fellow Trekkers"
         subtitle="Real stories from our community of adventurers"
@@ -86,7 +86,7 @@ export function Testimonials() {
         {testimonials.map((t) => (
           <div
             key={t.id}
-            className="flex-none group cursor-pointer w-[256px] h-[320px] snap-start bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-zinc-100 flex flex-col"
+            className="flex-none group cursor-pointer w-64 h-80 snap-start bg-white rounded-2xl shadow-raised border border-zinc-100 flex flex-col"
           >
             {/* Media Area */}
             <div className="size-full rounded-2xl overflow-hidden relative">

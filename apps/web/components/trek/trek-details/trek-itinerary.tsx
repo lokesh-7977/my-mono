@@ -29,7 +29,7 @@ export function TrekItinerary({
   if (routes.length === 0) {
     return (
       <section className="border-t border-zinc-200 pt-6">
-        <h2 className="text-[26px] font-bold text-foreground font-bricolage-grotesque mb-4">
+        <h2 className="text-heading font-bold text-foreground font-bricolage-grotesque mb-4">
           {trekName} Itinerary
         </h2>
         <p className="text-base text-zinc-500">
@@ -55,7 +55,7 @@ export function TrekItinerary({
 
   return (
     <section className="border-t border-zinc-200 pt-6">
-      <h2 className="text-[26px] font-bold text-foreground font-bricolage-grotesque mb-8">
+      <h2 className="text-heading font-bold text-foreground font-bricolage-grotesque mb-8">
         {trekName} Itinerary
       </h2>
 
@@ -104,7 +104,7 @@ export function TrekItinerary({
                     <span className="text-base font-bold text-primary uppercase tracking-wide">
                       DAY {String(day.dayNumber).padStart(2, "0")}
                     </span>
-                    <h3 className="text-[20px] font-bold text-foreground leading-tight">
+                    <h3 className="text-xl font-bold text-foreground leading-tight">
                       {day.title}
                     </h3>
                   </div>

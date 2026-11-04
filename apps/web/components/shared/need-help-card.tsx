@@ -1,6 +1,6 @@
 export default function NeedHelpCard() {
     return (
-        <div className="cursor-pointer border border-magic-green rounded-2xl p-6 flex flex-col gap-4 relative overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.03)]">
+        <div className="cursor-pointer border border-magic-green rounded-2xl p-6 flex flex-col gap-4 relative overflow-hidden shadow-soft">
             <div className="flex flex-col gap-2">
                 <h3 className="text-2xl font-bold">Need Help?</h3>
                 <p className="text-sm font-medium leading-relaxed opacity-90">

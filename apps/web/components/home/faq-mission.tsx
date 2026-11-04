@@ -49,7 +49,7 @@ export function FaqMission({
     <section className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex flex-col gap-6 lg:gap-10 w-full mx-auto">
         <div className="w-full">
-          <h2 className="text-[28px] md:text-[32px] font-bold leading-tight text-foreground w-full text-center mb-3">{heading}</h2>
+          <h2 className="text-title md:text-title-lg font-bold leading-tight text-foreground w-full text-center mb-3">{heading}</h2>
           <p className="text-sm text-zinc-400 w-full text-center">Didn’t find your answer? Write to us at <a href={`mailto:${MAIN_EMAIL}`}>{MAIN_EMAIL}</a> and we’ll be happy to help.</p>
         </div>
 
@@ -78,7 +78,7 @@ export function FaqMission({
                       onClick={() => setOpenIndex(isOpen ? null : index)}
                       className="w-full flex items-center justify-between p-5 md:p-6 text-left cursor-pointer transition-colors hover:bg-zinc-50"
                     >
-                      <span className="font-bold text-foreground pr-4 text-[15px] md:text-base">
+                      <span className="font-bold text-foreground pr-4 text-body md:text-base">
                         {faq.question}
                       </span>
                       {isOpen ? (

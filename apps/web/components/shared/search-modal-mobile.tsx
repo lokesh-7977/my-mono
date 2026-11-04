@@ -25,23 +25,23 @@ export default function SearchModalMobile({ children, activeTab, onActiveTabChan
                     <div className="relative w-full flex h-fit">
                         <div className={cn("flex flex-row items-stretch justify-center pb-0 mx-auto h-fit gap-3 mt-3")}>
 
-                            <div onClick={() => onActiveTabChange("Trekking")} className={cn("flex-1 flex flex-col items-center justify-between pb-1.5 px-2 border-b-2 h-[62.25px]", activeTab === "Trekking" ? "border-primary" : "border-transparent")}>
+                            <div onClick={() => onActiveTabChange("Trekking")} className={cn("flex-1 flex flex-col items-center justify-between pb-1.5 px-2 border-b-2 h-15.5", activeTab === "Trekking" ? "border-primary" : "border-transparent")}>
                                 <Image src={'/backpack.svg'} alt="backpack" width={30} height={30} className="my-auto" />
                                 <span className="text-xs font-bold">Treks</span>
                             </div>
 
-                            <div onClick={() => onActiveTabChange("Experiences")} className={cn("flex-1 cursor-pointer flex flex-col items-center justify-between pb-1.5 px-2 border-b-2 h-[62.25px]", activeTab === "Experiences" ? "border-primary" : "border-transparent")}>
+                            <div onClick={() => onActiveTabChange("Experiences")} className={cn("flex-1 cursor-pointer flex flex-col items-center justify-between pb-1.5 px-2 border-b-2 h-15.5", activeTab === "Experiences" ? "border-primary" : "border-transparent")}>
                                 <Image src={'/goggles.svg'} alt="backpack" width={30} height={30} className="my-auto" />
                                 <span className="text-xs font-bold">Experiences</span>
                             </div>
 
-                            <div onClick={() => onActiveTabChange("Locations")} className={cn("flex-1 cursor-pointer flex flex-col items-center justify-between pb-1.5 px-2 border-b-2 h-[62.25px]", activeTab === "Locations" ? "border-primary" : "border-transparent")}>
+                            <div onClick={() => onActiveTabChange("Locations")} className={cn("flex-1 cursor-pointer flex flex-col items-center justify-between pb-1.5 px-2 border-b-2 h-15.5", activeTab === "Locations" ? "border-primary" : "border-transparent")}>
                                 <Image src={'/map-pin.svg'} alt="backpack" width={30} height={30} className="my-auto" />
                                 <span className="text-xs font-bold">Locations</span>
                             </div>
                         </div>
                         <DialogClose asChild>
-                            <button className="absolute right-3 top-1/2 -translate-y-1/2 border border-gray-500 text-gray-500 rounded-[10px] h-fit p-1.5">
+                            <button className="absolute right-3 top-1/2 -translate-y-1/2 border border-gray-500 text-gray-500 rounded-base h-fit p-1.5">
                                 <X className="size-4" />
                             </button>
                         </DialogClose>

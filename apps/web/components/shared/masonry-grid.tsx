@@ -267,13 +267,13 @@ const Masonry = ({
                 >
                     <div
                         onClick={(e) => onImageClick?.(e, Number(item.id))}
-                        // className="relative w-full h-full bg-cover bg-center rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)]"
-                        className="relative w-full h-full bg-cover bg-center rounded-[10px] "
+                        // className="relative w-full h-full bg-cover bg-center rounded-base shadow-overlay"
+                        className="relative w-full h-full bg-cover bg-center rounded-base "
                         style={{ backgroundImage: `url("${item.img}")` }}
                     >
                         {colorShiftOnHover && (
                             <div
-                                className="color-overlay absolute inset-0 rounded-[10px] bg-linear-to-tr from-pink-500/50 to-sky-500/50 pointer-events-none"
+                                className="color-overlay absolute inset-0 rounded-base bg-linear-to-tr from-pink-500/50 to-sky-500/50 pointer-events-none"
                                 style={{ opacity: 0 }}
                             />
                         )}

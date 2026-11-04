@@ -78,7 +78,7 @@ export function HeroSection({ slides }: HeroSectionProps) {
     <section className="relative w-full max-w-360 mx-auto px-0 sm:px-6 lg:px-8">
       {/* ─── Hero Banner ─── */}
       <div
-        className="relative w-full h-130 md:h-155 overflow-hidden md:rounded-3xl rounded-b-[14px]"
+        className="relative w-full h-130 md:h-155 overflow-hidden md:rounded-3xl rounded-b-hero"
         role="group"
         aria-roledescription="carousel"
         aria-label="Hero image carousel"
@@ -103,7 +103,7 @@ export function HeroSection({ slides }: HeroSectionProps) {
               src={slides[currentIndex].img}
               alt={slides[currentIndex].title}
               fill
-              className="object-cover md:rounded-3xl rounded-b-[14px]"
+              className="object-cover md:rounded-3xl rounded-b-hero"
               priority={currentIndex === 0}
               quality={90}
               sizes="100vw"
@@ -127,7 +127,7 @@ export function HeroSection({ slides }: HeroSectionProps) {
               <p className="text-white/85 text-base md:text-lg font-normal mb-2 tracking-wide">
                 {slides[currentIndex].subtext}
               </p>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold text-white mb-6 max-w-4xl leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-hero font-bold text-white mb-6 max-w-4xl leading-tight">
                 {slides[currentIndex].title}
               </h1>
               <Link href={slides[currentIndex].href}>

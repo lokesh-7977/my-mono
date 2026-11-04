@@ -70,12 +70,12 @@ export function SearchBarMobile({ className }: SearchBarProps) {
     <div
       ref={containerRef}
       className={cn(
-        "sticky top-0 z-40 w-full max-w-[1100px] mx-auto py-2 max-[800px]:w-[85%] max-sm:w-[92%]",
+        "sticky top-0 z-40 w-full max-w-275 mx-auto py-2 max-search:w-[85%] max-sm:w-[92%]",
         className,
         isActive ? "max-sm:w-full pt-0" : "max-sm:w-[92%]"
       )}
     >
-      <div className={cn("shadow-[0_8px_40px_rgba(0,0,0,0.12)] overflow-hidden", isActive ? "rounded-none py-5 bg-gray-100" : "bg-white rounded-[35px]")}>
+      <div className={cn("shadow-float overflow-hidden", isActive ? "rounded-none py-5 bg-gray-100" : "bg-white rounded-full")}>
         {isActive && <div className="w-[90%] mx-auto">
           <SearchModalMobile activeTab={activeTab} onActiveTabChange={setActiveTab}>
             <button className={cn("w-full border text-left px-4 text-foreground/50 leading-none py-3 rounded-full bg-white")}>

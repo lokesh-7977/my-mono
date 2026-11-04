@@ -75,7 +75,7 @@ export default function ItineraryModal({ days, trekName = "this trek" }: Itinera
 
                     {/* Header */}
                     <div className="mb-6">
-                        <h2 className="text-[26px] font-bold text-foreground">
+                        <h2 className="text-heading font-bold text-foreground">
                             <span className="text-primary">Itinerary</span> for {trekName}
                         </h2>
                     </div>
@@ -108,7 +108,7 @@ export default function ItineraryModal({ days, trekName = "this trek" }: Itinera
                                 return (
                                     <div key={idx} className="relative flex flex-col items-center cursor-pointer group z-10" onClick={() => setSelectedDayIndex(idx)}>
                                         <div className="bg-white p-1 rounded-full">
-                                            <div className={`size-6 rounded-full border-[2.5px] flex items-center justify-center transition-all duration-300
+                                            <div className={`size-6 rounded-full border-2 flex items-center justify-center transition-all duration-300
                                                 ${isCompleted ? 'border-primary bg-primary text-white' : ''}
                                                 ${isActive ? 'border-primary ring-4 ring-primary/20' : ''}
                                                 ${isUpcoming ? 'border-zinc-200 group-hover:border-zinc-300' : ''}

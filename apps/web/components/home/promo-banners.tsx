@@ -4,10 +4,10 @@ import { MessageCircle, Compass } from "lucide-react";
 
 export function PromoBanners() {
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <section className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Banner 1 */}
-        <div className="flex-1 bg-[#F5F9FD] rounded-3xl p-8 relative overflow-hidden flex flex-col justify-center min-h-[280px]">
+        <div className="flex-1 bg-[#F5F9FD] rounded-3xl p-8 relative overflow-hidden flex flex-col justify-center min-h-70">
           <div className="absolute top-0 right-0 p-8 text-[#E2EEF8]">
             <MessageCircle className="w-48 h-48 -mr-16 -mt-16" />
           </div>
@@ -27,7 +27,7 @@ export function PromoBanners() {
         </div>
 
         {/* Banner 2 */}
-        <div className="flex-1 bg-[#F0FDF4] rounded-3xl p-8 relative overflow-hidden flex flex-col justify-center min-h-[280px]">
+        <div className="flex-1 bg-[#F0FDF4] rounded-3xl p-8 relative overflow-hidden flex flex-col justify-center min-h-70">
           <div className="absolute top-0 right-0 p-8 text-[#DCFCE7]">
             <Compass className="w-48 h-48 -mr-16 -mt-16" />
           </div>

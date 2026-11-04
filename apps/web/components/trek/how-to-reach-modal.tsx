@@ -27,7 +27,7 @@ export function HowToReachModal({ trekName, options }: HowToReachModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="mt-1 h-10 flex items-center gap-2 bg-secondary text-foreground font-bold px-5 py-2.5 rounded-xl w-fit transition-all hover:bg-primary hover:text-primary-foreground group cursor-pointer text-[14px]">
+        <Button className="mt-1 h-10 flex items-center gap-2 bg-secondary text-foreground font-bold px-5 py-2.5 rounded-xl w-fit transition-all hover:bg-primary hover:text-primary-foreground group cursor-pointer text-sm">
           View Routes
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </Button>
@@ -39,7 +39,7 @@ export function HowToReachModal({ trekName, options }: HowToReachModalProps) {
         </VisuallyHidden>
 
         <div className="min-w-0">
-          <h2 className="text-[26px] font-bold text-foreground mb-4">
+          <h2 className="text-heading font-bold text-foreground mb-4">
             <span className="text-primary">How to Reach</span> {trekName}
           </h2>
 

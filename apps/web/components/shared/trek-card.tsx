@@ -73,7 +73,7 @@ export function TrekCard({
       {/* Location */}
       <div className="flex items-center gap-1.5 mb-4">
         <MapPin className="w-3.5 h-3.5 text-primary" />
-        <span className="text-[13px] font-medium text-primary">{location}</span>
+        <span className="text-meta font-medium text-primary">{location}</span>
       </div>
 
       {/* Bottom Row / Pricing */}
@@ -89,14 +89,14 @@ export function TrekCard({
 
         {/* Price */}
         <div className="flex flex-col items-end text-zinc-800">
-          <span className="text-[11px] font-semibold text-zinc-400">Starting from</span>
+          <span className="text-caption font-semibold text-zinc-400">Starting from</span>
           <div className="flex items-center gap-1.5">
             {oldPrice && (
               <span className="text-xs font-semibold text-red-500 line-through">
                 ₹{oldPrice.toLocaleString()}/-
               </span>
             )}
-            <span className="text-[15px] font-bold text-foreground">
+            <span className="text-body font-bold text-foreground">
               ₹{price.toLocaleString()}/-
             </span>
           </div>

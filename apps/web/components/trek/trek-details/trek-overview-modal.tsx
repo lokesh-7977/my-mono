@@ -34,7 +34,7 @@ export function TrekOverviewModal({ trekName, description, howToReach }: TrekOve
 
         <div>
           {/* Header */}
-          <h2 className="text-[26px] font-bold text-forefround mb-4">
+          <h2 className="text-heading font-bold text-forefround mb-4">
             <span className="text-primary">Overview</span> for {trekName}
           </h2>
 
@@ -46,7 +46,7 @@ export function TrekOverviewModal({ trekName, description, howToReach }: TrekOve
             </p>
 
             {howToReach && (
-              <div className="relative mt-5 p-6 bg-primary-50/40 border-l-[6px] border-primary">
+              <div className="relative mt-5 p-6 bg-primary-50/40 border-l-6 border-primary">
                 <p className="text-foreground font-bold italic text-lg sm:text-xl leading-relaxed">
                   {howToReach}
                 </p>

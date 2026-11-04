@@ -40,7 +40,7 @@ export function NearbyPlaces({ places }: NearbyPlacesProps) {
           <h3 className="text-base font-bold text-foreground mb-1">{place.name}</h3>
           <div className="flex items-center gap-1.5">
             <MapPin className="size-3.5 text-primary" />
-            <span className="text-[13px] font-medium text-primary">{place.location}</span>
+            <span className="text-meta font-medium text-primary">{place.location}</span>
           </div>
         </div>
       ))}

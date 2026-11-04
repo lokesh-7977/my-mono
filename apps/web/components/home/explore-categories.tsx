@@ -60,7 +60,7 @@ export function ExploreCategories() {
   const { scrollRef, isAtStart, isAtEnd, checkScrollPosition, scrollLeft, scrollRight } = useCarouselScroll(300);
 
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <section className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <SectionHeader
         title="Explore. Experience. Evolve."
         subtitle="Adventure with purpose — explore nature, culture, and conscious travel experiences."
@@ -80,9 +80,9 @@ export function ExploreCategories() {
         {categories.map((category) => (
           <div
             key={category.id}
-            className="flex-none w-[280px] snap-start group cursor-pointer"
+            className="flex-none w-70 snap-start group cursor-pointer"
           >
-            <div className="w-full h-[180px] rounded-2xl overflow-hidden mb-4 relative">
+            <div className="w-full h-45 rounded-2xl overflow-hidden mb-4 relative">
               <Image
                 src={category.img}
                 alt={category.title}
@@ -91,7 +91,7 @@ export function ExploreCategories() {
                 sizes="280px"
               />
             </div>
-            <h3 className="text-[17px] font-bold text-zinc-800 mb-2">
+            <h3 className="text-lead font-bold text-zinc-800 mb-2">
               {category.title}
             </h3>
             <span className="inline-block bg-[#4EC5C1]/10 text-[#4EC5C1] text-xs font-bold px-3 py-1.5 rounded-full">

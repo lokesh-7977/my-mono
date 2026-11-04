@@ -30,7 +30,7 @@ export function Navbar() {
 
   return (
     <header className="bg-white w-full">
-      <div className="w-full max-w-[1540px] mx-auto px-5 lg:px-5 flex items-center justify-between h-22.5">
+      <div className="w-full max-w-385 mx-auto px-5 lg:px-5 flex items-center justify-between h-22.5">
         <div className="flex items-center gap-5">
           <Link href="/" className="flex items-center">
             <Image src="/scoutripper-logo-dark.png" className="" alt="Logo" width={150} height={44} />

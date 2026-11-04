@@ -20,7 +20,7 @@ export default function TrekHighlights({
 }: TrekHighlightsProps) {
     return (
         <section className="border-t border-zinc-200 pt-6">
-            <h2 className="text-[26px] font-bold text-foreground mb-4 font-bricolage-grotesque">
+            <h2 className="text-heading font-bold text-foreground mb-4 font-bricolage-grotesque">
                 {trekName} Highlights
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

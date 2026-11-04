@@ -36,7 +36,7 @@ const blogPosts = [
 
 export function BlogInspiration() {
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-white">
+    <section className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-white">
       <SectionHeader
         title="Get inspiration for your next trip"
         subtitle="Read our latest articles and travel guides"
@@ -76,7 +76,7 @@ export function BlogInspiration() {
 
             <div className="mt-auto flex items-center gap-2 text-primary text-xs font-medium transition-colors group-hover:text-primary">
               Read More
-              <ArrowRight className="size-3.5  ml-[-2px] group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="size-3.5  -ml-0.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </Link>
         ))}

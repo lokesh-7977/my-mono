@@ -15,7 +15,7 @@ export default function BookingCTA({ startingPrice = null, currency = null }: Bo
     const symbol = currency ? (CURRENCY_SYMBOL[currency] ?? `${currency} `) : "₹";
 
     return (
-        <div className="rounded-2xl border border-zinc-200 shadow-[0_8px_40px_rgba(0,0,0,0.03)] p-8">
+        <div className="rounded-2xl border border-zinc-200 shadow-soft p-8">
             <div className="flex flex-col gap-5">
                 {/* Pricing Row */}
                 <div className="flex justify-between items-start">
@@ -23,7 +23,7 @@ export default function BookingCTA({ startingPrice = null, currency = null }: Bo
                         <span className="text-xs text-foreground/50 font-medium mb-1">Starting From</span>
                         {startingPrice !== null ? (
                             <div className="flex items-baseline gap-2">
-                                <span className="text-[24px] text-foreground font-bold leading-none">{symbol}{startingPrice.toLocaleString()}</span>
+                                <span className="text-2xl text-foreground font-bold leading-none">{symbol}{startingPrice.toLocaleString()}</span>
                                 <span className="text-foreground/50 text-sm font-medium">/ trekker</span>
                             </div>
                         ) : (

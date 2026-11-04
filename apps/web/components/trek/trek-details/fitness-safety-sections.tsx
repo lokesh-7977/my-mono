@@ -33,7 +33,7 @@ export function FitnessSafetySections({
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_590px] gap-12 items-start">
         {/* Left: Recommended Fitness */}
         <div className="flex flex-col">
-          <h3 className="font-bricolage-grotesque font-bold leading-tight text-xl md:text-[26px] mb-4">
+          <h3 className="font-bricolage-grotesque font-bold leading-tight text-xl md:text-heading mb-4">
             <span className="text-primary">Recommended Fitness</span>
             {" "}
             <span className="text-foreground">for {trekName}</span>

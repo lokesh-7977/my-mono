@@ -39,11 +39,11 @@ export function SearchBar({ className }: SearchBarProps) {
   return (
     <div
       className={cn(
-        "relative z-30 max-w-[1100px] mx-auto w-[85%] lg:w-[80%]",
+        "relative z-30 max-w-275 mx-auto w-[85%] lg:w-[80%]",
         className
       )}
     >
-      <div className="bg-white rounded-xl md:rounded-full shadow-[0_8px_40px_rgba(0,0,0,0.12)] overflow-hidden">
+      <div className="bg-white rounded-xl md:rounded-full shadow-float overflow-hidden">
         <div className="flex flex-col md:flex-row items-stretch pl-0 pr-0 pb-1.5 md:pb-0 md:pl-4 md:pr-1">
           {/* Treks */}
           {/* <div className="flex-1 px-6 py-5 border-b md:border-b-0 md:border-r border-zinc-100">
@@ -101,7 +101,7 @@ export function SearchBar({ className }: SearchBarProps) {
           </DatePicker>
           {/* Search Button */}
           <div className="p-3 flex items-center">
-            <button className="bg-primary hover:bg-primary-500 text-white rounded-full h-full min-h-[52px] px-7 flex items-center gap-2.5 text-sm font-bold transition-colors whitespace-nowrap w-full md:w-auto justify-center cursor-pointer">
+            <button className="bg-primary hover:bg-primary-500 text-white rounded-full h-full min-h-13 px-7 flex items-center gap-2.5 text-sm font-bold transition-colors whitespace-nowrap w-full md:w-auto justify-center cursor-pointer">
               <Search className="w-4 h-4" />
               Search Trek
             </button>

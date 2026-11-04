@@ -46,7 +46,7 @@ const destinations = [
 
 export function Destinations() {
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <section className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <SectionHeader
         title="Find Your Perfect Destination"
         subtitle="Explore specific regions for your next adventure"
@@ -62,7 +62,7 @@ export function Destinations() {
 
           // Calculate height: top row might be slightly taller in the image, 
           // or they can all be the same height. Let's make top row somewhat taller.
-          const heightClass = isTopRow ? "h-[260px] md:h-[280px]" : "h-[220px] md:h-[240px]";
+          const heightClass = isTopRow ? "h-65 md:h-70" : "h-55 md:h-60";
 
           return (
             <Link
@@ -93,7 +93,7 @@ export function Destinations() {
                   <h3 className="text-xl md:text-2xl font-bold text-white font-bricolage-grotesque drop-shadow-md mb-1 line-clamp-1">
                     {dest.region}
                   </h3>
-                  <p className="text-white font-medium text-[10px] md:text-xs tracking-wider line-clamp-1 drop-shadow-md">
+                  <p className="text-white font-medium text-micro md:text-xs tracking-wider line-clamp-1 drop-shadow-md">
                     A Destination For All Seasons And All Reasons
                   </p>
                 </div>

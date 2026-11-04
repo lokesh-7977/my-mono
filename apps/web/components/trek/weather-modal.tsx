@@ -47,7 +47,7 @@ export function WeatherModal({ trekName, weather }: WeatherModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="mt-1 h-10 flex items-center gap-2 bg-secondary text-foreground font-bold px-5 py-2.5 rounded-xl w-fit transition-all hover:bg-primary hover:text-primary-foreground group cursor-pointer text-[14px]">
+        <Button className="mt-1 h-10 flex items-center gap-2 bg-secondary text-foreground font-bold px-5 py-2.5 rounded-xl w-fit transition-all hover:bg-primary hover:text-primary-foreground group cursor-pointer text-sm">
           Check Weather
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </Button>
@@ -59,7 +59,7 @@ export function WeatherModal({ trekName, weather }: WeatherModalProps) {
         </VisuallyHidden>
 
         <div className="min-w-0">
-          <h2 className="text-[26px] font-bold text-foreground mb-1">
+          <h2 className="text-heading font-bold text-foreground mb-1">
             <span className="text-primary">Weather Conditions</span> for {trekName}
           </h2>
           <p className="text-base text-zinc-500 mb-6">
@@ -81,7 +81,7 @@ export function WeatherModal({ trekName, weather }: WeatherModalProps) {
                 </div>
                 <div className="flex items-start text-right divide-x divide-zinc-300">
                   <div className="pr-6">
-                    <span className="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wide">
+                    <span className="block text-caption font-semibold text-zinc-400 uppercase tracking-wide">
                       Snow Risk
                     </span>
                     <span className={cn("text-sm font-bold", RISK_STYLES[climate.snowRisk])}>
@@ -89,7 +89,7 @@ export function WeatherModal({ trekName, weather }: WeatherModalProps) {
                     </span>
                   </div>
                   <div className="pl-6">
-                    <span className="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wide">
+                    <span className="block text-caption font-semibold text-zinc-400 uppercase tracking-wide">
                       Rain Risk
                     </span>
                     <span className={cn("text-sm font-bold", RISK_STYLES[climate.rainRisk])}>
@@ -119,7 +119,7 @@ export function WeatherModal({ trekName, weather }: WeatherModalProps) {
                             opacity,
                           }}
                         />
-                        <span className="text-[11px] font-semibold text-zinc-400 uppercase">
+                        <span className="text-caption font-semibold text-zinc-400 uppercase">
                           {monthLabel(m.month)}
                         </span>
                       </div>

@@ -21,7 +21,7 @@ export function CarouselSection({ title, subtitle, scrollAmount = 350, children 
       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
         <div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <h2 className="text-[24px] font-bold text-foreground font-bricolage-grotesque leading-tight">
+            <h2 className="text-2xl font-bold text-foreground font-bricolage-grotesque leading-tight">
               {title}
             </h2>
             {/* No listing route exists yet, so this has nowhere to navigate to. */}

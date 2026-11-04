@@ -74,8 +74,8 @@ export function PackageCard({
         </div>
 
         <div className="flex flex-col items-end shrink-0">
-          <span className="text-[11px] font-semibold text-zinc-400">Starting from</span>
-          <span className="text-[15px] font-bold text-foreground">
+          <span className="text-caption font-semibold text-zinc-400">Starting from</span>
+          <span className="text-body font-bold text-foreground">
             ₹{price.toLocaleString()}/trekker
           </span>
         </div>

@@ -48,14 +48,14 @@ const socialContent = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#4EC5C1] text-white pt-16 pb-8">
-      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-primary text-white pt-16 pb-8">
+      <div className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Top Section */}
         <div className="flex flex-col xl:flex-row gap-y-12 xl:gap-x-10 mb-16">
 
           {/* Brand Div */}
-          <div className="w-full xl:max-w-[500px]">
+          <div className="w-full xl:max-w-125">
             <Link href="/" className="inline-block mb-8">
               <Image src="/scoutripper-logo-light.png" className="" alt="Logo" width={150} height={44} />
             </Link>
@@ -103,7 +103,7 @@ export function Footer() {
           </div>
 
           {/* Resources Div */}
-          <div className="w-full lg:w-2/3 grid max-[420px]:grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="w-full lg:w-2/3 grid max-xs:grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-8">
 
             {/* Start Planning */}
             <div>
@@ -164,7 +164,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/20 flex flex-col md:flex-row items-center justify-between text-[13px] font-medium">
+        <div className="pt-8 border-t border-white/20 flex flex-col md:flex-row items-center justify-between text-meta font-medium">
           <p>© {new Date().getFullYear()} Scoutripper · Made With ❤️ For Responsible Travelers</p>
           <div className="mt-4 md:mt-0 flex gap-4">
             <Link href="/privacy" className="hover:underline">Privacy</Link>
