@@ -1268,57 +1268,35 @@ export const searchPublicPackagesService = async (
     );
   }
 
-  if (schedule.adultPrice !== null) {
-    return schedule.adultPrice;
-  }
-
-  if (schedule.childPrice !== null) {
-    return schedule.childPrice;
-  }
-
   return null;
 };
 
-    const getStartingPriceAndCurrency = (
+    const getStartingPrice = (
   schedules: Array<{
     price: number | null;
     adultPrice: number | null;
     childPrice: number | null;
-    currency: string;
   }>,
-): { startingPrice: number | null; currency: string | null } => {
-  let startingPrice: number | null = null;
-  let currency: string | null = null;
+): number | null => {
+  const prices = schedules
+    .map(getScheduleDisplayPrice)
+    .filter(
+      (price): price is number =>
+        price !== null,
+    );
 
-  for (const schedule of schedules) {
-    const displayPrice = getScheduleDisplayPrice(schedule);
-    if (displayPrice === null) continue;
-
-    if (startingPrice === null || displayPrice < startingPrice) {
-      startingPrice = displayPrice;
-      currency = schedule.currency;
-    }
-  }
-
-  return { startingPrice, currency };
+  return prices.length > 0
+    ? Math.min(...prices)
+    : null;
 };
 
 
   const items: PublicPackageSearchItem[] = packages.map(
     (pkg) => {
-      const { startingPrice, currency } = getStartingPriceAndCurrency(
+      const startingPrice = getStartingPrice(
         pkg.schedules,
       );
-
-      let rating: number | null = null;
-      if (pkg.reviews.length > 0) {
-        const totalRating = pkg.reviews.reduce(
-          (acc, review) => acc + review.rating,
-          0,
-        );
-        rating =
-          Math.round((totalRating / pkg.reviews.length) * 10) / 10;
-      }
+      const firstSchedule = pkg.schedules[0] ?? null;
 
       return {
         id: pkg.id,
@@ -1336,11 +1314,11 @@ export const searchPublicPackagesService = async (
             }
           : null,
 
-        rating,
+        rating: null,
 
         startingPrice,
         originalPrice: null,
-        currency,
+        currency: firstSchedule?.currency ?? null,
       };
     },
   );
