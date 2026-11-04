@@ -6,6 +6,8 @@ import { Button } from "@repo/ui/components/button";
 import { ThingsToCarryModal } from "@/components/trek/things-to-carry-modal";
 import { HowToReachModal } from "@/components/trek/how-to-reach-modal";
 import { MOCK_HOW_TO_REACH } from "@/lib/how-to-reach-mock";
+import { WeatherModal } from "@/components/trek/weather-modal";
+import { MOCK_TREK_WEATHER } from "@/lib/weather-mock";
 import type { TrekDifficulty } from "@/api/trek/trek.types";
 
 interface InfoCardProps {
@@ -66,6 +68,7 @@ export function TrekInfoSections({
           title={`for ${trekName}`}
           description="Check seasonal weather patterns before you set out, since conditions in the Himalayas can shift quickly."
           buttonText="Check Weather"
+          trigger={<WeatherModal trekName={trekName} weather={MOCK_TREK_WEATHER} />}
         />
         <InfoCard
           heading="How to Reach"
