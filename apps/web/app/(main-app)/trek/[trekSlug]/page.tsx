@@ -13,7 +13,7 @@ import { TrekInfoSections } from "@/components/trek/trek-details/trek-info-secti
 import { FitnessSafetySections } from "@/components/trek/trek-details/fitness-safety-sections";
 import Divider from "@repo/ui/components/divider";
 import { FaqMission } from "@/components/home/faq-mission";
-import { CuratedExperiences } from "@/components/home/curated-experiences";
+import { FeaturedTreks } from "@/components/trek/trek-details/featured-treks";
 import BookingCTA from "@/components/trek/trek-details/booking-cta";
 import NeedHelpCard from "@/components/shared/need-help-card";
 import { TrekGallery } from "@/components/trek/trek-gallery";
@@ -123,7 +123,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
                 <Divider />
                 <NearbyPlaces places={MOCK_NEARBY_PLACES} />
                 <Divider />
-                <CuratedExperiences />
+                <FeaturedTreks />
             </main>
             <Footer />
         </div>
