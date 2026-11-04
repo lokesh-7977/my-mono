@@ -9,36 +9,43 @@ import { SectionHeader } from "@/components/shared/section-header";
 const destinations = [
   {
     id: "himachal",
+    slug: "himachal-pradesh",
     region: "Himachal Pradesh",
     img: "https://images.scoutripper.com/treks/hampta-pass-trek/beauty-of-hampta-pass-trek.jpg",
   },
   {
     id: "uttarakhand",
+    slug: "uttarakhand",
     region: "Uttarakhand",
     img: "https://images.scoutripper.com/treks/kedarnath-dham/kedarnath-dham-view-of-kedarnath-temple.png",
   },
   {
     id: "kashmir",
+    slug: "jammu-and-kashmir",
     region: "Jammu & Kashmir",
     img: "https://images.scoutripper.com/treks/kashmir-great-lake-trek/Kashmir Great Lakes-bg.png",
   },
   {
     id: "ladakh",
+    slug: "ladakh",
     region: "Ladakh",
     img: "https://images.scoutripper.com/treks/kareri-lake-trek/kareri-lake-trek-summer.webp",
   },
   {
     id: "nepal",
+    slug: "nepal",
     region: "Nepal",
     img: "https://images.scoutripper.com/treks/triund-trek/camps-in-triund.png",
   },
   {
     id: "ladakh2",
+    slug: "ladakh",
     region: "Ladakh",
     img: "https://images.scoutripper.com/treks/kareri-lake-trek/kareri-lake-trek-summer.webp",
   },
   {
     id: "himachal2",
+    slug: "himachal-pradesh",
     region: "Himachal Pradesh",
     img: "https://images.scoutripper.com/treks/hampta-pass-trek/beauty-of-hampta-pass-trek.jpg",
   },
@@ -66,7 +73,7 @@ export function Destinations() {
 
           return (
             <Link
-              href={`/destinations/${dest.id}`}
+              href={`/location/${dest.slug}`}
               key={`${dest.id}-${index}`}
               className={`relative rounded-xl overflow-hidden group block col-span-1 border border-black/5 ${spanClass} ${heightClass}`}
             >
