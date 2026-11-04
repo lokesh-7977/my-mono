@@ -56,6 +56,33 @@
   --color-magic-green: var(--magic-green);
   --color-warn-orange: var(--warn-orange);
   --color-danger-red: var(--danger-red);
+
+  /* Font sizes between Tailwind's defaults. Size only, so line-height stays
+     inherited. Add any new name to customTwTokens in packages/ui/src/lib/utils.ts. */
+  --text-micro: 0.625rem; /* 10px */
+  --text-caption: 0.6875rem; /* 11px */
+  --text-meta: 0.8125rem; /* 13px */
+  --text-body: 0.9375rem; /* 15px */
+  --text-lead: 1.0625rem; /* 17px */
+  --text-heading: 1.625rem; /* 26px */
+  --text-title: 1.75rem; /* 28px */
+  --text-title-lg: 2rem; /* 32px */
+  --text-display: 2.625rem; /* 42px */
+  --text-hero: 4rem; /* 64px */
+
+  --radius-base: var(--radius); /* 10px */
+  --radius-hero: 0.875rem; /* 14px */
+
+  --shadow-raised-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-raised: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --shadow-raised-strong: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-soft: 0 8px 40px rgba(0, 0, 0, 0.03);
+  --shadow-float: 0 8px 40px rgba(0, 0, 0, 0.12);
+  --shadow-overlay: 0 10px 50px -10px rgba(0, 0, 0, 0.2);
+
+  --breakpoint-xs: 26.25rem; /* 420px */
+  --breakpoint-search: 50rem; /* 800px: search bar switches to its mobile layout */
+
   /* --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
