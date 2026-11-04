@@ -48,7 +48,7 @@ async function main() {
       description:
         "The Valley of Flowers National Park bursts into color each monsoon, hosting hundreds of species of wildflowers against a backdrop of snow-capped peaks. Often combined with a visit to the Hemkund Sahib Gurudwara.",
       tagline: "Nature's own flower garden",
-      difficulty: "MEDIUM" as const,
+      difficulty: "MODERATE" as const,
       durationDays: 7,
       maxAltitude: 4300,
       distanceKm: 38,
@@ -68,7 +68,7 @@ async function main() {
       description:
         "Hampta Pass is famous for its stark landscape transition — lush green meadows on one side and the barren, moon-like terrain of Lahaul on the other. A short but visually dramatic trek often paired with a trip to Chandratal Lake.",
       tagline: "Two worlds, one pass",
-      difficulty: "MEDIUM" as const,
+      difficulty: "MODERATE" as const,
       durationDays: 5,
       maxAltitude: 4270,
       distanceKm: 26,
@@ -88,7 +88,7 @@ async function main() {
       description:
         "Roopkund, also known as the 'Mystery Lake' or 'Skeleton Lake', sits at the base of Trisul massif and is famed for the centuries-old human skeletons found in and around it. The trek passes through Bedni Bugyal, one of the largest meadows in Asia.",
       tagline: "The mystery lake",
-      difficulty: "HARD" as const,
+      difficulty: "DIFFICULT" as const,
       durationDays: 8,
       maxAltitude: 5029,
       distanceKm: 53,
@@ -128,7 +128,7 @@ async function main() {
       description:
         "Sandakphu offers a unique vantage point from which Everest, Kanchenjunga, Lhotse, and Makalu can all be seen in a single frame at sunrise. The trail winds through rhododendron forests and charming Nepali-influenced villages.",
       tagline: "Sleeping Buddha sunrise",
-      difficulty: "MEDIUM" as const,
+      difficulty: "MODERATE" as const,
       durationDays: 6,
       maxAltitude: 3636,
       distanceKm: 32,
