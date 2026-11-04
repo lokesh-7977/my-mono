@@ -69,6 +69,27 @@ enum PaymentStatus {
   REFUNDED
 }
 
+enum PaymentType {
+  FULL
+  DEPOSIT
+  BALANCE
+}
+
+enum ScheduleType {
+  FIXED
+  FLEXIBLE
+}
+
+enum DepositType {
+  PERCENTAGE
+  FIXED
+}
+
+enum ExperienceSource {
+  SELF_SUBMITTED
+  PLATFORM
+}
+
 enum LocationType {
   COUNTRY
   STATE
@@ -116,14 +137,6 @@ enum TeamInvitationStatus {
   EXPIRED
 }
 
-enum LocationType {
-  COUNTRY
-  STATE
-  DISTRICT
-  SUBDISTRICT
-  URBAN_LOCAL_BODY
-}
-
 model User {
   id        String  @id @map("_id")
   googleId  String  @unique
@@ -160,6 +173,7 @@ model User {
 teamMemberships     TeamMember[]
 teamInvitations     TeamInvitation[] @relation("TeamInvitedUser")
 sentTeamInvitations TeamInvitation[] @relation("TeamInviter")
+  reviews             Review[]
 }
 
 model VendorProfile {
@@ -210,6 +224,8 @@ model Team {
   createdBy   User             @relation("TeamCreator", fields: [createdByUserId], references: [id])
   members     TeamMember[]
   invitations TeamInvitation[]
+  packages    Package[]
+  experiences TeamExperience[]
 }
 
 model TeamMember {
@@ -217,8 +233,8 @@ model TeamMember {
   teamId String
   userId String
 
-  role   TeamMemberRole
-  status TeamMemberStatus
+  role   TeamMemberRole   @default(MEMBER)
+  status TeamMemberStatus @default(ACTIVE)
 
   joinedAt DateTime?
 
@@ -239,7 +255,7 @@ model TeamInvitation {
   email           String
   invitedByUserId String
 
-  status TeamInvitationStatus
+  status TeamInvitationStatus @default(PENDING)
 
   expiresAt DateTime?
 
@@ -249,6 +265,26 @@ model TeamInvitation {
   team       Team  @relation(fields: [teamId], references: [id], onDelete: Cascade)
   invitedBy  User  @relation("TeamInviter", fields: [invitedByUserId], references: [id])
   invitedUser User? @relation("TeamInvitedUser", fields: [invitedUserId], references: [id])
+}
+
+model TeamExperience {
+  id String @id @map("_id")
+
+  teamId     String
+  packageId  String
+  scheduleId String @unique
+
+  trekName    String
+  difficulty  Difficulty?
+  completedAt DateTime
+  duration    Int?
+  altitude    Float?
+  imageUrls   String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  team Team @relation(fields: [teamId], references: [id])
 }
 
 model Session {
@@ -350,6 +386,7 @@ model Location {
 
   masterTreks  MasterTrek[]
   nearbyPlaces NearbyPlace[]
+  packages     Package[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -591,6 +628,7 @@ model Package {
   team          Team?                 @relation(fields: [teamId], references: [id])
 
   location Location? @relation(fields: [locationId], references: [id])
+  reviews  Review[]
 }
 
 model PackageItineraryDay {
