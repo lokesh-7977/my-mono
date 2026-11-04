@@ -105,6 +105,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
                     trekName={trek.name}
                     howToReach={trek.howToReach}
                     permitInfo={trek.permitInfo}
+                    difficulty={trek.difficulty}
                 />
                 <FitnessSafetySections
                     trekName={trek.name}
