@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@repo/ui/lib/utils";
 import { Button } from "@repo/ui/components/button";
 import { ThingsToCarryModal } from "@/components/trek/things-to-carry-modal";
+import { HowToReachModal } from "@/components/trek/how-to-reach-modal";
+import { MOCK_HOW_TO_REACH } from "@/lib/how-to-reach-mock";
 import type { TrekDifficulty } from "@/api/trek/trek.types";
 
 interface InfoCardProps {
@@ -70,6 +72,7 @@ export function TrekInfoSections({
           title={trekName}
           description={howToReach ?? "Reach-route details for this trek haven't been published yet."}
           buttonText="View Routes"
+          trigger={<HowToReachModal trekName={trekName} options={MOCK_HOW_TO_REACH} />}
         />
         <InfoCard
           heading="Things to Carry"
