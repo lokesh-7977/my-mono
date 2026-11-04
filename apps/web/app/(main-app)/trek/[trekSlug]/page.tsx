@@ -111,6 +111,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
                     trekName={trek.name}
                     fitnessInfo={trek.fitnessInfo}
                     safetyInfo={trek.safetyInfo}
+                    difficulty={trek.difficulty}
                 />
                 <Divider />
                 <FaqMission

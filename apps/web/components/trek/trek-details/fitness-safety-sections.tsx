@@ -3,17 +3,30 @@
 import { FileText, Shield, ArrowRight } from "lucide-react";
 import { Button } from "@repo/ui/components/button";
 import { PulseHeart, MedicalBriefcase } from "@/components/icons";
+import type { TrekDifficulty } from "@/api/trek/trek.types";
+
+const FITNESS_GUIDE_SLUG: Record<TrekDifficulty, string> = {
+  EASY: "easy",
+  MODERATE: "moderate",
+  DIFFICULT: "difficult",
+  PRO: "pro",
+};
+
+const fitnessGuideUrl = (difficulty: TrekDifficulty) =>
+  `https://blog.scoutripper.com/trek-difficulty-level-${FITNESS_GUIDE_SLUG[difficulty]}/`;
 
 interface FitnessSafetySectionsProps {
   trekName?: string;
   fitnessInfo?: string | null;
   safetyInfo?: string | null;
+  difficulty?: TrekDifficulty;
 }
 
 export function FitnessSafetySections({
   trekName = "Kashmir Great Lakes Trek",
   fitnessInfo = null,
   safetyInfo = null,
+  difficulty = "MODERATE",
 }: FitnessSafetySectionsProps) {
   return (
     <section className="w-full max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -45,9 +58,11 @@ export function FitnessSafetySections({
             </div>
           </div>
 
-          <Button className="h-11 flex items-center gap-2 bg-secondary text-foreground font-bold px-6 py-3 rounded-xl w-fit transition-all hover:bg-primary hover:text-primary-foreground group cursor-pointer text-sm">
-            View Trek Fitness Guide
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          <Button asChild variant="secondary" className="h-11 flex items-center gap-2 bg-secondary text-foreground font-bold px-6 py-3 rounded-xl w-fit transition-all hover:bg-primary hover:text-primary-foreground group cursor-pointer text-sm">
+            <a href={fitnessGuideUrl(difficulty)} target="_blank" rel="noopener noreferrer">
+              View Trek Fitness Guide
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+            </a>
           </Button>
         </div>
 
