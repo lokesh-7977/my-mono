@@ -75,6 +75,12 @@ export interface PackageDetail {
     id: string;
     name: string | null;
     avatarUrl: string | null;
+    // Proposed in apps/docs/checklists/package/package-guide-profile-checklist.md; not sent by the API yet.
+    badges?: string[];
+    experienceYears?: number | null;
+    rating?: number | null;
+    reviewCount?: number | null;
+    quote?: string | null;
   };
   itineraryDays: PackageItineraryDay[];
   inclusions: string[];

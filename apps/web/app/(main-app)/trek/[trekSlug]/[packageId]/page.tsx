@@ -16,7 +16,9 @@ import BookingWidget from "@/components/trek/package-details/booking-widget";
 import { getPackageById } from "@/api/package/package.api";
 import { getLocationAncestorCrumbs } from "@/lib/location-ancestor-mock";
 import { getAscentDescent } from "@/lib/package-ascent-descent-mock";
+import { getGuideProfile } from "@/lib/package-guide-mock";
 import { getPackageHighlights } from "@/lib/package-highlights-mock";
+import { PackageProvider } from "@/components/trek/package-details/package-provider";
 import { NearbyPlaces } from "@/components/shared/nearby-places";
 import { MOCK_NEARBY_PLACES } from "@/lib/nearby-places-mock";
 import { FeaturedTreks } from "@/components/trek/trek-details/featured-treks";
@@ -55,6 +57,7 @@ export default async function TrekPackagePage({ params }: TrekPackagePageProps) 
     console.log(pkg)
     const title = pkg.title ?? pkg.trekInfo.name;
     const ascentDescent = getAscentDescent(pkg);
+    const guide = getGuideProfile(pkg);
     const galleryImages = Array.from(new Set(pkg.galleryImages.filter(Boolean)));
 
     const headerBadges = [
@@ -100,6 +103,17 @@ export default async function TrekPackagePage({ params }: TrekPackagePageProps) 
                                 exclusions={pkg.exclusions}
                                 highlights={getPackageHighlights(pkg)}
                             />
+                            {pkg.trekLeader.name && (
+                                <PackageProvider
+                                    name={pkg.trekLeader.name}
+                                    avatarUrl={pkg.trekLeader.avatarUrl}
+                                    badges={guide?.badges}
+                                    experienceYears={guide?.experienceYears}
+                                    rating={guide?.rating}
+                                    reviewCount={guide?.reviewCount}
+                                    quote={guide?.quote}
+                                />
+                            )}
                         </div>
                         <div className="lg:col-span-1">
                             <StickySidebar >
