@@ -1,6 +1,6 @@
 // TEMPORARY placeholder data for the "How to Reach" modal.
 //
-// See apps/docs/how-to-reach-data-structure-checklist.md — the real
+// See apps/docs/checklists/master-trek/how-to-reach-data-structure-checklist.md — the real
 // MasterTrek.howToReach field is currently a single flat string with no
 // enforced structure, so it can't reliably be parsed into per-mode
 // paragraphs. This file stands in until backend ships a structured

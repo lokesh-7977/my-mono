@@ -26,7 +26,7 @@ export function LocationOverview({ name, whatToKnow }: LocationOverviewProps) {
 
         {mapsApiKey ? (
           // TEMPORARY: queries the Embed API by place name since Location has
-          // no lat/lng yet (see apps/docs/location-ancestor-chain-checklist.md).
+          // no lat/lng yet (see apps/docs/checklists/location/location-ancestor-chain-checklist.md).
           // A name-only query can mismatch for an ambiguous/generic name; swap
           // for a coordinate-based query once Location exposes one.
           <iframe

@@ -1,5 +1,5 @@
 // TEMPORARY: stands in for the generic ancestor-chain lookup described in
-// apps/docs/location-ancestor-chain-checklist.md. `Location` is an
+// apps/docs/checklists/location/location-ancestor-chain-checklist.md. `Location` is an
 // admin-curated log, not a fixed hierarchy — a trek, package, or (later)
 // activity can link to a location at ANY depth (state, district, city, or
 // nothing at all), and that's permanent, not a gap waiting to be seeded

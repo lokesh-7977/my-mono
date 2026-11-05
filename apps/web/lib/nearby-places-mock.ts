@@ -1,5 +1,5 @@
 // TEMPORARY: stands in for the dynamic Location-proximity lookup described in
-// apps/docs/nearby-places-dynamic-lookup-checklist.md. A "nearby place" isn't
+// apps/docs/checklists/location/nearby-places-dynamic-lookup-checklist.md. A "nearby place" isn't
 // its own content type — it's just another admin-logged Location, surfaced
 // here because it's near whatever Location the current page/trek is about.
 // The same list is shown everywhere for now; ratings are placeholders with

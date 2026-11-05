@@ -31,7 +31,7 @@ const RISK_LABEL: Record<WeatherRiskLevel, string> = {
 };
 
 // Expects data in the shape proposed in
-// apps/docs/weather-conditions-modal-checklist.md — currently fed from a
+// apps/docs/checklists/master-trek/weather-conditions-modal-checklist.md — currently fed from a
 // temporary mock (see apps/web/lib/weather-mock.ts) until that backend
 // work ships. `climate` and `current` are both nullable in the real
 // contract (unpublished trek / provider outage), handled below.

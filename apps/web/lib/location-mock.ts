@@ -1,6 +1,6 @@
 // TEMPORARY: no `/location` detail endpoint exists yet (the live `/location` API is a
 // generic country/state/district picker, not this page's content — see
-// apps/docs/location-page-checklist.md). This stands in until the backend adds one.
+// apps/docs/checklists/location/location-page-checklist.md). This stands in until the backend adds one.
 
 export interface LocationGeneralInfo {
   label: string;

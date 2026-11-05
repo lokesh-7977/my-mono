@@ -1,6 +1,6 @@
 // TEMPORARY placeholder data for the "Weather Conditions" modal.
 //
-// See apps/docs/weather-conditions-modal-checklist.md — apps/api has no
+// See apps/docs/checklists/master-trek/weather-conditions-modal-checklist.md — apps/api has no
 // weather integration yet. This file stands in until that lands.
 //
 // Swap-out plan: once GET /api/master-trek/public/slug/{slug}/weather

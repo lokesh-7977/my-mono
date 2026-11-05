@@ -18,7 +18,7 @@ interface HowToReachModalProps {
 }
 
 // Expects options in the { mode, description }[] shape proposed in
-// apps/docs/how-to-reach-data-structure-checklist.md — currently fed from a
+// apps/docs/checklists/master-trek/how-to-reach-data-structure-checklist.md — currently fed from a
 // temporary mock (see apps/web/lib/how-to-reach-mock.ts) until the backend
 // field is restructured to match.
 export function HowToReachModal({ trekName, options }: HowToReachModalProps) {
