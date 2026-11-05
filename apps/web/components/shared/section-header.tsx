@@ -32,7 +32,7 @@ export function SectionHeader({
   return (
     <div className={cn("flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4", className)}>
       <div>
-        <h2 className="text-title md:text-title-lg font-bold text-foreground font-bricolage-grotesque leading-tight">
+        <h2 className="text-2xl md:text-heading font-bold text-foreground font-bricolage-grotesque leading-tight">
           {title}
         </h2>
         {subtitle && (
