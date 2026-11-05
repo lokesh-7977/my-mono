@@ -39,7 +39,7 @@ Needs backend to decide:
 
 ## 4. Computation approach: precompute + cache, not real-time counters
 
-Following the same reasoning as the weather-feature proposal (`apps/docs/weather-conditions-modal-checklist.md`) — recommending **precomputed, not a live aggregation per request, and not a real-time increment/decrement counter either.** Two realistic options:
+Following the same reasoning as the weather-feature proposal ([`weather-conditions-modal-checklist.md`](./weather-conditions-modal-checklist.md)) — recommending **precomputed, not a live aggregation per request, and not a real-time increment/decrement counter either.** Two realistic options:
 
 ### Option A (recommended): periodic recompute job
 

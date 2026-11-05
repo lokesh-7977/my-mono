@@ -4,6 +4,8 @@
 
 **Audience:** Backend team, before building out `NearbyPlace` / `TrekNearbyPlace` admin tooling further — this doc argues that tooling may be the wrong direction entirely (see §1).
 
+**Build order:** this is doc 3 of 3 in [`./README.md`](./README.md) — depends on [`location-page-checklist.md`](./location-page-checklist.md) adding real content (and coordinates, for the geographic-distance option) to `Location` rows first. Independent of doc 2's ancestor walk.
+
 **Related:** [`location-ancestor-chain-checklist.md`](./location-ancestor-chain-checklist.md) — a different lookup direction (a location's ancestors, for breadcrumbs), but the same underlying entity (`Location`) and the same "admin-curated, not a fixed reference dataset" model this doc leans on.
 
 ---

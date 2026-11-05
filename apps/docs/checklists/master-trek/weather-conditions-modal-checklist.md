@@ -41,7 +41,7 @@ The requested UI (see reference screenshot in the original conversation) shows, 
 
 ## 3. Proposed data model
 
-Following the same reasoning as the `howToReach` proposal (see `apps/docs/how-to-reach-data-structure-checklist.md`): this data has no independent existence outside its parent trek, is always read/written together with it, and is a natural fit for a MongoDB composite type rather than a separate collection + relation.
+Following the same reasoning as the `howToReach` proposal (see [`how-to-reach-data-structure-checklist.md`](./how-to-reach-data-structure-checklist.md)): this data has no independent existence outside its parent trek, is always read/written together with it, and is a natural fit for a MongoDB composite type rather than a separate collection + relation.
 
 ```prisma
 type MonthlyClimate {

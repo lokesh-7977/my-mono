@@ -13,7 +13,7 @@ There is no "featured treks" endpoint, and no featured/curation flag anywhere on
 - `components/home/featured-treks.tsx` — homepage section, grid layout, header "Featured Treks" / "Handpicked Treks for the Ultimate Experience".
 - `components/trek/trek-details/featured-treks.tsx` — trek detail page section, carousel layout, same copy, rendered near the bottom of the page.
 
-Both are **the same data, same ranking, different presentation (grid vs. carousel) and placement**. This is a distinct concept from `apps/docs/popular-treks-checklist.md`, which proposes a *computed* "most booked" ranking — "featured" here is a manual, admin-curated flag, independent of booking volume. A trek could be featured on day one with zero bookings; a heavily-booked trek might not be featured if it's not the kind of trek marketing wants to showcase.
+Both are **the same data, same ranking, different presentation (grid vs. carousel) and placement**. This is a distinct concept from [`popular-treks-checklist.md`](./popular-treks-checklist.md), which proposes a *computed* "most booked" ranking — "featured" here is a manual, admin-curated flag, independent of booking volume. A trek could be featured on day one with zero bookings; a heavily-booked trek might not be featured if it's not the kind of trek marketing wants to showcase.
 
 ## 2. Proposed data model: manual flag, not a computed score
 

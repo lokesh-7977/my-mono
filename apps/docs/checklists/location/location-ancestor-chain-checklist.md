@@ -4,6 +4,8 @@
 
 **Audience:** Backend team, before wiring any feature's response to the `Location` hierarchy.
 
+**Build order:** this is doc 2 of 3 in [`./README.md`](./README.md) — depends on [`location-page-checklist.md`](./location-page-checklist.md) adding real content to `Location` rows first; there's no hierarchy worth walking otherwise.
+
 **Related:** [`nearby-places-dynamic-lookup-checklist.md`](./nearby-places-dynamic-lookup-checklist.md) — a separate feature (computing what's physically near a trek), but one of several consumers of the same capability this doc asks for.
 
 ---
