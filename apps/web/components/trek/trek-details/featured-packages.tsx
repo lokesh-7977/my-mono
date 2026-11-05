@@ -108,9 +108,13 @@ const featuredPackagesList = [
   },
 ];
 
-export function FeaturedPackages() {
+interface FeaturedPackagesProps {
+  title?: string;
+}
+
+export function FeaturedPackages({ title = "Featured Packages" }: FeaturedPackagesProps) {
   return (
-    <CarouselSection title="Featured Packages">
+    <CarouselSection title={title}>
       {featuredPackagesList.map((pkg, index) => (
         <PackageCard className="w-73.75 shrink-0" key={pkg.id} {...pkg} priority={index < 2} />
       ))}

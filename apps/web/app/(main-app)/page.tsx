@@ -4,6 +4,7 @@ import { SearchBar } from "@/components/shared/search-bar";
 import { HeroSection } from "@/components/home/hero-section";
 import { ExploreCategories } from "@/components/home/explore-categories";
 import { FeaturedTreks } from "@/components/home/featured-treks";
+import { FeaturedPackages } from "@/components/trek/trek-details/featured-packages";
 import { Destinations } from "@/components/home/destinations";
 import { DifficultySelector } from "@/components/home/difficulty-selector";
 import { PromoBanners } from "@/components/home/promo-banners";
@@ -60,6 +61,7 @@ export default function Home() {
           <ExploreCategories />
         </div>
         <FeaturedTreks />
+        <FeaturedPackages title="Popular Upcoming Departures" />
         <Destinations />
         <DifficultySelector />
         <PromoBanners />
