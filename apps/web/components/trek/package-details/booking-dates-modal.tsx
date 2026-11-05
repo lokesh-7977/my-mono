@@ -13,224 +13,98 @@ import { Check, Edit2, ArrowRight } from "lucide-react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { cn } from "@repo/ui/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
+import { formatPrice } from "@/lib/format-price";
+import type { PackageSchedule } from "@/api/package/package.types";
 
 
-// Month abbreviation to full name map
-const MONTH_MAP: Record<string, string> = {
-    Jan: "January", Feb: "February", Mar: "March", Apr: "April",
-    May: "May", Jun: "June", Jul: "July", Aug: "August",
-    Sep: "September", Oct: "October", Nov: "November", Dec: "December",
-};
+const TIME_ZONE = "Asia/Kolkata";
+const LIMITED_SEATS_THRESHOLD = 5;
 
-/** Parses "Thu 21 Jan, 2025" → { monthYear: "January 2025", ... } */
-function parseMonthYear(dateStr: string): string {
-    // Handles formats like "Thu 21 Jan, 2025" or "Thu 1 Mar, 2025"
-    const parts = dateStr.replace(",", "").split(" ");
-    // parts: ["Thu", "21", "Jan", "2025"]
-    const monthAbbr = parts[2];
-    const year = parts[3];
-    return `${MONTH_MAP[monthAbbr] ?? monthAbbr} ${year}`;
+interface ScheduleOption {
+    id: string;
+    monthYear: string;
+    date: string;
+    price: string;
+    amount: number | null;
+    currency: string;
+    type: string;
+    status: string;
+    statusColor: string;
 }
 
 interface ScheduleGroup {
     monthYear: string;
-    items: typeof schedules;
+    items: ScheduleOption[];
 }
 
-function groupByMonth(items: typeof schedules): ScheduleGroup[] {
+function formatDate(iso: string): string {
+    const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: TIME_ZONE,
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    }).formatToParts(new Date(iso));
+    const get = (type: string) => parts.find((part) => part.type === type)?.value ?? "";
+    return `${get("weekday")} ${get("day")} ${get("month")}, ${get("year")}`;
+}
+
+function formatMonthYear(iso: string): string {
+    return new Intl.DateTimeFormat("en-US", {
+        timeZone: TIME_ZONE,
+        month: "long",
+        year: "numeric",
+    }).format(new Date(iso));
+}
+
+function toOption(schedule: PackageSchedule): ScheduleOption {
+    const amount = schedule.adultPrice ?? schedule.price;
+    const limited = schedule.availableSeats <= LIMITED_SEATS_THRESHOLD;
+
+    return {
+        id: schedule.id,
+        monthYear: formatMonthYear(schedule.startDate),
+        date: formatDate(schedule.startDate),
+        amount,
+        currency: schedule.currency,
+        price: amount !== null ? `${formatPrice(amount, schedule.currency)}/- person` : "Price on request",
+        type: "Group Pricing",
+        status: limited ? "Limited seats left" : "Available",
+        statusColor: limited ? "text-red-400" : "text-emerald-500",
+    };
+}
+
+function groupByMonth(items: ScheduleOption[]): ScheduleGroup[] {
     const groups: ScheduleGroup[] = [];
-    let currentKey = "";
 
     for (const item of items) {
-        const key = parseMonthYear(item.date);
-        if (key !== currentKey) {
-            currentKey = key;
-            groups.push({ monthYear: key, items: [] });
+        const last = groups[groups.length - 1];
+        if (last && last.monthYear === item.monthYear) {
+            last.items.push(item);
+        } else {
+            groups.push({ monthYear: item.monthYear, items: [item] });
         }
-        groups[groups.length - 1].items.push(item);
     }
 
     return groups;
 }
 
-const schedules = [
-    {
-        id: 1,
-        date: "Thu 21 Jan, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Available",
-        statusColor: "text-emerald-500",
-    },
-    {
-        id: 2,
-        date: "Thu 21 Jan, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 3,
-        date: "Thu 21 Jan, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Available",
-        statusColor: "text-emerald-500",
-    },
-    {
-        id: 4,
-        date: "Thu 21 Jan, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Available",
-        statusColor: "text-emerald-500",
-    },
-    {
-        id: 5,
-        date: "Thu 30 Jan, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 6,
-        date: "Thu 1 Feb, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 7,
-        date: "Thu 15 Feb, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 8,
-        date: "Thu 20 Feb, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 9,
-        date: "Thu 25 Feb, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 10,
-        date: "Thu 28 Feb, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 11,
-        date: "Thu 30 Feb, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 12,
-        date: "Thu 1 Mar, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 13,
-        date: "Thu 5 Mar, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 14,
-        date: "Thu 10 Mar, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 15,
-        date: "Thu 15 Mar, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 16,
-        date: "Thu 20 Mar, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 17,
-        date: "Thu 25 Mar, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 18,
-        date: "Thu 28 Mar, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 19,
-        date: "Thu 30 Mar, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 20,
-        date: "Thu 1 Apr, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    },
-    {
-        id: 21,
-        date: "Thu 5 Apr, 2025",
-        price: "₹ 999/- person",
-        type: "Group Pricing",
-        status: "Limited seats left",
-        statusColor: "text-red-400",
-    }
-];
+interface BookingDatesModalProps {
+    schedules: PackageSchedule[];
+}
 
-export function BookingDatesModal() {
+export function BookingDatesModal({ schedules }: BookingDatesModalProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedId, setSelectedId] = useState<number | null>(3);
+    const options = useMemo(
+        () => [...schedules].sort((a, b) => a.startDate.localeCompare(b.startDate)).map(toOption),
+        [schedules],
+    );
+    const [selectedId, setSelectedId] = useState<string | null>(options[0]?.id ?? null);
+    const selected = options.find((option) => option.id === selectedId) ?? null;
     const [isScrolled, setIsScrolled] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    const grouped = useMemo(() => groupByMonth(schedules), []);
+    const grouped = useMemo(() => groupByMonth(options), [options]);
     const [visibleMonth, setVisibleMonth] = useState(grouped[0]?.monthYear ?? "");
 
     // Determine visible month from scroll position
@@ -269,7 +143,7 @@ export function BookingDatesModal() {
                     Show Dates
                 </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-[95vw] gap-0 sm:max-w-[480px] p-0 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+            <DialogContent className="max-w-[95vw] gap-0 sm:max-w-120 p-0 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
                 <VisuallyHidden>
                     <DialogTitle>Select a Schedule</DialogTitle>
                     <DialogDescription>Choose your preferred trek date.</DialogDescription>
@@ -341,7 +215,7 @@ export function BookingDatesModal() {
                                             >
                                                 {/* Radio Button */}
                                                 <div className="shrink-0">
-                                                    <div className={`size-[18px] rounded-full border flex items-center justify-center transition-colors
+                                                    <div className={`size-4.5 rounded-full border flex items-center justify-center transition-colors
                                                         ${isSelected ? 'bg-primary border-primary' : 'border-zinc-300 bg-white'}
                                                     `}>
                                                         {isSelected && <Check className="size-3 text-white" strokeWidth={3} />}
@@ -350,13 +224,13 @@ export function BookingDatesModal() {
 
                                                 {/* Info */}
                                                 <div className="flex-1 flex flex-col">
-                                                    <span className="text-[15px] font-bold text-slate-800 leading-tight">
+                                                    <span className="text-body font-bold text-slate-800 leading-tight">
                                                         {schedule.date}
                                                     </span>
-                                                    <span className="text-[13px] font-bold text-[#f97316] mt-0.5">
+                                                    <span className="text-meta font-bold text-[#f97316] mt-0.5">
                                                         {schedule.price}
                                                     </span>
-                                                    <span className="text-[11px] font-medium text-zinc-400 mt-0.5">
+                                                    <span className="text-caption font-medium text-zinc-400 mt-0.5">
                                                         {schedule.type}
                                                     </span>
                                                 </div>
@@ -386,8 +260,10 @@ export function BookingDatesModal() {
                 {/* Sticky Footer */}
                 <div className="p-4 bg-white border-t border-zinc-100 flex items-center justify-between shrink-0 shadow-[0_-10px_20px_rgba(0,0,0,0.15)]">
                     <div className="flex items-baseline gap-1.5">
-                        <span className="text-[22px] font-bold text-slate-800">₹1,998</span>
-                        <span className="text-[13px] font-medium text-zinc-400">for 2 person</span>
+                        <span className="text-[22px] font-bold text-slate-800">
+                            {selected?.amount != null ? formatPrice(selected.amount, selected.currency) : "—"}
+                        </span>
+                        <span className="text-meta font-medium text-zinc-400">for 1 person</span>
                     </div>
                     <Button className="h-10 px-6 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 flex items-center gap-1.5 shadow-sm shadow-primary/20">
                         Next

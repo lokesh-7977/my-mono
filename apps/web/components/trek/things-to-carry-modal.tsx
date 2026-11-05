@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ComponentProps } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@repo/ui/components/button";
 import {
@@ -19,9 +19,10 @@ import type { TrekDifficulty } from "@/api/trek/trek.types";
 interface ThingsToCarryModalProps {
   trekName: string;
   difficulty: TrekDifficulty;
+  btnVariant?: ComponentProps<typeof Button>["variant"];
 }
 
-export function ThingsToCarryModal({ trekName, difficulty }: ThingsToCarryModalProps) {
+export function ThingsToCarryModal({ trekName, difficulty, btnVariant = "secondary" }: ThingsToCarryModalProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const gear = getTrekGear(difficulty);
@@ -39,7 +40,13 @@ export function ThingsToCarryModal({ trekName, difficulty }: ThingsToCarryModalP
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="mt-1 h-10 flex items-center gap-2 bg-secondary text-foreground font-bold px-5 py-2.5 rounded-xl w-fit transition-all hover:bg-primary hover:text-primary-foreground group cursor-pointer text-sm">
+        <Button
+          variant={btnVariant}
+          className={cn(
+            "mt-1 h-10 flex items-center gap-2 font-bold px-5 py-2.5 rounded-xl w-fit transition-all group cursor-pointer text-sm",
+            btnVariant === "secondary" && "bg-secondary text-foreground hover:bg-primary hover:text-primary-foreground",
+          )}
+        >
           View Checklist
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </Button>

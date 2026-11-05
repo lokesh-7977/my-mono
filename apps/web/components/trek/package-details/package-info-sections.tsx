@@ -3,7 +3,7 @@ import { CheckCircle2, XCircle } from 'lucide-react';
 interface SectionProps {
   title: string;
   items: string[];
-  type: 'inclusion' | 'exclusion' | 'highlight';
+  type: 'inclusion' | 'exclusion';
 }
 
 const InfoSection = ({ title, items, type }: SectionProps) => {
@@ -29,36 +29,16 @@ const InfoSection = ({ title, items, type }: SectionProps) => {
   );
 };
 
-export const PackageInfoSections = () => {
-  const inclusions = [
-    "Accommodation",
-    "Meals",
-    "Permit Charges",
-    "Trek Equipments",
-    "Certified trek leader",
-    "Emergency oxygen & first aid"
-  ];
+interface PackageInfoSectionsProps {
+  inclusions: string[];
+  exclusions: string[];
+}
 
-  const exclusions = [
-    "Anything apart from inclusions",
-    "The cab fare is not included in the package.",
-    "Offloading charges are not included",
-    "Food during the travel to and from the base camp is in your expense."
-  ];
-
-  const highlights = [
-    "Visit the Museum of Modern Art in Manhattan",
-    "See amazing works of contemporary art, including Vincent van Gogh's The Starry Night",
-    "Check out Campbell's Soup Cans by Warhol and The Dance (I) by Matisse",
-    "Behold masterpieces by Gauguin, Dali, Picasso, and Pollock",
-    "Enjoy free audio guides available in English, French, German, Italian, Spanish, Portuguese."
-  ];
-
+export const PackageInfoSections = ({ inclusions, exclusions }: PackageInfoSectionsProps) => {
   return (
     <>
-      <InfoSection title="Inclusions" items={inclusions} type="inclusion" />
-      <InfoSection title="Exclusions" items={exclusions} type="exclusion" />
-      <InfoSection title="Highlights" items={highlights} type="highlight" />
+      {inclusions.length > 0 && <InfoSection title="Inclusions" items={inclusions} type="inclusion" />}
+      {exclusions.length > 0 && <InfoSection title="Exclusions" items={exclusions} type="exclusion" />}
     </>
   );
 };

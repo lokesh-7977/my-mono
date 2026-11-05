@@ -1,20 +1,33 @@
 import { Button } from "@repo/ui/components/button";
 import { BadgeCheck, ShieldCheck } from "lucide-react";
 import { BookingDatesModal } from "./booking-dates-modal";
+import { formatPrice } from "@/lib/format-price";
+import type { PackageSchedule } from "@/api/package/package.types";
 
-export default function BookingWidget() {
+interface BookingWidgetProps {
+    startingPrice: number | null;
+    currency: string | null;
+    schedules: PackageSchedule[];
+}
+
+export default function BookingWidget({ startingPrice, currency, schedules }: BookingWidgetProps) {
     return (
-        <div className="rounded-2xl border border-zinc-200 shadow-[0_8px_40px_rgba(0,0,0,0.03)] p-8">
+        <div className="rounded-2xl border border-zinc-200 shadow-soft p-8">
             <div className="flex flex-col gap-5">
                 {/* Pricing Row */}
                 <div className="flex justify-between items-start">
                     <div className="flex flex-col">
-                        <span className="text-xs text-foreground/50 font-medium mb-1">Starting From</span>
-                        <div className="flex items-baseline gap-2">
-                            <span className="text-[24px] text-foreground font-bold leading-none">₹16,500</span>
-                            <span className="text-foreground/50 text-sm font-medium">/ trekker</span>
-                        </div>
-                        <span className="text-[#FF4D4D] text-sm font-bold line-through ml-1 mt-1">₹19,299</span>
+                        <span className="text-xs text-foreground/50 font-medium mb-1">
+                            {startingPrice !== null ? "Starting From" : "Dates coming soon"}
+                        </span>
+                        {startingPrice !== null && (
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-[24px] text-foreground font-bold leading-none">
+                                    {formatPrice(startingPrice, currency ?? undefined)}
+                                </span>
+                                <span className="text-foreground/50 text-sm font-medium">/ trekker</span>
+                            </div>
+                        )}
                     </div>
                     <ul className="text-xs text-foreground/50 font-medium space-y-1 text-right mt-1">
                         <li>• GST Included</li>
@@ -24,7 +37,7 @@ export default function BookingWidget() {
                 </div>
 
                 <div className="flex flex-col gap-2 mt-2">
-                    <BookingDatesModal />
+                    {schedules.length > 0 && <BookingDatesModal schedules={schedules} />}
                     <Button variant={"secondary"} className="w-full h-13.5 rounded-xl text-base font-bold cursor-pointer">
                         Send Enquiry
                     </Button>

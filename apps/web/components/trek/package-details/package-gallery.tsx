@@ -1,28 +1,18 @@
 "use client";
 import Image from "next/image";
 
-interface TrekGalleryProps {
+interface PackageGalleryProps {
     title: string;
-    rating: number;
-    reviewsCount: string;
-    location: string;
     images: string[];
     quote?: string;
     tag?: string;
 }
 
-export function PackageGallery({
-    title = "Kashmir Great Lakes Trek",
-    images = [
-        "https://images.scoutripper.com/treks/hampta-pass-trek/beauty-of-hampta-pass-trek.jpg",
-        "https://images.scoutripper.com/treks/kashmir-great-lake-trek/Kashmir Great Lakes-bg.png",
-        "https://images.scoutripper.com/treks/triund-trek/camps-in-triund.png",
-        "https://images.scoutripper.com/treks/kedarnath-dham/kedarnath-dham-view-of-kedarnath-temple.png",
-        "https://images.scoutripper.com/treks/kareri-lake-trek/kareri-lake-trek-summer.webp",
-    ],
-    quote = "A walking dream through heaven in Kashmir",
-    tag = "Beginner Friendly"
-}: Partial<TrekGalleryProps>) {
+export function PackageGallery({ title, images, quote, tag }: PackageGalleryProps) {
+    if (images.length === 0) return null;
+
+    const remaining = images.length - 3;
+
     return (
         <section className="w-full">
             <div className="w-full">
@@ -32,7 +22,7 @@ export function PackageGallery({
                     {/* Main Large Image */}
                     <div className="col-span-2 md:row-span-2 relative rounded-2xl overflow-hidden group aspect-4/3 md:aspect-auto">
                         <Image
-                            src={images[0]}
+                            src={images[0]!}
                             alt={title}
                             fill
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -55,26 +45,32 @@ export function PackageGallery({
                     </div>
 
                     {/* Small Images */}
-                    <div className="relative rounded-2xl overflow-hidden group aspect-4/3 md:aspect-auto">
-                        <Image
-                            src={images[1]}
-                            alt={`${title} view 2`}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                    </div>
-
-                    <div className="relative rounded-2xl overflow-hidden group aspect-4/3 md:aspect-auto cursor-pointer">
-                        <Image
-                            src={images[2]}
-                            alt={`${title} view 3`}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                            <span className="text-white text-xl font-bold">+14 More</span>
+                    {images[1] && (
+                        <div className="relative rounded-2xl overflow-hidden group aspect-4/3 md:aspect-auto">
+                            <Image
+                                src={images[1]}
+                                alt={`${title} view 2`}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
                         </div>
-                    </div>
+                    )}
+
+                    {images[2] && (
+                        <div className="relative rounded-2xl overflow-hidden group aspect-4/3 md:aspect-auto cursor-pointer">
+                            <Image
+                                src={images[2]}
+                                alt={`${title} view 3`}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            {remaining > 0 && (
+                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                    <span className="text-white text-xl font-bold">+{remaining} More</span>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </section>
