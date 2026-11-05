@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, Star } from "lucide-react";
+import { Heart, MapPin, Star } from "lucide-react";
 import { cn } from "@repo/ui/lib/utils";
 
 interface PackageCardProps {
@@ -14,6 +14,7 @@ interface PackageCardProps {
   price: number;
   guideName: string;
   guideAvatarUrl: string;
+  masterTrekName?: string;
   priority?: boolean;
   className?: string;
 }
@@ -29,6 +30,7 @@ export function PackageCard({
   price,
   guideName,
   guideAvatarUrl,
+  masterTrekName,
   priority,
   className,
 }: PackageCardProps) {
@@ -61,9 +63,21 @@ export function PackageCard({
         {distanceKm} km • {durationDays} Days • {maxAltitudeFt.toLocaleString()} ft
       </div>
 
-      <h3 className="text-lg font-bold text-foreground mb-4 group-hover:text-primary transition-colors line-clamp-2 min-h-[2lh]">
+      <h3
+        className={cn(
+          "text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 min-h-[2lh]",
+          masterTrekName ? "mb-2" : "mb-4",
+        )}
+      >
         {title}
       </h3>
+
+      {masterTrekName && (
+        <div className="flex items-center gap-1.5 mb-4">
+          <MapPin className="w-3.5 h-3.5 text-primary" />
+          <span className="text-meta font-medium text-primary">{masterTrekName}</span>
+        </div>
+      )}
 
       <div className="flex items-center justify-between gap-3 mt-auto">
         <div className="flex items-center gap-2 min-w-0">

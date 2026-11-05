@@ -108,15 +108,29 @@ const featuredPackagesList = [
   },
 ];
 
+const MASTER_TREK_NAME_BY_SLUG: Record<string, string> = {
+  "hampta-pass-trek": "Hampta Pass Trek",
+  "kashmir-great-lakes-trek": "Kashmir Great Lakes Trek",
+  "triund-trek": "Triund Trek",
+  "kedarnath-dham": "Kedarnath Dham",
+};
+
 interface FeaturedPackagesProps {
   title?: string;
+  showMasterTrek?: boolean;
 }
 
-export function FeaturedPackages({ title = "Featured Packages" }: FeaturedPackagesProps) {
+export function FeaturedPackages({ title = "Featured Packages", showMasterTrek = false }: FeaturedPackagesProps) {
   return (
     <CarouselSection title={title}>
       {featuredPackagesList.map((pkg, index) => (
-        <PackageCard className="w-73.75 shrink-0" key={pkg.id} {...pkg} priority={index < 2} />
+        <PackageCard
+          className="w-73.75 shrink-0"
+          key={pkg.id}
+          {...pkg}
+          masterTrekName={showMasterTrek ? MASTER_TREK_NAME_BY_SLUG[pkg.slug] : undefined}
+          priority={index < 2}
+        />
       ))}
     </CarouselSection>
   );

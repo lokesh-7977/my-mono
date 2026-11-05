@@ -61,7 +61,7 @@ export default function Home() {
           <ExploreCategories />
         </div>
         <FeaturedTreks />
-        <FeaturedPackages title="Popular Upcoming Departures" />
+        <FeaturedPackages title="Popular Upcoming Departures" showMasterTrek />
         <Destinations />
         <DifficultySelector />
         <PromoBanners />
