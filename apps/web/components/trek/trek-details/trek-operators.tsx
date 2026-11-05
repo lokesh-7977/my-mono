@@ -62,7 +62,7 @@ function OperatorCard({ operator }: { operator: typeof operators[0] }) {
 
       <div className="flex items-center gap-4 mb-6">
         <div className="flex flex-col">
-          <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">{operator.experience}</span>
+          <span className="text-micro text-zinc-400 font-bold uppercase tracking-widest">{operator.experience}</span>
         </div>
         <div className="w-px h-3 bg-zinc-200" />
         <div className="flex items-center gap-1.5">
@@ -71,7 +71,7 @@ function OperatorCard({ operator }: { operator: typeof operators[0] }) {
         </div>
         <div className="w-px h-3 bg-zinc-200" />
         <div className="flex flex-col">
-          <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">{operator.reviews}</span>
+          <span className="text-micro text-zinc-400 font-bold uppercase tracking-widest">{operator.reviews}</span>
         </div>
       </div>
 
@@ -79,7 +79,7 @@ function OperatorCard({ operator }: { operator: typeof operators[0] }) {
         {operator.badges.map((badge, idx) => (
           <span
             key={idx}
-            className={`px-4 py-1.5 rounded-full text-[11px] font-black tracking-tight ${badge.variant === 'eco' ? 'bg-[#E8F5E9] text-[#2E7D32]' :
+            className={`px-4 py-1.5 rounded-full text-caption font-black tracking-tight ${badge.variant === 'eco' ? 'bg-[#E8F5E9] text-[#2E7D32]' :
               badge.variant === 'imf' ? 'bg-[#FFF3E0] text-[#EF6C00]' :
                 'bg-[#E0F7FA] text-[#00838F]'
               }`}
@@ -93,7 +93,7 @@ function OperatorCard({ operator }: { operator: typeof operators[0] }) {
 
       <div className="w-full flex items-center justify-between">
         <span className="text-xl font-black text-[#0F3D3A]">{operator.price}</span>
-        <button className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary/5 text-primary text-[13px] font-black hover:bg-primary/10 transition-all group">
+        <button className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary/5 text-primary text-meta font-black hover:bg-primary/10 transition-all group">
           View Details
           <ChevronRight className="size-4 group-hover:translate-x-0.5 transition-transform" />
         </button>
@@ -106,7 +106,7 @@ export function TrekOperators() {
   return (
     <div className="flex flex-col gap-10 border-t border-zinc-200 pt-8">
       <div className="flex items-center justify-between">
-        <h2 className="text-[26px] font-bold text-[#0F3D3A] font-bricolage-grotesque">
+        <h2 className="text-heading font-bold text-foreground font-bricolage-grotesque">
           Available Groups & Operators
         </h2>
         <Button className="h-12 rounded-xl bg-primary hover:bg-[#3ba4a2] text-white px-8 font-bold flex items-center gap-2">
