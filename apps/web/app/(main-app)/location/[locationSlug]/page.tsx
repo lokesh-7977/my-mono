@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Breadcrumb from "@/components/shared/breadcrumb";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
@@ -18,6 +19,20 @@ import Divider from "@repo/ui/components/divider";
 
 interface LocationPageProps {
   params: Promise<{ locationSlug: string }>;
+}
+
+export async function generateMetadata({ params }: LocationPageProps): Promise<Metadata> {
+  const { locationSlug } = await params;
+  const location = getLocationBySlug(locationSlug);
+
+  if (!location) {
+    return { title: "Location not found | Scoutripper" };
+  }
+
+  return {
+    title: `${location.name} | Scoutripper`,
+    description: location.tagline,
+  };
 }
 
 export default async function LocationPage({ params }: LocationPageProps) {
