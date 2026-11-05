@@ -131,7 +131,6 @@ export default async function TrekPage({ params }: TrekPageProps) {
                 />
                 <Divider />
                 <NearbyPlaces places={MOCK_NEARBY_PLACES} />
-                <Divider />
                 <FeaturedTreks />
             </main>
             <Footer />
