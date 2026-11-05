@@ -87,6 +87,8 @@ export interface Trek {
   beginnerFriendly: boolean;
 
   overview: string | null;
+  // Proposed in apps/docs/checklists/master-trek/trek-summary-checklist.md; not sent by the API yet.
+  summary?: string | null;
   howToReach: string | null;
   fitnessInfo: string | null;
   safetyInfo: string | null;

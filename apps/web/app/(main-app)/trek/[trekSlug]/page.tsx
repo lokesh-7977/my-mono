@@ -21,6 +21,7 @@ import { NearbyPlaces } from "@/components/shared/nearby-places";
 import { MOCK_NEARBY_PLACES } from "@/lib/nearby-places-mock";
 import { getLocationAncestorCrumbs } from "@/lib/location-ancestor-mock";
 import { getTrekBySlug } from "@/api/trek/trek.api";
+import { getTrekSummary } from "@/lib/trek-summary-mock";
 
 interface TrekPageProps {
     params: Promise<{ trekSlug: string }>;
@@ -92,7 +93,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
                             <TrekContent
                                 trekName={trek.name}
                                 description={trek.overview ?? trek.description}
-                                howToReach={trek.howToReach}
+                                summary={getTrekSummary(trek)}
                             />
                             <TrekHighlights trekName={trek.name} />
                             <TrekItinerary
