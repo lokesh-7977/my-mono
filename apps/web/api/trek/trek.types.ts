@@ -65,6 +65,33 @@ export interface TrekFaq {
   order: number;
 }
 
+export interface TrekPackageSchedule {
+  id: string;
+  startDate: string;
+  endDate: string;
+  price: number | null;
+  adultPrice: number | null;
+  childPrice: number | null;
+  currency: string;
+  availableSeats: number;
+}
+
+// The public trek response embeds each published, public package as a raw row.
+// `rating` and `trekLeader` are proposed in
+// apps/docs/checklists/master-trek/trek-packages-listing-checklist.md; the API does not send them yet.
+export interface TrekPackage {
+  id: string;
+  createdByUserId?: string;
+  title: string | null;
+  galleryImages: string[];
+  durationDays: number | null;
+  distanceKm: number | null;
+  difficulty: TrekDifficulty | null;
+  schedules: TrekPackageSchedule[];
+  rating?: number | null;
+  trekLeader?: { id: string; name: string | null; avatarUrl: string | null } | null;
+}
+
 export interface Trek {
   id: string;
   name: string;
@@ -108,4 +135,5 @@ export interface Trek {
 
   startingPrice: number | null;
   currency: string | null;
+  packages: TrekPackage[];
 }

@@ -1,5 +1,6 @@
 import { CarouselSection } from "@/components/shared/carousel-section";
 import { PackageCard } from "@/components/shared/package-card";
+import type { PackageCardData } from "@/lib/trek-package-cards";
 
 const featuredPackagesList = [
   {
@@ -118,9 +119,21 @@ const MASTER_TREK_NAME_BY_SLUG: Record<string, string> = {
 interface FeaturedPackagesProps {
   title?: string;
   showMasterTrek?: boolean;
+  // Real packages from the API. When provided they replace the mock list entirely.
+  packages?: PackageCardData[];
 }
 
-export function FeaturedPackages({ title = "Featured Packages", showMasterTrek = false }: FeaturedPackagesProps) {
+export function FeaturedPackages({ title = "Featured Packages", showMasterTrek = false, packages }: FeaturedPackagesProps) {
+  if (packages) {
+    return (
+      <CarouselSection title={title}>
+        {packages.map((pkg, index) => (
+          <PackageCard className="w-73.75 shrink-0" key={pkg.id} {...pkg} priority={index < 2} />
+        ))}
+      </CarouselSection>
+    );
+  }
+
   return (
     <CarouselSection title={title}>
       {featuredPackagesList.map((pkg, index) => (

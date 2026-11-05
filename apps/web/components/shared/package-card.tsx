@@ -4,16 +4,17 @@ import { Heart, MapPin, Star } from "lucide-react";
 import { cn } from "@repo/ui/lib/utils";
 
 interface PackageCardProps {
-  slug: string;
+  slug?: string;
+  href?: string;
   title: string;
   image: string;
   durationDays: number;
-  distanceKm: number;
-  maxAltitudeFt: number;
-  rating: number;
+  distanceKm?: number;
+  maxAltitudeFt?: number;
+  rating?: number;
   price: number;
-  guideName: string;
-  guideAvatarUrl: string;
+  guideName?: string;
+  guideAvatarUrl?: string;
   masterTrekName?: string;
   priority?: boolean;
   className?: string;
@@ -21,6 +22,7 @@ interface PackageCardProps {
 
 export function PackageCard({
   slug,
+  href,
   title,
   image,
   durationDays,
@@ -36,7 +38,7 @@ export function PackageCard({
 }: PackageCardProps) {
   return (
     <Link
-      href={`/trek/${slug}`}
+      href={href ?? `/trek/${slug}`}
       className={cn("group flex flex-col pb-2", className ? className : "w-full")}
     >
       <div className="relative w-full aspect-5/4 rounded-xl overflow-hidden mb-4">
@@ -53,14 +55,22 @@ export function PackageCard({
           <Heart className="w-4 h-4 group-hover/wishlist:fill-white transition-all duration-300" />
         </button>
 
-        <div className="absolute bottom-3 left-3 bg-white rounded-md px-2 py-1 flex items-center gap-1 shadow-md z-10">
-          <Star className="w-3.5 h-3.5 fill-[#FFB800] text-[#FFB800]" />
-          <span className="text-xs font-bold text-foreground">{rating}</span>
-        </div>
+        {rating != null && (
+          <div className="absolute bottom-3 left-3 bg-white rounded-md px-2 py-1 flex items-center gap-1 shadow-md z-10">
+            <Star className="w-3.5 h-3.5 fill-[#FFB800] text-[#FFB800]" />
+            <span className="text-xs font-bold text-foreground">{rating}</span>
+          </div>
+        )}
       </div>
 
       <div className="text-sm font-medium text-neutral-400 mb-1">
-        {distanceKm} km • {durationDays} Days • {maxAltitudeFt.toLocaleString()} ft
+        {[
+          distanceKm ? `${distanceKm} km` : null,
+          `${durationDays} Days`,
+          maxAltitudeFt ? `${maxAltitudeFt.toLocaleString()} ft` : null,
+        ]
+          .filter(Boolean)
+          .join(" • ")}
       </div>
 
       <h3
@@ -80,14 +90,16 @@ export function PackageCard({
       )}
 
       <div className="flex items-center justify-between gap-3 mt-auto">
-        <div className="flex items-center gap-2 min-w-0">
-          <div className="size-6 rounded-full overflow-hidden relative shrink-0 bg-zinc-200">
-            <Image src={guideAvatarUrl} alt={guideName} fill className="object-cover" />
+        {guideName && (
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="size-6 rounded-full overflow-hidden relative shrink-0 bg-zinc-200">
+              {guideAvatarUrl && <Image src={guideAvatarUrl} alt={guideName} fill className="object-cover" />}
+            </div>
+            <span className="text-sm font-semibold text-primary truncate">{guideName}</span>
           </div>
-          <span className="text-sm font-semibold text-primary truncate">{guideName}</span>
-        </div>
+        )}
 
-        <div className="flex flex-col items-end shrink-0">
+        <div className="flex flex-col items-end shrink-0 ml-auto">
           <span className="text-caption font-semibold text-zinc-400">Starting from</span>
           <span className="text-body font-bold text-foreground">
             ₹{price.toLocaleString()}/trekker

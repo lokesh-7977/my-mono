@@ -22,6 +22,7 @@ import { MOCK_NEARBY_PLACES } from "@/lib/nearby-places-mock";
 import { getLocationAncestorCrumbs } from "@/lib/location-ancestor-mock";
 import { getTrekBySlug } from "@/api/trek/trek.api";
 import { getTrekSummary } from "@/lib/trek-summary-mock";
+import { getTrekPackageCards } from "@/lib/trek-package-cards";
 
 interface TrekPageProps {
     params: Promise<{ trekSlug: string }>;
@@ -55,6 +56,9 @@ export default async function TrekPage({ params }: TrekPageProps) {
     if (!trek) {
         notFound();
     }
+    console.log(trek);
+
+    const packageCards = getTrekPackageCards(trek);
 
     const galleryImages = Array.from(
         new Set([trek.coverImageUrl, ...trek.galleryImages].filter(Boolean)),
@@ -111,8 +115,12 @@ export default async function TrekPage({ params }: TrekPageProps) {
                     </div>
                 </div>
                 <Divider className="mt-9.5" />
-                <FeaturedPackages />
-                <Divider className="mt-9.5" />
+                {packageCards.length > 0 && (
+                    <>
+                        <FeaturedPackages packages={packageCards} />
+                        <Divider className="mt-9.5" />
+                    </>
+                )}
                 <TrekInfoSections
                     trekName={trek.name}
                     howToReach={trek.howToReach}
