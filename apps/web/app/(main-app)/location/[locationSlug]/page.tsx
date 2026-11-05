@@ -14,6 +14,7 @@ import { NearbyPlaces } from "@/components/shared/nearby-places";
 import { getLocationBySlug } from "@/lib/location-mock";
 import { MOCK_FEATURED_TREKS } from "@/lib/featured-treks-mock";
 import { MOCK_NEARBY_PLACES } from "@/lib/nearby-places-mock";
+import Divider from "@repo/ui/components/divider";
 
 interface LocationPageProps {
   params: Promise<{ locationSlug: string }>;
@@ -36,10 +37,14 @@ export default async function LocationPage({ params }: LocationPageProps) {
       <main>
         <Breadcrumb items={[{ label: location.name }]} />
 
-        <LocationHero name={location.name} tagline={location.tagline} heroImage={location.heroImage} />
-        <LocationOverview name={location.name} whatToKnow={location.whatToKnow} />
-        <LocationBackdrop title={location.backdropTitle} description={location.backdrop} />
-        <LocationHighlights highlights={location.highlights} />
+        <div className="max-w-360 pt-4 px-4 sm:px-6 lg:px-8 mx-auto">
+          <LocationHero slug={location.slug} name={location.name} tagline={location.tagline} heroImage={location.heroImage} />
+          <LocationOverview name={location.name} whatToKnow={location.whatToKnow} />
+          <Divider className="my-6" />
+          <LocationBackdrop title={location.backdropTitle} description={location.backdrop} />
+          <Divider className="my-6" />
+          <LocationHighlights highlights={location.highlights} />
+        </div>
         <LocationGeneralInfoSection info={location.generalInfo} />
 
         <NearbyPlaces places={nearbyPlaces} />
