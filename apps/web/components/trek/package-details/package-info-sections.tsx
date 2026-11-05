@@ -3,7 +3,7 @@ import { CheckCircle2, XCircle } from 'lucide-react';
 interface SectionProps {
   title: string;
   items: string[];
-  type: 'inclusion' | 'exclusion';
+  type: 'inclusion' | 'exclusion' | 'highlight';
 }
 
 const InfoSection = ({ title, items, type }: SectionProps) => {
@@ -32,13 +32,15 @@ const InfoSection = ({ title, items, type }: SectionProps) => {
 interface PackageInfoSectionsProps {
   inclusions: string[];
   exclusions: string[];
+  highlights?: string[];
 }
 
-export const PackageInfoSections = ({ inclusions, exclusions }: PackageInfoSectionsProps) => {
+export const PackageInfoSections = ({ inclusions, exclusions, highlights = [] }: PackageInfoSectionsProps) => {
   return (
     <>
       {inclusions.length > 0 && <InfoSection title="Inclusions" items={inclusions} type="inclusion" />}
       {exclusions.length > 0 && <InfoSection title="Exclusions" items={exclusions} type="exclusion" />}
+      {highlights.length > 0 && <InfoSection title="Highlights" items={highlights} type="highlight" />}
     </>
   );
 };

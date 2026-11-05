@@ -79,6 +79,8 @@ export interface PackageDetail {
   itineraryDays: PackageItineraryDay[];
   inclusions: string[];
   exclusions: string[];
+  // Proposed in apps/docs/checklists/package/package-highlights-checklist.md; not sent by the API yet.
+  highlights?: string[];
   packingList: string[];
   fitnessAndExperienceRequirement: string | null;
   meetingPoint: string | null;

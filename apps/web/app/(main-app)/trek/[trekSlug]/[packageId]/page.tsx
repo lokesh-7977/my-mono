@@ -16,6 +16,7 @@ import BookingWidget from "@/components/trek/package-details/booking-widget";
 import { getPackageById } from "@/api/package/package.api";
 import { getLocationAncestorCrumbs } from "@/lib/location-ancestor-mock";
 import { getAscentDescent } from "@/lib/package-ascent-descent-mock";
+import { getPackageHighlights } from "@/lib/package-highlights-mock";
 import { NearbyPlaces } from "@/components/shared/nearby-places";
 import { MOCK_NEARBY_PLACES } from "@/lib/nearby-places-mock";
 import { FeaturedTreks } from "@/components/trek/trek-details/featured-treks";
@@ -94,7 +95,11 @@ export default async function TrekPackagePage({ params }: TrekPackagePageProps) 
                                 days={pkg.itineraryDays}
                                 fallbackImage={galleryImages[0]}
                             />
-                            <PackageInfoSections inclusions={pkg.inclusions} exclusions={pkg.exclusions} />
+                            <PackageInfoSections
+                                inclusions={pkg.inclusions}
+                                exclusions={pkg.exclusions}
+                                highlights={getPackageHighlights(pkg)}
+                            />
                         </div>
                         <div className="lg:col-span-1">
                             <StickySidebar >
