@@ -13,8 +13,8 @@ interface PackageProviderProps {
 }
 
 const BADGE_TONE: Record<string, string> = {
-  "Eco Certified": "bg-emerald-50 text-emerald-700 border-emerald-100",
-  "IMF Certified": "bg-orange-50 text-orange-700 border-orange-100",
+  "Eco Certified": "bg-magic-green/15 text-emerald-700",
+  "IMF Certified": "bg-orange-50 text-orange-600",
 };
 const NEUTRAL_BADGE_TONE = "bg-zinc-50 text-zinc-600 border-zinc-100";
 
@@ -41,46 +41,49 @@ export function PackageProvider({
   ].filter(Boolean);
 
   return (
-    <section className="rounded-2xl border border-zinc-200 p-5 flex flex-col gap-4">
-      <div className="flex items-center gap-4">
-        <div className="relative size-11 shrink-0 overflow-hidden rounded-lg bg-zinc-200">
-          {avatarUrl ? (
-            <Image src={avatarUrl} alt={name} fill className="object-cover" />
-          ) : (
-            <span className="flex size-full items-center justify-center text-sm font-bold text-zinc-500">
-              {name.charAt(0).toUpperCase()}
-            </span>
-          )}
+    <section className="w-full px-2">
+      <div className="rounded-2xl border border-zinc-200 p-6 flex flex-col gap-4 shadow-lg shadow-black/3">
+        <div className="flex items-center gap-5">
+          <div className="relative size-16.5 shrink-0 overflow-hidden rounded-lg bg-zinc-200">
+            {avatarUrl ? (
+              <Image src={avatarUrl} alt={name} fill className="object-cover" />
+            ) : (
+              <span className="flex size-full items-center justify-center text-sm font-bold text-zinc-500">
+                {name.charAt(0).toUpperCase()}
+              </span>
+            )}
+          </div>
+
+          <div className="flex min-w-0 flex-col gap-2">
+            <h3 className="text-lg font-bold text-foreground leading-tight">{name}</h3>
+            {(badges.length > 0 || meta.length > 0) && (
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                {badges.map((badge) => (
+                  <span
+                    key={badge}
+                    className={cn("px-2.5 py-0.5 h-6 flex items-center rounded-full text-xs font-semibold", BADGE_TONE[badge] ?? NEUTRAL_BADGE_TONE)}
+                  >
+                    {badge}
+                  </span>
+                ))}
+                {meta.length > 0 && (
+                  <div className="flex items-center gap-2 text-xs font-medium text-foreground/50">
+                    {meta.map((item, index) => (
+                      <span key={index} className="flex items-center gap-2">
+                        {index > 0 && <span className="size-1 rounded-full bg-zinc-300" />}
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="flex min-w-0 flex-col gap-1.5">
-          <h3 className="text-base font-bold text-foreground leading-tight">{name}</h3>
-          {(badges.length > 0 || meta.length > 0) && (
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-              {badges.map((badge) => (
-                <span
-                  key={badge}
-                  className={cn("px-2.5 py-0.5 rounded-full border text-xs font-semibold", BADGE_TONE[badge] ?? NEUTRAL_BADGE_TONE)}
-                >
-                  {badge}
-                </span>
-              ))}
-              {meta.length > 0 && (
-                <div className="flex items-center gap-2 text-xs font-medium text-foreground/50">
-                  {meta.map((item, index) => (
-                    <span key={index} className="flex items-center gap-2">
-                      {index > 0 && <span className="size-1 rounded-full bg-zinc-300" />}
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+        {quote && <p className="text-base font-lato italic text-foreground/80">&quot;{quote}&quot;</p>}
       </div>
-
-      {quote && <p className="text-sm italic text-foreground/70 leading-relaxed">&quot;{quote}&quot;</p>}
     </section>
+
   );
 }
