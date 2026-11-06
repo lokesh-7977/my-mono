@@ -56,7 +56,6 @@ export default async function TrekPage({ params }: TrekPageProps) {
     if (!trek) {
         notFound();
     }
-    console.log(trek);
 
     const packageCards = getTrekPackageCards(trek);
 

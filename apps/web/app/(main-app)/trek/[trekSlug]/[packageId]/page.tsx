@@ -54,7 +54,6 @@ export default async function TrekPackagePage({ params }: TrekPackagePageProps) 
     if (!pkg) {
         notFound();
     }
-    console.log(pkg)
     const title = pkg.title ?? pkg.trekInfo.name;
     const ascentDescent = getAscentDescent(pkg);
     const guide = getGuideProfile(pkg);
