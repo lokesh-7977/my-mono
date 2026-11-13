@@ -1,16 +1,17 @@
-import { Button } from "@repo/ui/components/button";
 import { BadgeCheck, ShieldCheck } from "lucide-react";
 import { BookingDatesModal } from "./booking-dates-modal";
+import { EnquiryModal } from "./enquiry-modal";
 import { formatPrice } from "@/lib/format-price";
 import type { PackageSchedule } from "@/api/package/package.types";
 
 interface BookingWidgetProps {
+    packageId: string;
     startingPrice: number | null;
     currency: string | null;
     schedules: PackageSchedule[];
 }
 
-export default function BookingWidget({ startingPrice, currency, schedules }: BookingWidgetProps) {
+export default function BookingWidget({ packageId, startingPrice, currency, schedules }: BookingWidgetProps) {
     return (
         <div className="rounded-2xl border border-zinc-200 shadow-soft p-8">
             <div className="flex flex-col gap-5">
@@ -38,9 +39,7 @@ export default function BookingWidget({ startingPrice, currency, schedules }: Bo
 
                 <div className="flex flex-col gap-2 mt-2">
                     {schedules.length > 0 && <BookingDatesModal schedules={schedules} />}
-                    <Button variant={"secondary"} className="w-full h-13.5 rounded-xl text-base font-bold cursor-pointer">
-                        Send Enquiry
-                    </Button>
+                    <EnquiryModal packageId={packageId} />
                 </div>
 
                 {/* Footer Info */}

@@ -117,6 +117,7 @@ export default async function TrekPackagePage({ params }: TrekPackagePageProps) 
                         <div className="lg:col-span-1">
                             <StickySidebar >
                                 <BookingWidget
+                                    packageId={pkg.id}
                                     startingPrice={pkg.startingPrice}
                                     currency={pkg.currency}
                                     schedules={pkg.schedules}
